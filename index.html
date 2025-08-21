@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMC Saúde - Calculadora de Índice de Massa Corporal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --md-ref-palette-primary100: #D0E4FF;
+            --md-ref-palette-primary200: #9ECAFF;
+            --md-ref-palette-primary300: #6BB0FF;
+            --md-ref-palette-primary400: #3896FF;
+            --md-ref-palette-primary500: #057CFF;
+            --md-ref-palette-primary600: #0063D9;
+            --md-ref-palette-primary700: #004BB3;
+            --md-ref-palette-primary800: #00348C;
+            --md-ref-palette-primary900: #001E66;
+            
+            --md-ref-palette-secondary100: #FFD9E6;
+            --md-ref-palette-secondary200: #FFB3CC;
+            --md-ref-palette-secondary300: #FF8DB3;
+            --md-ref-palette-secondary400: #FF6699;
+            --md-ref-palette-secondary500: #FF4080;
+            --md-ref-palette-secondary600: #D9005C;
+            --md-ref-palette-secondary700: #B30048;
+            --md-ref-palette-secondary800: #8C0035;
+            --md-ref-palette-secondary900: #660022;
+            
+            --md-sys-color-primary: var(--md-ref-palette-primary500);
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: var(--md-ref-palette-primary100);
+            --md-sys-color-on-primary-container: var(--md-ref-palette-primary900);
+            
+            --md-sys-color-secondary: var(--md-ref-palette-secondary500);
+            --md-sys-color-on-secondary: #FFFFFF;
+            --md-sys-color-secondary-container: var(--md-ref-palette-secondary100);
+            --md-sys-color-on-secondary-container: var(--md-ref-palette-secondary900);
+            
+            --md-sys-color-surface: #FEFBFF;
+            --md-sys-color-on-surface: #1B1B1F;
+            --md-sys-color-surface-variant: #E1E2EC;
+            --md-sys-color-on-surface-variant: #44464F;
+            
+            --md-sys-color-background: #FEFBFF;
+            --md-sys-color-on-background: #1B1B1F;
+            
+            --md-sys-color-error: #BA1A1A;
+            --md-sys-color-on-error: #FFFFFF;
+            --md-sys-color-error-container: #FFDAD6;
+            --md-sys-color-on-error-container: #410002;
+        }
+        
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: var(--md-sys-color-background);
+            color: var(--md-sys-color-on-background);
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .app-bar {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .page {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--md-sys-color-surface);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 12px;
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 8px 12px;
+            border-radius: 16px;
+        }
+        
+        .nav-item.active {
+            color: var(--md-sys-color-primary);
+            background-color: var(--md-sys-color-primary-container);
+        }
+        
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .card {
+            background-color: var(--md-sys-color-surface);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: none;
+        }
+        
+        .card-title {
+            font-weight: 500;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 16px;
+        }
+        
+        .btn-primary {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border: none;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--md-ref-palette-primary600);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            background-color: var(--md-sys-color-surface);
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: 12px;
+            padding: 14px;
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .form-control:focus {
+            border-color: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 2px rgba(5, 124, 255, 0.2);
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .imc-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin: 10px 0;
+        }
+        
+        .imc-category {
+            font-size: 20px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        
+        .category-underweight {
+            background-color: #FFF0F0;
+            color: #D32F2F;
+        }
+        
+        .category-normal {
+            background-color: #F0FFF4;
+            color: #2E7D32;
+        }
+        
+        .category-overweight {
+            background-color: #FFF8E1;
+            color: #F57C00;
+        }
+        
+        .category-obese1 {
+            background-color: #FFECB3;
+            color: #EF6C00;
+        }
+        
+        .category-obese2 {
+            background-color: #FFE0B2;
+            color: #E65100;
+        }
+        
+        .category-obese3 {
+            background-color: #FFCDD2;
+            color: #C62828;
+        }
+        
+        .progress-container {
+            height: 24px;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            transition: width 1s ease-in-out;
+        }
+        
+        .progress-marker {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: rgba(0,0,0,0.2);
+        }
+        
+        .progress-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .info-item {
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .info-item i {
+            font-size: 32px;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 8px;
+        }
+        
+        .info-item h4 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .info-item p {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin: 0;
+        }
+        
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid var(--md-sys-color-surface-variant);
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-details {
+            flex: 1;
+        }
+        
+        .history-date {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface-variant);
+        }
+        
+        .history-imc {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--md-sys-color-on-surface);
+        }
+        
+        .history-category {
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+        
+        .age-group-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .age-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .age-option.active {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+        
+        .age-option i {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .gender-selector {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+        }
+        
+        .gender-option {
+            flex: 1;
+            padding: 16px;
+            background-color: var(--md-sys-color-surface-variant);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .gender-option.active {
+            background-color: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+        
+        .gender-option i {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .welcome-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .welcome-icon {
+            font-size: 64px;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 576px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .age-option {
+                min-width: calc(50% - 8px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de aplicativo -->
+    <div class="app-bar">
+        <h1 class="h4 mb-0">IMC Saúde</h1>
+    </div>
+
+    <!-- Página inicial -->
+    <div id="home-page" class="page active">
+        <div class="welcome-card card">
+            <div class="welcome-icon">
+                <i class="fas fa-heartbeat"></i>
+            </div>
+            <h2>Bem-vindo ao IMC Saúde</h2>
+            <p class="mb-4">Calcule seu Índice de Massa Corporal de forma precisa baseado nas diretrizes da OMS</p>
+            <button class="btn btn-primary w-100" onclick="showPage('calculate-page')">
+                Começar
+            </button>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Por que monitorar seu IMC?</h3>
+            <p>O Índice de Massa Corporal (IMC) é uma medida importante para avaliar se seu peso está adequado para sua altura, ajudando a identificar riscos à saúde.</p>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-heart"></i>
+                    <h4>Saúde Cardiovascular</h4>
+                    <p>Mantenha seu coração saudável</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-weight"></i>
+                    <h4>Controle de Peso</h4>
+                    <p>Acompanhe sua evolução</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-apple-alt"></i>
+                    <h4>Nutrição</h4>
+                    <p>Planeje sua alimentação</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-running"></i>
+                    <h4>Atividade Física</h4>
+                    <p>Adapte seus exercícios</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Página de cálculo -->
+    <div id="calculate-page" class="page">
+        <div class="card">
+            <h3 class="card-title">Informações Pessoais</h3>
+            
+            <div class="mb-4">
+                <h4>Selecione sua faixa etária:</h4>
+                <div class="age-group-selector">
+                    <div class="age-option active" data-age-group="child1">
+                        <i class="fas fa-baby"></i>
+                        <div>0-5 anos</div>
+                    </div>
+                    <div class="age-option" data-age-group="child2">
+                        <i class="fas fa-child"></i>
+                        <div>5-10 anos</div>
+                    </div>
+                    <div class="age-option" data-age-group="teen">
+                        <i class="fas fa-user-graduate"></i>
+                        <div>10-19 anos</div>
+                    </div>
+                    <div class="age-option" data-age-group="adult">
+                        <i class="fas fa-user"></i>
+                        <div>20-59 anos</div>
+                    </div>
+                    <div class="age-option" data-age-group="senior">
+                        <i class="fas fa-user-alt"></i>
+                        <div>60+ anos</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h4>Selecione seu gênero:</h4>
+                <div class="gender-selector">
+                    <div class="gender-option active" data-gender="male">
+                        <i class="fas fa-mars"></i>
+                        <div>Masculino</div>
+                    </div>
+                    <div class="gender-option" data-gender="female">
+                        <i class="fas fa-venus"></i>
+                        <div>Feminino</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="weight" class="form-label">Peso (kg)</label>
+                <input type="number" class="form-control" id="weight" placeholder="Ex: 65.5" step="0.1" min="0">
+            </div>
+            
+            <div class="mb-4">
+                <label for="height" class="form-label">Altura (cm)</label>
+                <input type="number" class="form-control" id="height" placeholder="Ex: 170" step="0.1" min="0">
+            </div>
+            
+            <button class="btn btn-primary w-100" onclick="calculateIMC()">
+                <i class="fas fa-calculator me-2"></i>Calcular IMC
+            </button>
+        </div>
+        
+        <div class="card">
+            <h3 class="card-title">Sobre as faixas etárias</h3>
+            <p>O cálculo e interpretação do IMC variam conforme a faixa etária, seguindo as diretrizes da Organização Mundial da Saúde (OMS):</p>
+            <ul>
+                <li><strong>0-5 anos:</strong> Usam curvas de crescimento específicas (WHO Child Growth Standards)</li>
+                <li><strong>5-10 anos:</strong> Utilizam tabelas de percentis por idade e sexo</li>
+                <li><strong>10-19 anos:</strong> Aplicam-se gráficos de IMC por idade para adolescentes</li>
+                <li><strong>20-59 anos:</strong> Usam a classificação padrão de IMC para adultos</li>
+                <li><strong>60+ anos:</strong> Consideram-se ajustes para idosos com avaliação adicional</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Página de resultados -->
+    <div id="result-page" class="page">
+        <div class="card">
+            <h3 class="card-title">Resultado do IMC</h3>
+            
+            <div class="result-container">
+                <p>Seu Índice de Massa Corporal é:</p>
+                <div class="imc-value" id="imc-value">--</div>
+                <div class="imc-category" id="imc-category">--</div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="imc-progress" style="width: 0%; background-color: #057CFF;"></div>
+                    <div class="progress-marker" style="left: 16.5%;"></div>
+                    <div class="progress-marker" style="left: 33%;"></div>
+                    <div class="progress-marker" style="left: 49.5%;"></div>
+                    <div class="progress-marker" style="left: 66%;"></div>
+                    <div class="progress-marker" style="left: 82.5%;"></div>
+                    
+                    <div class="progress-label" style="left: 8%;">Abaixo</div>
+                    <div class="progress-label" style="left: 24%;">Normal</div>
+                    <div class="progress-label" style="left: 41%;">Sobrepeso</div>
+                    <div class="progress-label" style="left: 57%;">Obesidade I</div>
+                    <div class="progress-label" style="left: 74%;">Obesidade II</div>
+                    <div class="progress-label" style="left: 90%;">Obesidade III</div>
+                </div>
+                
+                <div id="result-description">
+                    Preencha os dados na página de cálculo para ver seu resultado.
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 class="card-title">Recomendações</h3>
+            <div id="recommendations">
+                <p>Com base no seu IMC, aqui estão algumas recomendações gerais:</p>
+                <ul>
+                    <li>Mantenha uma alimentação balanceada com frutas, vegetais e grãos integrais</li>
+                    <li>Pratique atividade física regularmente</li>
+                    <li>Consulte um profissional de saúde para orientações personalizadas</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" onclick="saveResult()">
+                <i class="fas fa-save me-2"></i>Salvar Resultado
+            </button>
+            <button class="btn btn-outline-primary" onclick="showPage('calculate-page')">
+                <i class="fas fa-redo me-2"></i>Calcular Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- Página de histórico -->
+    <div id="history-page" class="page">
+        <div class="card">
+            <h3 class="card-title">Histórico de Cálculos</h3>
+            
+            <div id="history-list">
+                <div class="history-item">
+                    <div class="history-details">
+                        <div class="history-date">25/08/2023 - 10:30</div>
+                        <div class="history-imc">IMC: 24.2</div>
+                    </div>
+                    <div class="history-category category-normal">Normal</div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-details">
+                        <div class="history-date">18/08/2023 - 15:45</div>
+                        <div class="history-imc">IMC: 23.8</div>
+                    </div>
+                    <div class="history-category category-normal">Normal</div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-details">
+                        <div class="history-date">10/08/2023 - 09:15</div>
+                        <div class="history-imc">IMC: 24.5</div>
+                    </div>
+                    <div class="history-category category-normal">Normal</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-grid">
+            <button class="btn btn-outline-primary" id="clear-history">
+                <i class="fas fa-trash me-2"></i>Limpar Histórico
+            </button>
+        </div>
+    </div>
+
+    <!-- Navegação inferior -->
+    <div class="nav-bottom">
+        <a href="#" class="nav-item active" onclick="showPage('home-page')">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('calculate-page')">
+            <i class="fas fa-calculator"></i>
+            <span>Calcular</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('result-page')">
+            <i class="fas fa-chart-line"></i>
+            <span>Resultado</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('history-page')">
+            <i class="fas fa-history"></i>
+            <span>Histórico</span>
+        </a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados baseados nas diretrizes da OMS
+        const imcClassifications = {
+            adult: {
+                underweight: { max: 18.4, description: "Abaixo do peso" },
+                normal: { min: 18.5, max: 24.9, description: "Peso normal" },
+                overweight: { min: 25.0, max: 29.9, description: "Sobrepeso" },
+                obese1: { min: 30.0, max: 34.9, description: "Obesidade Grau I" },
+                obese2: { min: 35.0, max: 39.9, description: "Obesidade Grau II" },
+                obese3: { min: 40.0, description: "Obesidade Grau III" }
+            },
+            teen: {
+                // Valores aproximados - na prática usariam-se percentis específicos
+                underweight: { max: 18.4, description: "Abaixo do peso" },
+                normal: { min: 18.5, max: 24.9, description: "Peso normal" },
+                overweight: { min: 25.0, max: 29.9, description: "Sobrepeso" },
+                obese1: { min: 30.0, max: 34.9, description: "Obesidade Grau I" },
+                obese2: { min: 35.0, max: 39.9, description: "Obesidade Grau II" },
+                obese3: { min: 40.0, description: "Obesidade Grau III" }
+            },
+            child: {
+                // Em aplicação real, usaria percentis específicos por idade
+                underweight: { max: 18.4, description: "Abaixo do peso" },
+                normal: { min: 18.5, max: 24.9, description: "Peso normal" },
+                overweight: { min: 25.0, max: 29.9, description: "Sobrepeso" },
+                obese1: { min: 30.0, max: 34.9, description: "Obesidade Grau I" },
+                obese2: { min: 35.0, max: 39.9, description: "Obesidade Grau II" },
+                obese3: { min: 40.0, description: "Obesidade Grau III" }
+            },
+            senior: {
+                // Para idosos, os limites podem ser ligeiramente diferentes
+                underweight: { max: 22.9, description: "Abaixo do peso" },
+                normal: { min: 23.0, max: 27.9, description: "Peso normal" },
+                overweight: { min: 28.0, max: 29.9, description: "Sobrepeso" },
+                obese1: { min: 30.0, max: 34.9, description: "Obesidade Grau I" },
+                obese2: { min: 35.0, max: 39.9, description: "Obesidade Grau II" },
+                obese3: { min: 40.0, description: "Obesidade Grau III" }
+            }
+        };
+        
+        // Variáveis globais
+        let currentAgeGroup = 'adult';
+        let currentGender = 'male';
+        let currentImc = 0;
+        
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar seletores de idade
+            document.querySelectorAll('.age-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.age-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentAgeGroup = this.getAttribute('data-age-group');
+                });
+            });
+            
+            // Configurar seletores de gênero
+            document.querySelectorAll('.gender-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentGender = this.getAttribute('data-gender');
+                });
+            });
+            
+            // Configurar navegação
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Configurar botão de limpar histórico
+            document.getElementById('clear-history').addEventListener('click', clearHistory);
+        });
+        
+        // Função para mostrar páginas
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            // Atualizar navegação
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            
+            if (pageId === 'home-page') {
+                document.querySelector('.nav-item:nth-child(1)').classList.add('active');
+            } else if (pageId === 'calculate-page') {
+                document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+            } else if (pageId === 'result-page') {
+                document.querySelector('.nav-item:nth-child(3)').classList.add('active');
+            } else if (pageId === 'history-page') {
+                document.querySelector('.nav-item:nth-child(4)').classList.add('active');
+            }
+        }
+        
+        // Função para calcular o IMC
+        function calculateIMC() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // Converter para metros
+            
+            if (isNaN(weight) || isNaN(height) || height <= 0) {
+                alert('Por favor, insira valores válidos para peso e altura.');
+                return;
+            }
+            
+            currentImc = weight / (height * height);
+            const roundedImc = currentImc.toFixed(1);
+            
+            // Mostrar resultado
+            document.getElementById('imc-value').textContent = roundedImc;
+            
+            // Determinar categoria
+            const classification = imcClassifications[currentAgeGroup];
+            let category = '';
+            let categoryClass = '';
+            
+            if (currentImc < classification.underweight.max) {
+                category = classification.underweight.description;
+                categoryClass = 'category-underweight';
+            } else if (currentImc >= classification.normal.min && currentImc <= classification.normal.max) {
+                category = classification.normal.description;
+                categoryClass = 'category-normal';
+            } else if (currentImc >= classification.overweight.min && currentImc <= classification.overweight.max) {
+                category = classification.overweight.description;
+                categoryClass = 'category-overweight';
+            } else if (currentImc >= classification.obese1.min && currentImc <= classification.obese1.max) {
+                category = classification.obese1.description;
+                categoryClass = 'category-obese1';
+            } else if (currentImc >= classification.obese2.min && currentImc <= classification.obese2.max) {
+                category = classification.obese2.description;
+                categoryClass = 'category-obese2';
+            } else {
+                category = classification.obese3.description;
+                categoryClass = 'category-obese3';
+            }
+            
+            document.getElementById('imc-category').textContent = category;
+            document.getElementById('imc-category').className = 'imc-category ' + categoryClass;
+            
+            // Atualizar barra de progresso
+            let progressWidth = 0;
+            if (currentImc < 16) progressWidth = 5;
+            else if (currentImc < 18.5) progressWidth = 15;
+            else if (currentImc < 25) progressWidth = 33;
+            else if (currentImc < 30) progressWidth = 49;
+            else if (currentImc < 35) progressWidth = 66;
+            else if (currentImc < 40) progressWidth = 82;
+            else progressWidth = 95;
+            
+            document.getElementById('imc-progress').style.width = progressWidth + '%';
+            
+            // Cor da barra de progresso baseada na categoria
+            let progressColor = '#057CFF';
+            if (categoryClass === 'category-underweight') progressColor = '#D32F2F';
+            else if (categoryClass === 'category-normal') progressColor = '#2E7D32';
+            else if (categoryClass === 'category-overweight') progressColor = '#F57C00';
+            else if (categoryClass === 'category-obese1') progressColor = '#EF6C00';
+            else if (categoryClass === 'category-obese2') progressColor = '#E65100';
+            else if (categoryClass === 'category-obese3') progressColor = '#C62828';
+            
+            document.getElementById('imc-progress').style.backgroundColor = progressColor;
+            
+            // Descrição do resultado
+            let description = '';
+            if (categoryClass === 'category-underweight') {
+                description = 'Seu IMC indica que você está abaixo do peso ideal. Considere consultar um nutricionista para orientação sobre alimentação adequada.';
+            } else if (categoryClass === 'category-normal') {
+                description = 'Parabéns! Seu IMC está dentro da faixa considerada saudável. Continue mantendo um estilo de vida equilibrado.';
+            } else if (categoryClass === 'category-overweight') {
+                description = 'Seu IMC indica sobrepeso. Pequenas mudanças na alimentação e aumento da atividade física podem ajudar a alcançar um peso mais saudável.';
+            } else {
+                description = 'Seu IMC indica obesidade. Recomendamos consultar um profissional de saúde para orientação personalizada e acompanhamento.';
+            }
+            
+            document.getElementById('result-description').textContent = description;
+            
+            // Mostrar página de resultados
+            showPage('result-page');
+        }
+        
+        // Função para salvar resultado no histórico
+        function saveResult() {
+            alert('Resultado salvo no histórico!');
+            // Em uma aplicação real, isso salvaria no localStorage ou enviaria para um backend
+        }
+        
+        // Função para limpar histórico
+        function clearHistory() {
+            if (confirm('Tem certeza que deseja limpar todo o histórico?')) {
+                document.getElementById('history-list').innerHTML = '<p class="text-center py-3">Nenhum histórico disponível</p>';
+            }
+        }
+    </script>
+</body>
+</html>
