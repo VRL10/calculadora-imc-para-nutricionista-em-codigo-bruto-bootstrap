@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* ===== VARIÁVEIS GLOBAIS ===== */
         :root {
             --primary: #4361ee;
             --primary-light: #e6ecff;
@@ -23,6 +25,7 @@
             --gray: #8d99ae;
         }
 
+        /* ===== ESTILOS GERAIS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -46,6 +49,7 @@
             overflow: hidden;
         }
 
+        /* ===== CABEÇALHO ===== */
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -70,6 +74,7 @@
             opacity: 0.9;
         }
 
+        /* ===== PÁGINAS E NAVEGAÇÃO ===== */
         .page {
             display: none;
             padding: 20px;
@@ -129,6 +134,7 @@
             margin-bottom: 4px;
         }
 
+        /* ===== COMPONENTES DE CARTA ===== */
         .card {
             background-color: white;
             border-radius: 15px;
@@ -145,6 +151,7 @@
             font-size: 18px;
         }
 
+        /* ===== BOTÕES ===== */
         .btn-primary {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
@@ -180,6 +187,49 @@
             color: white;
         }
 
+        .btn-google {
+            background: white;
+            color: #757575;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 12px 25px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-google:hover {
+            background: #f5f5f5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-microsoft {
+            background: white;
+            color: #757575;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 12px 25px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-microsoft:hover {
+            background: #f5f5f5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===== FORMULÁRIOS ===== */
         .form-label {
             font-weight: 600;
             color: var(--dark);
@@ -214,6 +264,7 @@
             font-weight: 600;
         }
 
+        /* ===== RESULTADOS E VISUALIZAÇÃO ===== */
         .result-container {
             text-align: center;
             padding: 20px;
@@ -360,6 +411,7 @@
             color: var(--primary);
         }
 
+        /* ===== MODAIS ===== */
         .save-modal,
         .edit-modal {
             position: fixed;
@@ -386,6 +438,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
+        /* ===== HISTÓRICO ===== */
         .history-item {
             display: flex;
             justify-content: space-between;
@@ -412,6 +465,8 @@
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 5px;
+            cursor: pointer;
+            color: var(--primary);
         }
 
         .history-info {
@@ -457,6 +512,11 @@
             color: var(--primary);
         }
 
+        .history-actions .history-action-btn:first-child {
+            margin-left: 8px;
+        }
+
+        /* ===== PÁGINA INICIAL ===== */
         .home-buttons {
             display: flex;
             flex-direction: column;
@@ -464,13 +524,11 @@
             margin-top: 20px;
         }
 
+        /* ===== PESQUISA E ORDENAÇÃO ===== */
         .search-container {
             display: flex;
-            /* coloca input e botão na mesma linha */
             align-items: center;
-            /* centraliza verticalmente */
             gap: 5px;
-            /* espaço entre input e botão */
             margin-bottom: 5%;
         }
 
@@ -482,7 +540,6 @@
             justify-content: center;
             align-items: center;
         }
-
 
         .search-input {
             flex: 1;
@@ -516,6 +573,7 @@
             color: white;
         }
 
+        /* ===== SELEÇÃO DE IDADE E GÊNERO ===== */
         .age-group-selector {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -576,20 +634,120 @@
             display: block;
         }
 
+        /* ===== BOTÕES ESPECÍFICOS ===== */
         #calculate-btn {
             margin-bottom: 10%;
         }
 
-        /* add por mim para a pagina do historico */
-        .history-actions .history-action-btn:first-child {
-            margin-left: 8px;
-        }
-        #card_historico{
+        /* ===== PÁGINA DE HISTÓRICO ===== */
+        #card_historico {
             margin-bottom: 15%;
         }
-        /* fim*/
 
+        /* ===== SELEÇÃO OF IDIOMA ===== */
+        .language-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
 
+        .language-option {
+            padding: 8px 15px;
+            background-color: #f5f7ff;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        .language-option.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-color: white;
+        }
+
+        /* ===== LOGIN SOCIAL ===== */
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f5f7ff;
+            border-radius: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ===== PÁGINA DE HISTÓRICO DO PACIENTE ===== */
+        .patient-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        .patient-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            flex: 1;
+            min-width: 150px;
+            margin: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .info-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .info-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .patient-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 576px) {
             .header-title {
                 font-size: 22px;
@@ -610,6 +768,18 @@
             .gender-selector {
                 flex-direction: column;
             }
+
+            .patient-info {
+                flex-direction: column;
+            }
+
+            .info-item {
+                min-width: 100%;
+            }
+
+            .patient-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -618,24 +788,53 @@
     <div class="app-container">
         <!-- Cabeçalho -->
         <div class="header">
-            <div class="header-title">IMC Saúde</div>
-            <div class="header-subtitle">Calculadora de Índice de Massa Corporal</div>
+            <div class="header-title" data-translate="app_title">IMC Saúde</div>
+            <div class="header-subtitle" data-translate="app_subtitle">Calculadora de Índice de Massa Corporal</div>
         </div>
 
         <div class="container">
             <!-- Página inicial -->
             <div id="home-page" class="page active">
                 <div class="card">
-                    <h3 class="card-title">Calculadora de IMC</h3>
-                    <p>O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa
+                    <h3 class="card-title" data-translate="home_title">Calculadora de IMC</h3>
+                    <p data-translate="home_description">O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa
                         está no peso ideal.</p>
+
+                    <!-- Seleção de Idioma -->
+                    <div class="language-selector">
+                        <div class="language-option active" data-lang="pt">Português</div>
+                        <div class="language-option" data-lang="en">English</div>
+                        <div class="language-option" data-lang="es">Español</div>
+                    </div>
+
+                    <!-- Login Social -->
+                    <div class="social-login" id="social-login-section">
+                        <button class="btn btn-google" onclick="loginWithGoogle()">
+                            <i class="fab fa-google"></i>
+                            <span data-translate="login_google">Entrar com Google</span>
+                        </button>
+                        <button class="btn btn-microsoft" onclick="loginWithMicrosoft()">
+                            <i class="fab fa-microsoft"></i>
+                            <span data-translate="login_microsoft">Entrar com Microsoft</span>
+                        </button>
+                    </div>
+
+                    <!-- Perfil do Usuário (quando logado) -->
+                    <div class="user-profile" id="user-profile" style="display: none;">
+                        <div class="user-avatar" id="user-avatar">U</div>
+                        <div>
+                            <div id="user-name">Usuário</div>
+                            <div id="user-email">user@example.com</div>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" onclick="logout()" data-translate="logout">Sair</button>
+                    </div>
 
                     <div class="home-buttons">
                         <button class="btn btn-primary" onclick="showPage('calculate-page')">
-                            <i class="fas fa-calculator me-2"></i>Calcular IMC
+                            <i class="fas fa-calculator me-2"></i><span data-translate="calculate_imc">Calcular IMC</span>
                         </button>
-                        <button class="btn btn-outline-primary" onclick="showPage('history-page')">
-                            <i class="fas fa-history me-2"></i>Ver Histórico
+                        <button class="btn btn-outline-primary" onclick="showPage('patients-page')">
+                            <i class="fas fa-users me-2"></i><span>Meus Pacientes</span>
                         </button>
                     </div>
                 </div>
@@ -644,50 +843,50 @@
             <!-- Página de cálculo -->
             <div id="calculate-page" class="page">
                 <div class="card">
-                    <h3 class="card-title">Informações para Cálculo</h3>
+                    <h3 class="card-title" data-translate="calculation_info">Informações para Cálculo</h3>
 
                     <div class="mb-3">
-                        <label class="form-label">Faixa Etária</label>
+                        <label class="form-label" data-translate="age_group">Faixa Etária</label>
                         <div class="age-group-selector">
                             <div class="age-option active" data-age-group="child1">
                                 <i class="fas fa-baby"></i>
-                                <div>0-5 anos</div>
+                                <div data-translate="age_0_5">0-5 anos</div>
                             </div>
                             <div class="age-option" data-age-group="child2">
                                 <i class="fas fa-child"></i>
-                                <div>5-10 anos</div>
+                                <div data-translate="age_5_10">5-10 anos</div>
                             </div>
                             <div class="age-option" data-age-group="teen">
                                 <i class="fas fa-user-graduate"></i>
-                                <div>10-19 anos</div>
+                                <div data-translate="age_10_19">10-19 anos</div>
                             </div>
                             <div class="age-option" data-age-group="adult">
                                 <i class="fas fa-user"></i>
-                                <div>20-59 anos</div>
+                                <div data-translate="age_20_59">20-59 anos</div>
                             </div>
                             <div class="age-option" data-age-group="senior">
                                 <i class="fas fa-user-alt"></i>
-                                <div>60+ anos</div>
+                                <div data-translate="age_60_plus">60+ anos</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Gênero</label>
+                        <label class="form-label" data-translate="gender">Gênero</label>
                         <div class="gender-selector">
                             <div class="gender-option active" data-gender="male">
                                 <i class="fas fa-mars"></i>
-                                <div>Masculino</div>
+                                <div data-translate="male">Masculino</div>
                             </div>
                             <div class="gender-option" data-gender="female">
                                 <i class="fas fa-venus"></i>
-                                <div>Feminino</div>
+                                <div data-translate="female">Feminino</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="weight" class="form-label">Peso (kg)</label>
+                        <label for="weight" class="form-label" data-translate="weight">Peso (kg)</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="weight" placeholder="Ex: 70" step="0.1"
                                 min="0">
@@ -696,7 +895,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="height" class="form-label">Altura (cm)</label>
+                        <label for="height" class="form-label" data-translate="height">Altura (cm)</label>
                         <div class="input-group">
                             <input type="number" class="form-control" id="height" placeholder="Ex: 170" step="0.1"
                                 min="0">
@@ -705,7 +904,7 @@
                     </div>
 
                     <button class="btn btn-primary" id="calculate-btn">
-                        <i class="fas fa-calculator me-2"></i>Calcular IMC
+                        <i class="fas fa-calculator me-2"></i><span data-translate="calculate_imc">Calcular IMC</span>
                     </button>
                 </div>
             </div>
@@ -713,49 +912,49 @@
             <!-- Página de resultados -->
             <div id="result-page" class="page">
                 <div class="card">
-                    <h3 class="card-title">Resultado do IMC</h3>
+                    <h3 class="card-title" data-translate="result_title">Resultado do IMC</h3>
 
                     <div class="result-container">
                         <div class="imc-value" id="imc-value">22.5</div>
-                        <div class="imc-category category-saudavel" id="imc-category">Saudável</div>
+                        <div class="imc-category category-saudavel" id="imc-category" data-translate="healthy">Saudável</div>
 
                         <div class="weight-range">
-                            <div class="weight-range-title">Peso ideal para sua altura</div>
+                            <div class="weight-range-title" data-translate="ideal_weight">Peso ideal para sua altura</div>
                             <div class="weight-range-value" id="ideal-weight">53.4 - 72.1 kg</div>
                         </div>
                     </div>
 
                     <div class="imc-scale">
                         <div class="scale-item magreza-grave" id="scale-magreza-grave">
-                            <span>Magreza grave</span>
+                            <span data-translate="severe_thinness">Magreza grave</span>
                             <span>≤ 15.9</span>
                         </div>
                         <div class="scale-item magreza-moderada" id="scale-magreza-moderada">
-                            <span>Magreza moderada</span>
+                            <span data-translate="moderate_thinness">Magreza moderada</span>
                             <span>16.0 – 16.9</span>
                         </div>
                         <div class="scale-item magreza-leve" id="scale-magreza-leve">
-                            <span>Magreza leve</span>
+                            <span data-translate="mild_thinness">Magreza leve</span>
                             <span>17.0 – 18.4</span>
                         </div>
                         <div class="scale-item saudavel" id="scale-saudavel">
-                            <span>Saudável</span>
+                            <span data-translate="healthy">Saudável</span>
                             <span>18.5 – 24.9</span>
                         </div>
                         <div class="scale-item sobrepeso" id="scale-sobrepeso">
-                            <span>Sobrepeso</span>
+                            <span data-translate="overweight">Sobrepeso</span>
                             <span>25.0 – 29.9</span>
                         </div>
                         <div class="scale-item obesidade-1" id="scale-obesidade-1">
-                            <span>Obesidade Grau I</span>
+                            <span data-translate="obesity_1">Obesidade Grau I</span>
                             <span>30.0 – 34.9</span>
                         </div>
                         <div class="scale-item obesidade-2" id="scale-obesidade-2">
-                            <span>Obesidade Grau II</span>
+                            <span data-translate="obesity_2">Obesidade Grau II</span>
                             <span>35.0 – 39.9</span>
                         </div>
                         <div class="scale-item obesidade-3" id="scale-obesidade-3">
-                            <span>Obesidade Grau III</span>
+                            <span data-translate="obesity_3">Obesidade Grau III</span>
                             <span>≥ 40.0</span>
                         </div>
                     </div>
@@ -763,41 +962,88 @@
 
                 <div class="d-grid gap-2" style="margin-bottom: 20%;">
                     <button class="btn btn-primary" onclick="openSaveModal()">
-                        <i class="fas fa-save me-2"></i>Salvar Resultado
+                        <i class="fas fa-save me-2"></i><span data-translate="save_result">Salvar Resultado</span>
                     </button>
                     <button class="btn btn-outline-primary" onclick="showPage('calculate-page')">
-                        <i class="fas fa-redo me-2"></i>Calcular Novamente
+                        <i class="fas fa-redo me-2"></i><span data-translate="calculate_again">Calcular Novamente</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Página de histórico -->
-            <div id="history-page" class="page">
-                <div class="card" id="card_historico">
-                    <h3 class="card-title">Histórico de Cálculos</h3>
+            <!-- Página de pacientes -->
+            <div id="patients-page" class="page">
+                <div class="card" id="card_patients">
+                    <h3 class="card-title">Meus Pacientes</h3>
 
                     <div class="search-container">
                         <input type="text" class="form-control search-input" id="search-input"
-                            placeholder="Buscar por nome ou data...">
-                        <button class="btn btn-primary" onclick="searchHistory()">
+                            placeholder="Buscar por nome...">
+                        <button class="btn btn-primary" onclick="searchPatients()">
                             <i class="fas fa-search"></i>
                         </button>
                     </div>
 
                     <div class="sort-buttons">
-                        <button class="sort-btn active" data-sort="date">
-                            <i class="fas fa-calendar me-2"></i>Data
+                        <button class="sort-btn active" data-sort="name">
+                            <i class="fas fa-font me-2"></i><span>Nome</span>
                         </button>
-                        <button class="sort-btn" data-sort="name">
-                            <i class="fas fa-font me-2"></i>Nome
+                        <button class="sort-btn" data-sort="date">
+                            <i class="fas fa-calendar me-2"></i><span>Data</span>
                         </button>
                     </div>
 
-                    <div id="history-list">
-                        <div class="text-center py-4" id="empty-history">
-                            <i class="fas fa-history fa-3x text-muted mb-3"></i>
-                            <p>Nenhum cálculo salvo ainda</p>
+                    <div id="patients-list">
+                        <div class="text-center py-4" id="empty-patients">
+                            <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                            <p>Nenhum paciente salvo ainda</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Página de histórico do paciente -->
+            <div id="patient-history-page" class="page">
+                <div class="card">
+                    <div class="patient-header">
+                        <h3 class="card-title" id="patient-name">Histórico do Paciente</h3>
+                        <button class="btn btn-outline-primary" onclick="showPage('patients-page')">
+                            <i class="fas fa-arrow-left me-2"></i> Voltar
+                        </button>
+                    </div>
+
+                    <div class="patient-info">
+                        <div class="info-item">
+                            <div class="info-value" id="patient-age"></div>
+                            <div class="info-label">Faixa Etária</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="patient-gender"></div>
+                            <div class="info-label">Gênero</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="patient-latest-imc"></div>
+                            <div class="info-label">Último IMC</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-value" id="patient-latest-weight"></div>
+                            <div class="info-label">Último Peso</div>
+                        </div>
+                    </div>
+
+                    <div class="patient-actions">
+                        <button class="btn btn-primary" onclick="addNewRecordForPatient()">
+                            <i class="fas fa-plus me-2"></i> Adicionar Novo Registro
+                        </button>
+                    </div>
+
+                    <h4 class="mb-3">Evolução do IMC</h4>
+                    <div class="chart-container">
+                        <canvas id="imc-chart"></canvas>
+                    </div>
+
+                    <h4 class="mb-3">Evolução do Peso</h4>
+                    <div class="chart-container">
+                        <canvas id="weight-chart"></canvas>
                     </div>
                 </div>
             </div>
@@ -806,53 +1052,21 @@
         <!-- Modal de salvamento -->
         <div class="save-modal" id="save-modal">
             <div class="save-modal-content">
-                <h3 class="card-title mb-4">Salvar Resultado</h3>
+                <h3 class="card-title mb-4" data-translate="save_result">Salvar Resultado</h3>
 
                 <div class="mb-3">
-                    <label for="save-name" class="form-label">Nome (opcional)</label>
+                    <label for="save-name" class="form-label">Nome do Paciente</label>
                     <input type="text" class="form-control" id="save-name" placeholder="Ex: João Silva">
                 </div>
 
                 <div class="mb-4">
-                    <label for="save-date" class="form-label">Data</label>
+                    <label for="save-date" class="form-label" data-translate="save_date">Data</label>
                     <input type="date" class="form-control" id="save-date">
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary" onclick="saveResult()">Salvar</button>
-                    <button class="btn btn-outline-secondary" onclick="closeSaveModal()">Cancelar</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal de edição -->
-        <div class="edit-modal" id="edit-modal">
-            <div class="edit-modal-content">
-                <h3 class="card-title mb-4">Editar Resultado</h3>
-
-                <div class="mb-3">
-                    <label for="edit-name" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="edit-name">
-                </div>
-
-                <div class="mb-3">
-                    <label for="edit-date" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="edit-date">
-                </div>
-
-                <div class="mb-3">
-                    <label for="edit-weight" class="form-label">Peso (kg)</label>
-                    <input type="number" class="form-control" id="edit-weight" step="0.1" min="0">
-                </div>
-
-                <div class="mb-4">
-                    <label for="edit-height" class="form-label">Altura (cm)</label>
-                    <input type="number" class="form-control" id="edit-height" step="0.1" min="0">
-                </div>
-
-                <div class="d-grid gap-2">
-                    <button class="btn btn-primary" onclick="updateResult()">Salvar Alterações</button>
-                    <button class="btn btn-outline-secondary" onclick="closeEditModal()">Cancelar</button>
+                    <button class="btn btn-primary" onclick="saveResult()" data-translate="save">Salvar</button>
+                    <button class="btn btn-outline-secondary" onclick="closeSaveModal()" data-translate="cancel">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -861,35 +1075,195 @@
         <div class="nav-bottom">
             <a href="#" class="nav-item active" onclick="showPage('home-page')">
                 <i class="fas fa-home"></i>
-                <span>Início</span>
+                <span data-translate="home">Início</span>
             </a>
             <a href="#" class="nav-item" onclick="showPage('calculate-page')">
                 <i class="fas fa-calculator"></i>
-                <span>Calcular</span>
+                <span data-translate="calculate">Calcular</span>
             </a>
             <a href="#" class="nav-item" onclick="showPage('result-page')">
                 <i class="fas fa-chart-line"></i>
-                <span>Resultado</span>
+                <span data-translate="result">Resultado</span>
             </a>
-            <a href="#" class="nav-item" onclick="showPage('history-page')">
-                <i class="fas fa-history"></i>
-                <span>Histórico</span>
+            <a href="#" class="nav-item" onclick="showPage('patients-page')">
+                <i class="fas fa-users"></i>
+                <span>Pacientes</span>
             </a>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Variáveis globais
+        // ===== VARIÁVEIS GLOBAIS =====
         let currentImc = 0;
         let currentWeight = 0;
         let currentHeight = 0;
         let currentAgeGroup = 'child1';
         let currentGender = 'male';
-        let currentEditIndex = -1;
-        let currentSort = 'date';
+        let currentEditId = null;
+        let currentSort = 'name';
+        let currentLanguage = 'pt';
+        let currentUser = null;
+        let imcChart = null;
+        let weightChart = null;
+        let currentPatientId = null;
+        let currentPatientForNewRecord = null;
 
-        // Inicialização
+        // ===== TRADUÇÕES =====
+        const translations = {
+            pt: {
+                app_title: "IMC Saúde",
+                app_subtitle: "Calculadora de Índice de Massa Corporal",
+                home_title: "Calculadora de IMC",
+                home_description: "O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa está no peso ideal.",
+                calculate_imc: "Calcular IMC",
+                view_history: "Ver Histórico",
+                login_google: "Entrar com Google",
+                login_microsoft: "Entrar com Microsoft",
+                logout: "Sair",
+                calculation_info: "Informações para Cálculo",
+                age_group: "Faixa Etária",
+                age_0_5: "0-5 anos",
+                age_5_10: "5-10 anos",
+                age_10_19: "10-19 anos",
+                age_20_59: "20-59 anos",
+                age_60_plus: "60+ anos",
+                gender: "Gênero",
+                male: "Masculino",
+                female: "Feminino",
+                weight: "Peso (kg)",
+                height: "Altura (cm)",
+                result_title: "Resultado do IMC",
+                healthy: "Saudável",
+                ideal_weight: "Peso ideal para sua altura",
+                severe_thinness: "Magreza grave",
+                moderate_thinness: "Magreza moderada",
+                mild_thinness: "Magreza leve",
+                overweight: "Sobrepeso",
+                obesity_1: "Obesidade Grau I",
+                obesity_2: "Obesidade Grau II",
+                obesity_3: "Obesidade Grau III",
+                save_result: "Salvar Resultado",
+                calculate_again: "Calcular Novamente",
+                history_title: "Histórico de Cálculos",
+                search_placeholder: "Buscar por nome ou data...",
+                sort_date: "Data",
+                sort_name: "Nome",
+                no_history: "Nenhum cálculo salvo ainda",
+                save_name: "Nome (opcional)",
+                save_date: "Data",
+                save: "Salvar",
+                cancel: "Cancelar",
+                edit_result: "Editar Resultado",
+                save_changes: "Salvar Alterações",
+                home: "Início",
+                calculate: "Calcular",
+                result: "Resultado",
+                history: "Histórico"
+            },
+            en: {
+                app_title: "Health BMI",
+                app_subtitle: "Body Mass Index Calculator",
+                home_title: "BMI Calculator",
+                home_description: "The Body Mass Index (BMI) is an international measurement used to calculate if a person is at their ideal weight.",
+                calculate_imc: "Calculate BMI",
+                view_history: "View History",
+                login_google: "Sign in with Google",
+                login_microsoft: "Sign in with Microsoft",
+                logout: "Logout",
+                calculation_info: "Calculation Information",
+                age_group: "Age Group",
+                age_0_5: "0-5 years",
+                age_5_10: "5-10 years",
+                age_10_19: "10-19 years",
+                age_20_59: "20-59 years",
+                age_60_plus: "60+ years",
+                gender: "Gender",
+                male: "Male",
+                female: "Female",
+                weight: "Weight (kg)",
+                height: "Height (cm)",
+                result_title: "BMI Result",
+                healthy: "Healthy",
+                ideal_weight: "Ideal weight for your height",
+                severe_thinness: "Severe thinness",
+                moderate_thinness: "Moderate thinness",
+                mild_thinness: "Mild thinness",
+                overweight: "Overweight",
+                obesity_1: "Obesity Class I",
+                obesity_2: "Obesity Class II",
+                obesity_3: "Obesity Class III",
+                save_result: "Save Result",
+                calculate_again: "Calculate Again",
+                history_title: "Calculation History",
+                search_placeholder: "Search by name or date...",
+                sort_date: "Date",
+                sort_name: "Name",
+                no_history: "No saved calculations yet",
+                save_name: "Name (optional)",
+                save_date: "Date",
+                save: "Save",
+                cancel: "Cancel",
+                edit_result: "Edit Result",
+                save_changes: "Save Changes",
+                home: "Home",
+                calculate: "Calculate",
+                result: "Result",
+                history: "History"
+            },
+            es: {
+                app_title: "Salud IMC",
+                app_subtitle: "Calculadora de Índice de Masa Corporal",
+                home_title: "Calculadora de IMC",
+                home_description: "El Índice de Masa Corporal (IMC) es una medida internacional utilizada para calcular si una persona está en su peso ideal.",
+                calculate_imc: "Calcular IMC",
+                view_history: "Ver Historial",
+                login_google: "Iniciar con Google",
+                login_microsoft: "Iniciar con Microsoft",
+                logout: "Salir",
+                calculation_info: "Información para Cálculo",
+                age_group: "Grupo de Edad",
+                age_0_5: "0-5 años",
+                age_5_10: "5-10 años",
+                age_10_19: "10-19 años",
+                age_20_59: "20-59 años",
+                age_60_plus: "60+ años",
+                gender: "Género",
+                male: "Masculino",
+                female: "Femenino",
+                weight: "Peso (kg)",
+                height: "Altura (cm)",
+                result_title: "Resultado del IMC",
+                healthy: "Saludable",
+                ideal_weight: "Peso ideal para su altura",
+                severe_thinness: "Delgadez severa",
+                moderate_thinness: "Delgadez moderada",
+                mild_thinness: "Delgadez leve",
+                overweight: "Sobrepeso",
+                obesity_1: "Obesidad Grado I",
+                obesity_2: "Obesidad Grado II",
+                obesity_3: "Obesidad Grado III",
+                save_result: "Guardar Resultado",
+                calculate_again: "Calcular de Nuevo",
+                history_title: "Historial de Cálculos",
+                search_placeholder: "Buscar por nombre o fecha...",
+                sort_date: "Fecha",
+                sort_name: "Nombre",
+                no_history: "Aún no hay cálculos guardados",
+                save_name: "Nombre (opcional)",
+                save_date: "Fecha",
+                save: "Guardar",
+                cancel: "Cancelar",
+                edit_result: "Editar Resultado",
+                save_changes: "Guardar Cambios",
+                home: "Inicio",
+                calculate: "Calcular",
+                result: "Resultado",
+                history: "Historial"
+            }
+        };
+
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function () {
             // Configurar data atual no modal de salvamento
             document.getElementById('save-date').valueAsDate = new Date();
@@ -921,15 +1295,101 @@
                     document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentSort = this.getAttribute('data-sort');
-                    loadHistory();
+                    loadPatients();
                 });
             });
 
-            // Carregar histórico se existir
-            loadHistory();
+            // Configurar seleção de idioma
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    currentLanguage = this.getAttribute('data-lang');
+                    applyTranslations(currentLanguage);
+                });
+            });
+
+            // Verificar se há usuário logado
+            const savedUser = localStorage.getItem('imcUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUserProfile();
+            }
+
+            // Carregar pacientes se existir
+            loadPatients();
         });
 
-        // Função para mostrar páginas
+        // ===== TRADUÇÃO =====
+        function applyTranslations(lang) {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                    
+                    // Para placeholders de input
+                    if (element.placeholder) {
+                        element.placeholder = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        // ===== AUTENTICAÇÃO SOCIAL =====
+        function loginWithGoogle() {
+            // Simulação de login com Google
+            currentUser = {
+                name: "Usuário Google",
+                email: "user.google@example.com",
+                avatar: "G",
+                provider: "google"
+            };
+            
+            localStorage.setItem('imcUser', JSON.stringify(currentUser));
+            updateUserProfile();
+            
+            alert(translations[currentLanguage].login_google + " (simulado)");
+        }
+
+        function loginWithMicrosoft() {
+            // Simulação de login com Microsoft
+            currentUser = {
+                name: "Usuário Microsoft",
+                email: "user.microsoft@example.com",
+                avatar: "M",
+                provider: "microsoft"
+            };
+            
+            localStorage.setItem('imcUser', JSON.stringify(currentUser));
+            updateUserProfile();
+            
+            alert(translations[currentLanguage].login_microsoft + " (simulado)");
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('imcUser');
+            updateUserProfile();
+        }
+
+        function updateUserProfile() {
+            const socialLoginSection = document.getElementById('social-login-section');
+            const userProfileSection = document.getElementById('user-profile');
+            
+            if (currentUser) {
+                socialLoginSection.style.display = 'none';
+                userProfileSection.style.display = 'flex';
+                document.getElementById('user-avatar').textContent = currentUser.avatar;
+                document.getElementById('user-name').textContent = currentUser.name;
+                document.getElementById('user-email').textContent = currentUser.email;
+            } else {
+                socialLoginSection.style.display = 'flex';
+                userProfileSection.style.display = 'none';
+            }
+        }
+
+        // ===== FUNÇÕES DE PÁGINAS =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -941,15 +1401,21 @@
                 document.querySelector('.nav-item:nth-child(1)').classList.add('active');
             } else if (pageId === 'calculate-page') {
                 document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+                // Se estamos vindo de um paciente específico, preencher os dados
+                if (currentPatientForNewRecord) {
+                    document.querySelector(`.age-option[data-age-group="${currentPatientForNewRecord.ageGroup}"]`).click();
+                    document.querySelector(`.gender-option[data-gender="${currentPatientForNewRecord.gender}"]`).click();
+                }
             } else if (pageId === 'result-page') {
                 document.querySelector('.nav-item:nth-child(3)').classList.add('active');
-            } else if (pageId === 'history-page') {
+            } else if (pageId === 'patients-page') {
                 document.querySelector('.nav-item:nth-child(4)').classList.add('active');
-                loadHistory();
+                loadPatients();
             }
+            // Para a página de histórico do paciente, não destacamos nenhum item do menu inferior
         }
 
-        // Função para calcular o IMC
+        // ===== CÁLCULO DE IMC =====
         function calculateIMC() {
             const weight = parseFloat(document.getElementById('weight').value);
             const height = parseFloat(document.getElementById('height').value) / 100; // Converter para metros
@@ -970,30 +1436,39 @@
             // Determinar categoria
             let category = '';
             let categoryClass = '';
+            let categoryKey = '';
 
             if (currentImc <= 15.9) {
-                category = 'Magreza grave';
+                category = translations[currentLanguage].severe_thinness;
+                categoryKey = 'severe_thinness';
                 categoryClass = 'category-magreza-grave';
             } else if (currentImc <= 16.9) {
-                category = 'Magreza moderada';
+                category = translations[currentLanguage].moderate_thinness;
+                categoryKey = 'moderate_thinness';
                 categoryClass = 'category-magreza-moderada';
             } else if (currentImc <= 18.4) {
-                category = 'Magreza leve';
+                category = translations[currentLanguage].mild_thinness;
+                categoryKey = 'mild_thinness';
                 categoryClass = 'category-magreza-leve';
             } else if (currentImc <= 24.9) {
-                category = 'Saudável';
+                category = translations[currentLanguage].healthy;
+                categoryKey = 'healthy';
                 categoryClass = 'category-saudavel';
             } else if (currentImc <= 29.9) {
-                category = 'Sobrepeso';
+                category = translations[currentLanguage].overweight;
+                categoryKey = 'overweight';
                 categoryClass = 'category-sobrepeso';
             } else if (currentImc <= 34.9) {
-                category = 'Obesidade Grau I';
+                category = translations[currentLanguage].obesity_1;
+                categoryKey = 'obesity_1';
                 categoryClass = 'category-obesidade-1';
             } else if (currentImc <= 39.9) {
-                category = 'Obesidade Grau II';
+                category = translations[currentLanguage].obesity_2;
+                categoryKey = 'obesity_2';
                 categoryClass = 'category-obesidade-2';
             } else {
-                category = 'Obesidade Grau III';
+                category = translations[currentLanguage].obesity_3;
+                categoryKey = 'obesity_3';
                 categoryClass = 'category-obesidade-3';
             }
 
@@ -1030,236 +1505,354 @@
             showPage('result-page');
         }
 
-        // Função para abrir o modal de salvamento
+        // ===== MODAIS =====
         function openSaveModal() {
+            // Se estamos adicionando um novo registro para um paciente existente
+            if (currentPatientForNewRecord) {
+                document.getElementById('save-name').value = currentPatientForNewRecord.name;
+                document.getElementById('save-name').disabled = true;
+            } else {
+                document.getElementById('save-name').disabled = false;
+            }
             document.getElementById('save-modal').style.display = 'flex';
         }
 
-        // Função para fechar o modal de salvamento
         function closeSaveModal() {
             document.getElementById('save-modal').style.display = 'none';
         }
 
-        // Função para abrir o modal de edição
-        function openEditModal(index) {
-            const history = JSON.parse(localStorage.getItem('imcHistory')) || [];
-            const item = history[index];
-
-            document.getElementById('edit-name').value = item.name;
-            document.getElementById('edit-date').value = item.date;
-            document.getElementById('edit-weight').value = item.weight;
-            document.getElementById('edit-height').value = item.height;
-
-            currentEditIndex = index;
-            document.getElementById('edit-modal').style.display = 'flex';
-        }
-
-        // Função para fechar o modal de edição
-        function closeEditModal() {
-            document.getElementById('edit-modal').style.display = 'none';
-            currentEditIndex = -1;
-        }
-
-        // Função para salvar resultado no histórico
+        // ===== SALVAMENTO E HISTÓRICO =====
         function saveResult() {
-            const name = document.getElementById('save-name').value || 'Anônimo';
+            const name = document.getElementById('save-name').value;
             const date = document.getElementById('save-date').value;
 
-            // Obter dados atuais do histórico
-            let history = JSON.parse(localStorage.getItem('imcHistory')) || [];
+            if (!name) {
+                alert('Por favor, informe o nome do paciente.');
+                return;
+            }
 
-            // Adicionar novo item
-            history.push({
-                name: name,
-                date: date,
-                imc: currentImc.toFixed(1),
-                weight: currentWeight,
-                height: currentHeight * 100, // Converter para cm
-                category: document.getElementById('imc-category').textContent,
-                ageGroup: currentAgeGroup,
-                gender: currentGender
-            });
+            // Obter dados atuais do armazenamento
+            let patients = JSON.parse(localStorage.getItem('imcPatients')) || {};
+            
+            // Se o paciente já existe, adicionar um novo registro
+            if (patients[name]) {
+                patients[name].records.push({
+                    date: date,
+                    imc: currentImc.toFixed(1),
+                    weight: currentWeight,
+                    height: currentHeight * 100, // Converter para cm
+                    category: document.getElementById('imc-category').textContent
+                });
+            } else {
+                // Se é um novo paciente, criar uma nova entrada
+                patients[name] = {
+                    ageGroup: currentAgeGroup,
+                    gender: currentGender,
+                    records: [{
+                        date: date,
+                        imc: currentImc.toFixed(1),
+                        weight: currentWeight,
+                        height: currentHeight * 100, // Converter para cm
+                        category: document.getElementById('imc-category').textContent
+                    }]
+                };
+            }
 
             // Salvar no localStorage
-            localStorage.setItem('imcHistory', JSON.stringify(history));
+            localStorage.setItem('imcPatients', JSON.stringify(patients));
 
             // Fechar modal
             closeSaveModal();
 
+            // Limpar paciente atual se estivermos adicionando um novo registro
+            currentPatientForNewRecord = null;
+
             // Mostrar mensagem de sucesso
-            alert('Resultado salvo com sucesso!');
+            alert(translations[currentLanguage].save_result + '!');
 
             // Limpar campo de nome
             document.getElementById('save-name').value = '';
+            document.getElementById('save-name').disabled = false;
         }
 
-        // Função para atualizar resultado no histórico
-        function updateResult() {
-            const name = document.getElementById('edit-name').value;
-            const date = document.getElementById('edit-date').value;
-            const weight = parseFloat(document.getElementById('edit-weight').value);
-            const height = parseFloat(document.getElementById('edit-height').value);
-
-            if (isNaN(weight) || isNaN(height) || height <= 0) {
-                alert('Por favor, insira valores válidos para peso e altura.');
-                return;
-            }
-
-            // Recalcular IMC
-            const imc = weight / ((height / 100) * (height / 100));
-            let category = '';
-
-            if (imc <= 15.9) category = 'Magreza grave';
-            else if (imc <= 16.9) category = 'Magreza moderada';
-            else if (imc <= 18.4) category = 'Magreza leve';
-            else if (imc <= 24.9) category = 'Saudável';
-            else if (imc <= 29.9) category = 'Sobrepeso';
-            else if (imc <= 34.9) category = 'Obesidade Grau I';
-            else if (imc <= 39.9) category = 'Obesidade Grau II';
-            else category = 'Obesidade Grau III';
-
-            // Obter dados atuais do histórico
-            let history = JSON.parse(localStorage.getItem('imcHistory')) || [];
-
-            // Atualizar item
-            history[currentEditIndex] = {
-                name: name,
-                date: date,
-                imc: imc.toFixed(1),
-                weight: weight,
-                height: height,
-                category: category,
-                ageGroup: history[currentEditIndex].ageGroup,
-                gender: history[currentEditIndex].gender
-            };
-
-            // Salvar no localStorage
-            localStorage.setItem('imcHistory', JSON.stringify(history));
-
-            // Fechar modal
-            closeEditModal();
-
-            // Recarregar histórico
-            loadHistory();
-
-            // Mostrar mensagem de sucesso
-            alert('Resultado atualizado com sucesso!');
-        }
-
-        // Função para excluir resultado do histórico
-        function deleteResult(index) {
-            if (!confirm('Tem certeza que deseja excluir este resultado?')) {
-                return;
-            }
-
-            // Obter dados atuais do histórico
-            let history = JSON.parse(localStorage.getItem('imcHistory')) || [];
-
-            // Remover item
-            history.splice(index, 1);
-
-            // Salvar no localStorage
-            localStorage.setItem('imcHistory', JSON.stringify(history));
-
-            // Recarregar histórico
-            loadHistory();
-
-            // Mostrar mensagem de sucesso
-            alert('Resultado excluído com sucesso!');
-        }
-
-        // Função para buscar no histórico
-        function searchHistory() {
+        function searchPatients() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            loadHistory(searchTerm);
+            loadPatients(searchTerm);
         }
 
-        // Função para carregar histórico
-        function loadHistory(searchTerm = '') {
-            const history = JSON.parse(localStorage.getItem('imcHistory')) || [];
-            const historyList = document.getElementById('history-list');
+        function loadPatients(searchTerm = '') {
+            const patients = JSON.parse(localStorage.getItem('imcPatients')) || {};
+            const patientsList = document.getElementById('patients-list');
+
+            // Converter objeto em array para facilitar a manipulação
+            let patientsArray = Object.entries(patients).map(([name, data]) => {
+                return {
+                    name: name,
+                    ...data,
+                    // Ordenar registros por data e pegar o mais recente
+                    latestRecord: data.records.sort((a, b) => new Date(b.date) - new Date(a.date))[0]
+                };
+            });
 
             // Filtrar resultados se houver termo de busca
-            let filteredHistory = history;
             if (searchTerm) {
-                filteredHistory = history.filter(item =>
-                    item.name.toLowerCase().includes(searchTerm) ||
-                    item.date.includes(searchTerm)
+                patientsArray = patientsArray.filter(patient =>
+                    patient.name.toLowerCase().includes(searchTerm)
                 );
             }
 
             // Ordenar resultados
             if (currentSort === 'date') {
-                filteredHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+                patientsArray.sort((a, b) => new Date(b.latestRecord.date) - new Date(a.latestRecord.date));
             } else if (currentSort === 'name') {
-                filteredHistory.sort((a, b) => a.name.localeCompare(b.name));
+                patientsArray.sort((a, b) => a.name.localeCompare(b.name));
             }
 
-            if (filteredHistory.length === 0) {
-                historyList.innerHTML = `
+            if (patientsArray.length === 0) {
+                patientsList.innerHTML = `
                     <div class="text-center py-4">
-                        <i class="fas fa-history fa-3x text-muted mb-3"></i>
-                        <p>${searchTerm ? 'Nenhum resultado encontrado' : 'Nenhum cálculo salvo ainda'}</p>
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <p>${searchTerm ? 'Nenhum paciente encontrado' : 'Nenhum paciente salvo ainda'}</p>
                     </div>
                 `;
                 return;
             }
 
             // Limpar lista
-            historyList.innerHTML = '';
+            patientsList.innerHTML = '';
 
-            // Adicionar itens do histórico
-            filteredHistory.forEach((item, index) => {
+            // Adicionar itens dos pacientes
+            patientsArray.forEach((patient) => {
                 let categoryClass = '';
 
-                if (item.category === 'Magreza grave') categoryClass = 'category-magreza-grave';
-                else if (item.category === 'Magreza moderada') categoryClass = 'category-magreza-moderada';
-                else if (item.category === 'Magreza leve') categoryClass = 'category-magreza-leve';
-                else if (item.category === 'Saudável') categoryClass = 'category-saudavel';
-                else if (item.category === 'Sobrepeso') categoryClass = 'category-sobrepeso';
-                else if (item.category === 'Obesidade Grau I') categoryClass = 'category-obesidade-1';
-                else if (item.category === 'Obesidade Grau II') categoryClass = 'category-obesidade-2';
-                else if (item.category === 'Obesidade Grau III') categoryClass = 'category-obesidade-3';
+                if (patient.latestRecord.category === translations[currentLanguage].severe_thinness) categoryClass = 'category-magreza-grave';
+                else if (patient.latestRecord.category === translations[currentLanguage].moderate_thinness) categoryClass = 'category-magreza-moderada';
+                else if (patient.latestRecord.category === translations[currentLanguage].mild_thinness) categoryClass = 'category-magreza-leve';
+                else if (patient.latestRecord.category === translations[currentLanguage].healthy) categoryClass = 'category-saudavel';
+                else if (patient.latestRecord.category === translations[currentLanguage].overweight) categoryClass = 'category-sobrepeso';
+                else if (patient.latestRecord.category === translations[currentLanguage].obesity_1) categoryClass = 'category-obesidade-1';
+                else if (patient.latestRecord.category === translations[currentLanguage].obesity_2) categoryClass = 'category-obesidade-2';
+                else if (patient.latestRecord.category === translations[currentLanguage].obesity_3) categoryClass = 'category-obesidade-3';
 
                 // Obter label da faixa etária
                 let ageGroupLabel = '';
-                if (item.ageGroup === 'child1') ageGroupLabel = '0-5 anos';
-                else if (item.ageGroup === 'child2') ageGroupLabel = '5-10 anos';
-                else if (item.ageGroup === 'teen') ageGroupLabel = '10-19 anos';
-                else if (item.ageGroup === 'adult') ageGroupLabel = '20-59 anos';
-                else if (item.ageGroup === 'senior') ageGroupLabel = '60+ anos';
+                if (patient.ageGroup === 'child1') ageGroupLabel = translations[currentLanguage].age_0_5;
+                else if (patient.ageGroup === 'child2') ageGroupLabel = translations[currentLanguage].age_5_10;
+                else if (patient.ageGroup === 'teen') ageGroupLabel = translations[currentLanguage].age_10_19;
+                else if (patient.ageGroup === 'adult') ageGroupLabel = translations[currentLanguage].age_20_59;
+                else if (patient.ageGroup === 'senior') ageGroupLabel = translations[currentLanguage].age_60_plus;
 
-                const historyItem = document.createElement('div');
-                historyItem.className = 'history-item';
-                historyItem.innerHTML = `
+                const genderLabel = patient.gender === 'male' ? translations[currentLanguage].male : translations[currentLanguage].female;
+
+                const patientItem = document.createElement('div');
+                patientItem.className = 'history-item';
+                patientItem.innerHTML = `
                     <div class="history-details">
-                        <div class="history-name">${item.name}</div>
-                        <div class="history-info">${ageGroupLabel}, ${item.gender === 'male' ? 'Masculino' : 'Feminino'}</div>
-                        <div class="history-info">${item.weight}kg, ${item.height}cm</div>
-                        <div class="history-date">${formatDate(item.date)}</div>
+                        <div class="history-name" onclick="viewPatientHistory('${patient.name}')">${patient.name}</div>
+                        <div class="history-info">${ageGroupLabel}, ${genderLabel}</div>
+                        <div class="history-info">${patient.latestRecord.weight}kg, ${patient.latestRecord.height}cm</div>
+                        <div class="history-date">${formatDate(patient.latestRecord.date)}</div>
                     </div>
                     <div class="d-flex align-items-center">
-                        <div class="history-imc">${item.imc}</div>
-                        <div class="history-category ${categoryClass}">${item.category}</div>
+                        <div class="history-imc">${patient.latestRecord.imc}</div>
+                        <div class="history-category ${categoryClass}">${patient.latestRecord.category}</div>
                     </div>
                     <div class="history-actions">
-                        <button class="history-action-btn" onclick="openEditModal(${index})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="history-action-btn" onclick="deleteResult(${index})">
+                        <button class="history-action-btn" onclick="deletePatient('${patient.name}')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 `;
 
-                historyList.appendChild(historyItem);
+                patientsList.appendChild(patientItem);
             });
         }
 
-        // Função para formatar data
+        function deletePatient(name) {
+            if (!confirm('Tem certeza que deseja excluir este paciente e todos os seus registros?')) {
+                return;
+            }
+
+            // Obter dados atuais dos pacientes
+            let patients = JSON.parse(localStorage.getItem('imcPatients')) || {};
+            
+            // Remover paciente
+            delete patients[name];
+
+            // Salvar no localStorage
+            localStorage.setItem('imcPatients', JSON.stringify(patients));
+
+            // Recarregar pacientes
+            loadPatients();
+
+            // Mostrar mensagem de sucesso
+            alert('Paciente excluído com sucesso!');
+        }
+
+        // ===== HISTÓRICO DO PACIENTE =====
+        function viewPatientHistory(name) {
+            currentPatientId = name;
+            showPage('patient-history-page');
+            loadPatientHistory(name);
+        }
+
+        function loadPatientHistory(name) {
+            const patients = JSON.parse(localStorage.getItem('imcPatients')) || {};
+            const patient = patients[name];
+            
+            if (!patient) {
+                alert('Paciente não encontrado!');
+                showPage('patients-page');
+                return;
+            }
+            
+            // Ordenar registros por data
+            patient.records.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Atualizar informações do paciente
+            document.getElementById('patient-name').textContent = `Histórico de ${name}`;
+            
+            // Obter label da faixa etária
+            let ageGroupLabel = '';
+            if (patient.ageGroup === 'child1') ageGroupLabel = translations[currentLanguage].age_0_5;
+            else if (patient.ageGroup === 'child2') ageGroupLabel = translations[currentLanguage].age_5_10;
+            else if (patient.ageGroup === 'teen') ageGroupLabel = translations[currentLanguage].age_10_19;
+            else if (patient.ageGroup === 'adult') ageGroupLabel = translations[currentLanguage].age_20_59;
+            else if (patient.ageGroup === 'senior') ageGroupLabel = translations[currentLanguage].age_60_plus;
+
+            const genderLabel = patient.gender === 'male' ? translations[currentLanguage].male : translations[currentLanguage].female;
+            
+            document.getElementById('patient-age').textContent = ageGroupLabel;
+            document.getElementById('patient-gender').textContent = genderLabel;
+            
+            // Último registro
+            const latestRecord = patient.records[patient.records.length - 1];
+            document.getElementById('patient-latest-imc').textContent = latestRecord.imc;
+            document.getElementById('patient-latest-weight').textContent = `${latestRecord.weight} kg`;
+            
+            // Salvar informações do paciente para adicionar novo registro
+            currentPatientForNewRecord = {
+                name: name,
+                ageGroup: patient.ageGroup,
+                gender: patient.gender
+            };
+            
+            // Preparar dados para os gráficos
+            const dates = patient.records.map(record => formatDate(record.date));
+            const imcs = patient.records.map(record => parseFloat(record.imc));
+            const weights = patient.records.map(record => parseFloat(record.weight));
+            
+            // Destruir gráficos existentes
+            if (imcChart) {
+                imcChart.destroy();
+            }
+            if (weightChart) {
+                weightChart.destroy();
+            }
+            
+            // Criar gráfico do IMC
+            const imcCtx = document.getElementById('imc-chart').getContext('2d');
+            imcChart = new Chart(imcCtx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'IMC',
+                        data: imcs,
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: '#4361ee',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Evolução do IMC'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `IMC: ${context.raw}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'IMC'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Criar gráfico do Peso
+            const weightCtx = document.getElementById('weight-chart').getContext('2d');
+            weightChart = new Chart(weightCtx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Peso (kg)',
+                        data: weights,
+                        borderColor: '#f72585',
+                        backgroundColor: 'rgba(247, 37, 133, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: '#f72585',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Evolução do Peso'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Peso: ${context.raw} kg`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: {
+                                display: true,
+                                text: 'Peso (kg)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function addNewRecordForPatient() {
+            if (currentPatientForNewRecord) {
+                showPage('calculate-page');
+            }
+        }
+
+        // ===== UTILITÁRIOS =====
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('pt-BR');
+            return date.toLocaleDateString(currentLanguage);
         }
     </script>
 </body>
