@@ -48,13 +48,13 @@ body {
 }
 
 /* ===== PÁGINAS E NAVEGAÇÃO ===== */
-.page {
+.pagina {
     display: none;
     padding: 20px;
     animation: fadeIn 0.4s ease;
 }
 
-.page.active {
+.pagina.ativo {
     display: block;
 }
 
@@ -63,14 +63,13 @@ body {
         opacity: 0;
         transform: translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.nav-bottom {
+.navegacao-inferior {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -84,7 +83,7 @@ body {
     border-radius: 20px 20px 0 0;
 }
 
-.nav-item {
+.item-navegacao {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -97,12 +96,12 @@ body {
     border-radius: 12px;
 }
 
-.nav-item.active {
+.item-navegacao.ativo {
     color: var(--primary);
     background-color: var(--primary-light);
 }
 
-.nav-item i {
+.item-navegacao i {
     font-size: 20px;
     margin-bottom: 4px;
 }
@@ -238,7 +237,7 @@ body {
 }
 
 /* ===== RESULTADOS E VISUALIZAÇÃO ===== */
-.result-container {
+.resultado-container {
     text-align: center;
     padding: 20px;
     background: linear-gradient(135deg, #f5f7ff 0%, #e8eeff 100%);
@@ -246,14 +245,14 @@ body {
     margin: 15px 0;
 }
 
-.imc-value {
+.valor-imc {
     font-size: 42px;
     font-weight: 800;
     color: var(--primary);
     margin: 10px 0;
 }
 
-.imc-category {
+.categoria-imc {
     font-size: 20px;
     font-weight: 700;
     padding: 10px 20px;
@@ -262,54 +261,54 @@ body {
     margin-bottom: 15px;
 }
 
-.category-magreza-grave {
+.categoria-magreza-grave {
     background: linear-gradient(135deg, #ff6b6b 0%, #ff9a9e 100%);
     color: white;
 }
 
-.category-magreza-moderada {
+.categoria-magreza-moderada {
     background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
     color: #d42a2f;
 }
 
-.category-magreza-leve {
+.categoria-magreza-leve {
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     color: #e67e22;
 }
 
-.category-saudavel {
+.categoria-saudavel {
     background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
     color: #1a6fd6;
 }
 
-.category-sobrepeso {
+.categoria-sobrepeso {
     background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     color: #e67e22;
 }
 
-.category-obesidade-1 {
+.categoria-obesidade-1 {
     background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
     color: #c23616;
 }
 
-.category-obesidade-2 {
+.categoria-obesidade-2 {
     background: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
     color: #c23616;
 }
 
-.category-obesidade-3 {
+.categoria-obesidade-3 {
     background: linear-gradient(135deg, #ff4d4d 0%, #ff3838 100%);
     color: white;
 }
 
-.imc-scale {
+.escala-imc {
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin: 20px 0;
 }
 
-.scale-item {
+.item-escala {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -319,52 +318,52 @@ body {
     transition: all 0.3s;
 }
 
-.scale-item.active {
+.item-escala.ativo {
     transform: scale(1.02);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.scale-item.magreza-grave {
+.item-escala.magreza-grave {
     background-color: #ffebee;
     color: #d32f2f;
 }
 
-.scale-item.magreza-moderada {
+.item-escala.magreza-moderada {
     background-color: #fff3e0;
     color: #f57c00;
 }
 
-.scale-item.magreza-leve {
+.item-escala.magreza-leve {
     background-color: #fff8e1;
     color: #ffa000;
 }
 
-.scale-item.saudavel {
+.item-escala.saudavel {
     background-color: #e8f5e9;
     color: #388e3c;
 }
 
-.scale-item.sobrepeso {
+.item-escala.sobrepeso {
     background-color: #fff3e0;
     color: #f57c00;
 }
 
-.scale-item.obesidade-1 {
+.item-escala.obesidade-1 {
     background-color: #ffebee;
     color: #d32f2f;
 }
 
-.scale-item.obesidade-2 {
+.item-escala.obesidade-2 {
     background-color: #ffcdd2;
     color: #c62828;
 }
 
-.scale-item.obesidade-3 {
+.item-escala.obesidade-3 {
     background-color: #ff8a80;
     color: #b71c1c;
 }
 
-.weight-range {
+.faixa-peso {
     background: linear-gradient(135deg, #f5f7ff 0%, #e8eeff 100%);
     border-radius: 12px;
     padding: 15px;
@@ -372,21 +371,20 @@ body {
     text-align: center;
 }
 
-.weight-range-title {
+.titulo-faixa-peso {
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 10px;
 }
 
-.weight-range-value {
+.valor-faixa-peso {
     font-size: 20px;
     font-weight: 800;
     color: var(--primary);
 }
 
 /* ===== MODAIS ===== */
-.save-modal,
-.edit-modal {
+.modal-salvamento {
     position: fixed;
     top: 0;
     left: 0;
@@ -401,8 +399,7 @@ body {
     display: none;
 }
 
-.save-modal-content,
-.edit-modal-content {
+.conteudo-modal-salvamento {
     background-color: white;
     border-radius: 15px;
     padding: 25px;
@@ -412,7 +409,7 @@ body {
 }
 
 /* ===== HISTÓRICO ===== */
-.history-item {
+.item-historico {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -422,19 +419,19 @@ body {
     position: relative;
 }
 
-.history-item:hover {
+.item-historico:hover {
     background-color: #f5f7ff;
 }
 
-.history-item:last-child {
+.item-historico:last-child {
     border-bottom: none;
 }
 
-.history-details {
+.detalhes-historico {
     flex: 1;
 }
 
-.history-name {
+.nome-historico {
     font-weight: 700;
     color: var(--dark);
     margin-bottom: 5px;
@@ -442,37 +439,37 @@ body {
     color: var(--primary);
 }
 
-.history-info {
+.info-historico {
     font-size: 12px;
     color: var(--gray);
     margin-bottom: 3px;
 }
 
-.history-date {
+.data-historico {
     font-size: 12px;
     color: var(--gray);
 }
 
-.history-imc {
+.imc-historico {
     font-size: 18px;
     font-weight: 700;
     color: var(--primary);
     margin-right: 10px;
 }
 
-.history-category {
+.categoria-historico {
     font-size: 12px;
     padding: 4px 10px;
     border-radius: 10px;
     font-weight: 600;
 }
 
-.history-actions {
+.acoes-historico {
     display: flex;
     gap: 10px;
 }
 
-.history-action-btn {
+.botao-acao-historico {
     background: none;
     border: none;
     color: var(--gray);
@@ -481,16 +478,16 @@ body {
     transition: color 0.3s;
 }
 
-.history-action-btn:hover {
+.botao-acao-historico:hover {
     color: var(--primary);
 }
 
-.history-actions .history-action-btn:first-child {
+.acoes-historico .botao-acao-historico:first-child {
     margin-left: 8px;
 }
 
 /* ===== PÁGINA INICIAL ===== */
-.home-buttons {
+.botoes-inicio {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -498,14 +495,14 @@ body {
 }
 
 /* ===== PESQUISA E ORDENAÇÃO ===== */
-.search-container {
+.container-pesquisa {
     display: flex;
     align-items: center;
     gap: 5px;
     margin-bottom: 5%;
 }
 
-.search-container button {
+.container-pesquisa button {
     width: 50px;
     height: 50px;
     padding: 0;
@@ -514,17 +511,17 @@ body {
     align-items: center;
 }
 
-.search-input {
+.campo-pesquisa {
     flex: 1;
 }
 
-.sort-buttons {
+.botoes-ordenacao {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.sort-btn {
+.botao-ordenar {
     flex: 1;
     padding: 10px;
     border: 2px solid var(--primary);
@@ -536,25 +533,25 @@ body {
     transition: all 0.3s;
 }
 
-.sort-btn.active {
+.botao-ordenar.ativo {
     background: var(--primary);
     color: white;
 }
 
-.sort-btn:hover {
+.botao-ordenar:hover {
     background: var(--primary);
     color: white;
 }
 
 /* ===== SELEÇÃO DE IDADE E GÊNERO ===== */
-.age-group-selector {
+.seletor-idade {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin: 15px 0;
 }
 
-.age-option {
+.opcao-idade {
     padding: 15px 10px;
     background-color: #f5f7ff;
     border-radius: 12px;
@@ -564,26 +561,26 @@ body {
     border: 2px solid transparent;
 }
 
-.age-option.active {
+.opcao-idade.ativo {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     border-color: white;
     box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
 }
 
-.age-option i {
+.opcao-idade i {
     font-size: 24px;
     margin-bottom: 8px;
     display: block;
 }
 
-.gender-selector {
+.seletor-genero {
     display: flex;
     gap: 15px;
     margin: 15px 0;
 }
 
-.gender-option {
+.opcao-genero {
     flex: 1;
     padding: 15px;
     background-color: #f5f7ff;
@@ -594,38 +591,33 @@ body {
     border: 2px solid transparent;
 }
 
-.gender-option.active {
+.opcao-genero.ativo {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     border-color: white;
     box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
 }
 
-.gender-option i {
+.opcao-genero i {
     font-size: 24px;
     margin-bottom: 8px;
     display: block;
 }
 
 /* ===== BOTÕES ESPECÍFICOS ===== */
-#calculate-btn {
+#botao-calcular {
     margin-bottom: 10%;
 }
 
-/* ===== PÁGINA DE HISTÓRICO ===== */
-#card_historico {
-    margin-bottom: 15%;
-}
-
-/* ===== SELEÇÃO OF IDIOMA ===== */
-.language-selector {
+/* ===== SELEÇÃO DE IDIOMA ===== */
+.seletor-idioma {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin: 15px 0;
 }
 
-.language-option {
+.opcao-idioma {
     padding: 8px 15px;
     background-color: #f5f7ff;
     border-radius: 20px;
@@ -635,21 +627,21 @@ body {
     font-weight: 500;
 }
 
-.language-option.active {
+.opcao-idioma.ativo {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     border-color: white;
 }
 
 /* ===== LOGIN SOCIAL ===== */
-.social-login {
+.login-social {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 20px 0;
 }
 
-.user-profile {
+.perfil-usuario {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -659,7 +651,7 @@ body {
     border-radius: 10px;
 }
 
-.user-avatar {
+.avatar-usuario {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -672,28 +664,28 @@ body {
 }
 
 /* ===== PÁGINA DE HISTÓRICO DO PACIENTE ===== */
-.patient-header {
+.cabecalho-paciente {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
-.chart-container {
+.container-grafico {
     position: relative;
     height: 300px;
     width: 100%;
     margin-bottom: 30px;
 }
 
-.patient-info {
+.informacoes-paciente {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
-.info-item {
+.item-informacao {
     flex: 1;
     min-width: 150px;
     margin: 10px;
@@ -703,18 +695,18 @@ body {
     text-align: center;
 }
 
-.info-value {
+.valor-informacao {
     font-size: 20px;
     font-weight: 700;
     color: var(--primary);
 }
 
-.info-label {
+.rotulo-informacao {
     font-size: 14px;
     color: var(--gray);
 }
 
-.patient-actions {
+.acoes-paciente {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
@@ -726,31 +718,31 @@ body {
         font-size: 22px;
     }
 
-    .imc-value {
+    .valor-imc {
         font-size: 36px;
     }
 
-    .imc-category {
+    .categoria-imc {
         font-size: 18px;
     }
 
-    .age-group-selector {
+    .seletor-idade {
         grid-template-columns: 1fr;
     }
 
-    .gender-selector {
+    .seletor-genero {
         flex-direction: column;
     }
 
-    .patient-info {
+    .informacoes-paciente {
         flex-direction: column;
     }
 
-    .info-item {
+    .item-informacao {
         min-width: 100%;
     }
 
-    .patient-actions {
+    .acoes-paciente {
         flex-direction: column;
     }
 }

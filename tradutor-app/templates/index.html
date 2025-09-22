@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tradutor PT-EN</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4285f4;
+            --secondary-color: #34a853;
+            --accent-color: #ea4335;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .app-container {
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .app-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .app-body {
+            padding: 30px;
+        }
+        
+        .language-card {
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: none;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .language-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .language-card .card-header {
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .text-area {
+            border: none;
+            resize: none;
+            width: 100%;
+            min-height: 200px;
+            padding: 20px;
+            font-size: 18px;
+            background: #f8f9fa;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .text-area:focus {
+            outline: none;
+            background: #f1f3f5;
+        }
+        
+        .btn-translate {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-translate:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #555;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .language-select {
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        .char-count {
+            text-align: right;
+            color: #6c757d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="app-header">
+            <h1><i class="fas fa-language me-2"></i>Tradutor PT-EN</h1>
+            <p class="mb-0">Traduza textos do Português para o Inglês instantaneamente</p>
+        </div>
+        
+        <div class="app-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card language-card">
+                        <div class="card-header">
+                            <span>Português</span>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-secondary" id="clearInput">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" id="speakInput">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea class="text-area" id="inputText" placeholder="Digite o texto em português..."></textarea>
+                        <div class="char-count">
+                            <span id="charCount">0</span> caracteres
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card language-card">
+                        <div class="card-header">
+                            <span>Inglês</span>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-outline-secondary" id="copyOutput">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" id="speakOutput">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-area" id="outputText"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-translate" id="translateBtn">
+                    <i class="fas fa-arrow-down me-2"></i>Traduzir<i class="fas fa-arrow-down ms-2"></i>
+                </button>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn" title="Limpar tudo" id="clearAll">
+                    <i class="fas fa-broom"></i>
+                </button>
+                <button class="action-btn" title="Trocar idiomas" id="swapLanguages">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                <button class="action-btn" title="Histórico" id="showHistory">
+                    <i class="fas fa-history"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputText = document.getElementById('inputText');
+            const outputText = document.getElementById('outputText');
+            const translateBtn = document.getElementById('translateBtn');
+            const clearInput = document.getElementById('clearInput');
+            const clearAll = document.getElementById('clearAll');
+            const copyOutput = document.getElementById('copyOutput');
+            const speakInput = document.getElementById('speakInput');
+            const speakOutput = document.getElementById('speakOutput');
+            const swapLanguages = document.getElementById('swapLanguages');
+            const charCount = document.getElementById('charCount');
+            const showHistory = document.getElementById('showHistory');
+            
+            // Atualizar contador de caracteres
+            inputText.addEventListener('input', function() {
+                charCount.textContent = inputText.value.length;
+            });
+            
+            // Função para traduzir texto
+            async function translateText(text) {
+                try {
+                    const response = await fetch('/translate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            text: text,
+                            from: 'pt',
+                            to: 'en'
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Erro na tradução');
+                    }
+                    
+                    const data = await response.json();
+                    return data.translatedText;
+                } catch (error) {
+                    console.error('Erro:', error);
+                    return 'Erro na tradução. Tente novamente.';
+                }
+            }
+            
+            // Evento de clique no botão de traduzir
+            translateBtn.addEventListener('click', async function() {
+                const text = inputText.value.trim();
+                if (!text) return;
+                
+                // Mostrar indicador de carregamento
+                outputText.innerHTML = '<div class="text-center py-4"><div class="spinner-border text-primary" role="status"></div><p class="mt-2">Traduzindo...</p></div>';
+                
+                const translated = await translateText(text);
+                outputText.textContent = translated;
+                
+                // Efeito visual
+                outputText.classList.add('pulse');
+                setTimeout(() => outputText.classList.remove('pulse'), 500);
+                
+                // Salvar no histórico
+                saveToHistory(text, translated);
+            });
+            
+            // Limpar campo de entrada
+            clearInput.addEventListener('click', function() {
+                inputText.value = '';
+                charCount.textContent = '0';
+                inputText.focus();
+            });
+            
+            // Limpar tudo
+            clearAll.addEventListener('click', function() {
+                inputText.value = '';
+                outputText.textContent = '';
+                charCount.textContent = '0';
+                inputText.focus();
+            });
+            
+            // Copiar texto traduzido
+            copyOutput.addEventListener('click', function() {
+                if (outputText.textContent) {
+                    navigator.clipboard.writeText(outputText.textContent)
+                        .then(() => {
+                            // Feedback visual
+                            copyOutput.innerHTML = '<i class="fas fa-check"></i>';
+                            setTimeout(() => {
+                                copyOutput.innerHTML = '<i class="fas fa-copy"></i>';
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Erro ao copiar texto: ', err);
+                        });
+                }
+            });
+            
+            // Falar texto de entrada
+            speakInput.addEventListener('click', function() {
+                const text = inputText.value;
+                if (text) {
+                    const speech = new SpeechSynthesisUtterance(text);
+                    speech.lang = 'pt-BR';
+                    speech.rate = 0.9;
+                    window.speechSynthesis.speak(speech);
+                    
+                    // Efeito visual
+                    speakInput.innerHTML = '<i class="fas fa-volume-off"></i>';
+                    setTimeout(() => {
+                        speakInput.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    }, 2000);
+                }
+            });
+            
+            // Falar texto traduzido
+            speakOutput.addEventListener('click', function() {
+                const text = outputText.textContent;
+                if (text) {
+                    const speech = new SpeechSynthesisUtterance(text);
+                    speech.lang = 'en-US';
+                    speech.rate = 0.9;
+                    window.speechSynthesis.speak(speech);
+                    
+                    // Efeito visual
+                    speakOutput.innerHTML = '<i class="fas fa-volume-off"></i>';
+                    setTimeout(() => {
+                        speakOutput.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    }, 2000);
+                }
+            });
+            
+            // Trocar idiomas (aparentemente)
+            swapLanguages.addEventListener('click', function() {
+                const input = inputText.value;
+                const output = outputText.textContent;
+                
+                if (input && output) {
+                    inputText.value = output;
+                    outputText.textContent = input;
+                    charCount.textContent = output.length;
+                    
+                    // Efeito visual
+                    inputText.classList.add('pulse');
+                    outputText.classList.add('pulse');
+                    setTimeout(() => {
+                        inputText.classList.remove('pulse');
+                        outputText.classList.remove('pulse');
+                    }, 500);
+                }
+            });
+            
+            // Salvar no histórico
+            function saveToHistory(original, translated) {
+                let history = JSON.parse(localStorage.getItem('translationHistory')) || [];
+                
+                history.unshift({
+                    original: original,
+                    translated: translated,
+                    timestamp: new Date().toISOString()
+                });
+                
+                // Manter apenas os últimos 50 itens
+                if (history.length > 50) {
+                    history = history.slice(0, 50);
+                }
+                
+                localStorage.setItem('translationHistory', JSON.stringify(history));
+            }
+            
+            // Mostrar histórico
+            showHistory.addEventListener('click', function() {
+                alert('Funcionalidade de histórico será implementada em breve!');
+            });
+            
+            // Permitir traduzir com Ctrl+Enter
+            inputText.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    translateBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

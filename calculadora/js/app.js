@@ -1,88 +1,88 @@
 // ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', function () {
     // Configurar data atual no modal de salvamento
-    document.getElementById('save-date').valueAsDate = new Date();
+    document.getElementById('data-salvamento').valueAsDate = new Date();
 
     // Adicionar evento de clique ao botão de calcular
-    document.getElementById('calculate-btn').addEventListener('click', calculateIMC);
+    document.getElementById('botao-calcular').addEventListener('click', calcularIMC);
 
     // Configurar seletores de idade
-    document.querySelectorAll('.age-option').forEach(option => {
-        option.addEventListener('click', function () {
-            document.querySelectorAll('.age-option').forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-            currentAgeGroup = this.getAttribute('data-age-group');
+    document.querySelectorAll('.opcao-idade').forEach(opcao => {
+        opcao.addEventListener('click', function () {
+            document.querySelectorAll('.opcao-idade').forEach(opt => opt.classList.remove('ativo'));
+            this.classList.add('ativo');
+            grupoIdadeAtual = this.getAttribute('dados-grupo-idade');
         });
     });
 
     // Configurar seletores de gênero
-    document.querySelectorAll('.gender-option').forEach(option => {
-        option.addEventListener('click', function () {
-            document.querySelectorAll('.gender-option').forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-            currentGender = this.getAttribute('data-gender');
+    document.querySelectorAll('.opcao-genero').forEach(opcao => {
+        opcao.addEventListener('click', function () {
+            document.querySelectorAll('.opcao-genero').forEach(opt => opt.classList.remove('ativo'));
+            this.classList.add('ativo');
+            generoAtual = this.getAttribute('dados-genero');
         });
     });
 
     // Configurar botões de ordenação
-    document.querySelectorAll('.sort-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentSort = this.getAttribute('data-sort');
-            loadPatients();
+    document.querySelectorAll('.botao-ordenar').forEach(botao => {
+        botao.addEventListener('click', function () {
+            document.querySelectorAll('.botao-ordenar').forEach(b => b.classList.remove('ativo'));
+            this.classList.add('ativo');
+            ordenacaoAtual = this.getAttribute('dados-ordenacao');
+            carregarPacientes();
         });
     });
 
     // Configurar seleção de idioma
-    document.querySelectorAll('.language-option').forEach(option => {
-        option.addEventListener('click', function () {
-            document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-            currentLanguage = this.getAttribute('data-lang');
-            applyTranslations(currentLanguage);
+    document.querySelectorAll('.opcao-idioma').forEach(opcao => {
+        opcao.addEventListener('click', function () {
+            document.querySelectorAll('.opcao-idioma').forEach(opt => opt.classList.remove('ativo'));
+            this.classList.add('ativo');
+            idiomaAtual = this.getAttribute('dados-idioma');
+            aplicarTraducoes(idiomaAtual);
         });
     });
 
     // Verificar se há usuário logado
-    const savedUser = localStorage.getItem('imcUser');
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        updateUserProfile();
+    const usuarioSalvo = localStorage.getItem('usuarioIMC');
+    if (usuarioSalvo) {
+        usuarioAtual = JSON.parse(usuarioSalvo);
+        atualizarPerfilUsuario();
     }
 
     // Configurar eventos de navegação
-    document.getElementById('nav-home').addEventListener('click', () => showPage('home-page'));
-    document.getElementById('nav-calculate').addEventListener('click', () => showPage('calculate-page'));
-    document.getElementById('nav-result').addEventListener('click', () => showPage('result-page'));
-    document.getElementById('nav-patients').addEventListener('click', () => showPage('patients-page'));
+    document.getElementById('navegacao-inicio').addEventListener('click', () => mostrarPagina('pagina-inicial'));
+    document.getElementById('navegacao-calcular').addEventListener('click', () => mostrarPagina('pagina-calculo'));
+    document.getElementById('navegacao-resultado').addEventListener('click', () => mostrarPagina('pagina-resultado'));
+    document.getElementById('navegacao-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));
 
     // Configurar botões da página inicial
-    document.getElementById('calculate-page-btn').addEventListener('click', () => showPage('calculate-page'));
-    document.getElementById('patients-page-btn').addEventListener('click', () => showPage('patients-page'));
+    document.getElementById('botao-ir-calcular').addEventListener('click', () => mostrarPagina('pagina-calculo'));
+    document.getElementById('botao-ir-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));
 
     // Configurar botões de autenticação
-    document.getElementById('google-login-btn').addEventListener('click', loginWithGoogle);
-    document.getElementById('microsoft-login-btn').addEventListener('click', loginWithMicrosoft);
-    document.getElementById('logout-btn').addEventListener('click', logout);
+    document.getElementById('botao-login-google').addEventListener('click', loginComGoogle);
+    document.getElementById('botao-login-microsoft').addEventListener('click', loginComMicrosoft);
+    document.getElementById('botao-logout').addEventListener('click', logout);
 
     // Configurar botões da página de resultados
-    document.getElementById('save-result-btn').addEventListener('click', openSaveModal);
-    document.getElementById('calculate-again-btn').addEventListener('click', () => showPage('calculate-page'));
+    document.getElementById('botao-salvar-resultado').addEventListener('click', abrirModalSalvamento);
+    document.getElementById('botao-calcular-novamente').addEventListener('click', () => mostrarPagina('pagina-calculo'));
 
     // Configurar botões do modal de salvamento
-    document.getElementById('save-confirm-btn').addEventListener('click', saveResult);
-    document.getElementById('save-cancel-btn').addEventListener('click', closeSaveModal);
+    document.getElementById('botao-confirmar-salvamento').addEventListener('click', salvarResultado);
+    document.getElementById('botao-cancelar-salvamento').addEventListener('click', fecharModalSalvamento);
 
     // Configurar botão de pesquisa
-    document.getElementById('search-btn').addEventListener('click', searchPatients);
+    document.getElementById('botao-pesquisar').addEventListener('click', pesquisarPacientes);
 
     // Configurar botão de voltar para pacientes
-    document.getElementById('back-to-patients-btn').addEventListener('click', () => showPage('patients-page'));
+    document.getElementById('botao-voltar-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));
 
     // Configurar botão de adicionar novo registro
-    document.getElementById('add-record-btn').addEventListener('click', addNewRecordForPatient);
+    document.getElementById('botao-adicionar-registro').addEventListener('click', adicionarNovoRegistroParaPaciente);
 
     // Carregar pacientes se existir
-    loadPatients();
+    carregarPacientes();
 });
