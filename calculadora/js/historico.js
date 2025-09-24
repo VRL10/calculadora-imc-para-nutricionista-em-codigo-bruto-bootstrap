@@ -1,7 +1,10 @@
 // ===== SALVAMENTO E HISTÓRICO =====
 function salvarResultado() {
-    const nome = document.getElementById('nome-salvamento').value;
-    const data = document.getElementById('data-salvamento').value;
+    const nomeInput = document.getElementById('nome-salvamento');
+    const dataInput = document.getElementById('data-salvamento');
+    
+    const nome = nomeInput.value.trim();
+    const data = dataInput.value;
 
     if (!nome) {
         alert('Por favor, informe o nome do paciente.');
@@ -11,26 +14,44 @@ function salvarResultado() {
     // Obter dados atuais do armazenamento
     let pacientes = JSON.parse(localStorage.getItem('pacientesIMC')) || {};
     
+    // Obter dados do cálculo atual
+    const imcAtual = parseFloat(document.getElementById('valor-imc').textContent);
+    const categoriaAtual = document.getElementById('categoria-imc').textContent;
+    
+    // Se estamos adicionando a um paciente existente, usar seus dados de idade/gênero
+    let grupoIdadeSalvar = grupoIdadeAtual;
+    let generoSalvar = generoAtual;
+    
+    // Se o paciente já existe, usar os dados salvos dele
+    if (pacientes[nome] && pacienteAtualParaNovoRegistro && pacienteAtualParaNovoRegistro.nome === nome) {
+        grupoIdadeSalvar = pacientes[nome].grupoIdade;
+        generoSalvar = pacientes[nome].genero;
+    }
+
     // Se o paciente já existe, adicionar um novo registro
     if (pacientes[nome]) {
         pacientes[nome].registros.push({
             data: data,
-            imc: imcAtual.toFixed(1),
+            imc: imcAtual,
             peso: pesoAtual,
-            altura: alturaAtual * 100, // Converter para cm
-            categoria: document.getElementById('categoria-imc').textContent
+            altura: alturaAtual, // Já está em cm
+            categoria: categoriaAtual
         });
+        
+        // Atualizar dados gerais do paciente se necessário
+        pacientes[nome].grupoIdade = grupoIdadeSalvar;
+        pacientes[nome].genero = generoSalvar;
     } else {
         // Se é um novo paciente, criar uma nova entrada
         pacientes[nome] = {
-            grupoIdade: grupoIdadeAtual,
-            genero: generoAtual,
+            grupoIdade: grupoIdadeSalvar,
+            genero: generoSalvar,
             registros: [{
                 data: data,
-                imc: imcAtual.toFixed(1),
+                imc: imcAtual,
                 peso: pesoAtual,
-                altura: alturaAtual * 100, // Converter para cm
-                categoria: document.getElementById('categoria-imc').textContent
+                altura: alturaAtual, // Já está em cm
+                categoria: categoriaAtual
             }]
         };
     }
@@ -41,15 +62,21 @@ function salvarResultado() {
     // Fechar modal
     fecharModalSalvamento();
 
-    // Limpar paciente atual se estivermos adicionando um novo registro
+    // Recarregar lista de pacientes
+    carregarPacientes();
+
+    // Limpar paciente atual
     pacienteAtualParaNovoRegistro = null;
 
     // Mostrar mensagem de sucesso
-    alert(traducoes[idiomaAtual].salvar_resultado + '!');
+    alert('Resultado salvo com sucesso!');
 
     // Limpar campo de nome
-    document.getElementById('nome-salvamento').value = '';
-    document.getElementById('nome-salvamento').disabled = false;
+    nomeInput.value = '';
+    nomeInput.disabled = false;
+
+    // Voltar para a página de pacientes
+    mostrarPagina('pagina-pacientes');
 }
 
 function pesquisarPacientes() {
@@ -63,11 +90,16 @@ function carregarPacientes(termoPesquisa = '') {
 
     // Converter objeto em array para facilitar a manipulação
     let arrayPacientes = Object.entries(pacientes).map(([nome, dados]) => {
+        // Ordenar registros por data e pegar o mais recente
+        const registrosOrdenados = dados.registros.sort((a, b) => new Date(b.data) - new Date(a.data));
+        const registroMaisRecente = registrosOrdenados[0];
+        
         return {
             nome: nome,
-            ...dados,
-            // Ordenar registros por data e pegar o mais recente
-            registroMaisRecente: dados.registros.sort((a, b) => new Date(b.data) - new Date(a.data))[0]
+            grupoIdade: dados.grupoIdade,
+            genero: dados.genero,
+            registros: dados.registros,
+            registroMaisRecente: registroMaisRecente
         };
     });
 
@@ -85,64 +117,65 @@ function carregarPacientes(termoPesquisa = '') {
         arrayPacientes.sort((a, b) => a.nome.localeCompare(b.nome));
     }
 
-    if (arrayPacientes.length === 0) {
-        listaPacientes.innerHTML = `
-            <div class="text-center py-4">
-                <i class="fas fa-users fa-3x text-muted mb-3"></i>
-                <p>${termoPesquisa ? 'Nenhum paciente encontrado' : 'Nenhum paciente salvo ainda'}</p>
-            </div>
-        `;
-        return;
-    }
-
     // Limpar lista
-    listaPacientes.innerHTML = '';
+    if (listaPacientes) {
+        listaPacientes.innerHTML = '';
 
-    // Adicionar itens dos pacientes
-    arrayPacientes.forEach((paciente) => {
-        let classeCategoria = '';
+        if (arrayPacientes.length === 0) {
+            listaPacientes.innerHTML = `
+                <div class="text-center py-4">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <p>${termoPesquisa ? 'Nenhum paciente encontrado' : 'Nenhum paciente salvo ainda'}</p>
+                </div>
+            `;
+            return;
+        }
 
-        if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].magreza_grave) classeCategoria = 'categoria-magreza-grave';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].magreza_moderada) classeCategoria = 'categoria-magreza-moderada';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].magreza_leve) classeCategoria = 'categoria-magreza-leve';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].saudavel) classeCategoria = 'categoria-saudavel';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].sobrepeso) classeCategoria = 'categoria-sobrepeso';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].obesidade_1) classeCategoria = 'categoria-obesidade-1';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].obesidade_2) classeCategoria = 'categoria-obesidade-2';
-        else if (paciente.registroMaisRecente.categoria === traducoes[idiomaAtual].obesidade_3) classeCategoria = 'categoria-obesidade-3';
+        // Adicionar itens dos pacientes
+        arrayPacientes.forEach((paciente) => {
+            let classeCategoria = '';
 
-        // Obter label da faixa etária
-        let labelGrupoIdade = '';
-        if (paciente.grupoIdade === 'crianca1') labelGrupoIdade = traducoes[idiomaAtual].idade_0_5;
-        else if (paciente.grupoIdade === 'crianca2') labelGrupoIdade = traducoes[idiomaAtual].idade_5_10;
-        else if (paciente.grupoIdade === 'adolescente') labelGrupoIdade = traducoes[idiomaAtual].idade_10_19;
-        else if (paciente.grupoIdade === 'adulto') labelGrupoIdade = traducoes[idiomaAtual].idade_20_59;
-        else if (paciente.grupoIdade === 'idoso') labelGrupoIdade = traducoes[idiomaAtual].idade_60_plus;
+            // Determinar a classe da categoria
+            if (paciente.registroMaisRecente.categoria.includes('Abaixo do peso')) classeCategoria = 'categoria-abaixo-peso';
+            else if (paciente.registroMaisRecente.categoria.includes('Peso normal')) classeCategoria = 'categoria-normal';
+            else if (paciente.registroMaisRecente.categoria.includes('Sobrepeso')) classeCategoria = 'categoria-sobrepeso';
+            else if (paciente.registroMaisRecente.categoria.includes('Obesidade Grau I')) classeCategoria = 'categoria-obesidade-1';
+            else if (paciente.registroMaisRecente.categoria.includes('Obesidade Grau II')) classeCategoria = 'categoria-obesidade-2';
+            else if (paciente.registroMaisRecente.categoria.includes('Obesidade Grau III')) classeCategoria = 'categoria-obesidade-3';
 
-        const labelGenero = paciente.genero === 'masculino' ? traducoes[idiomaAtual].masculino : traducoes[idiomaAtual].feminino;
+            // Obter label da faixa etária
+            let labelGrupoIdade = '';
+            if (paciente.grupoIdade === 'crianca1') labelGrupoIdade = '0-5 anos';
+            else if (paciente.grupoIdade === 'crianca2') labelGrupoIdade = '5-10 anos';
+            else if (paciente.grupoIdade === 'adolescente') labelGrupoIdade = '10-19 anos';
+            else if (paciente.grupoIdade === 'adulto') labelGrupoIdade = '20-59 anos';
+            else if (paciente.grupoIdade === 'idoso') labelGrupoIdade = '60+ anos';
 
-        const itemPaciente = document.createElement('div');
-        itemPaciente.className = 'item-historico';
-        itemPaciente.innerHTML = `
-            <div class="detalhes-historico">
-                <div class="nome-historico" onclick="verHistoricoPaciente('${paciente.nome}')">${paciente.nome}</div>
-                <div class="info-historico">${labelGrupoIdade}, ${labelGenero}</div>
-                <div class="info-historico">${paciente.registroMaisRecente.peso}kg, ${paciente.registroMaisRecente.altura}cm</div>
-                <div class="data-historico">${formatarData(paciente.registroMaisRecente.data)}</div>
-            </div>
-            <div class="d-flex align-items-center">
-                <div class="imc-historico">${paciente.registroMaisRecente.imc}</div>
-                <div class="categoria-historico ${classeCategoria}">${paciente.registroMaisRecente.categoria}</div>
-            </div>
-            <div class="acoes-historico">
-                <button class="botao-acao-historico" onclick="excluirPaciente('${paciente.nome}')">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
+            const labelGenero = paciente.genero === 'masculino' ? 'Masculino' : 'Feminino';
 
-        listaPacientes.appendChild(itemPaciente);
-    });
+            const itemPaciente = document.createElement('div');
+            itemPaciente.className = 'item-historico';
+            itemPaciente.innerHTML = `
+                <div class="detalhes-historico">
+                    <div class="nome-historico" onclick="verHistoricoPaciente('${paciente.nome}')">${paciente.nome}</div>
+                    <div class="info-historico">${labelGrupoIdade}, ${labelGenero}</div>
+                    <div class="info-historico">${paciente.registroMaisRecente.peso}kg, ${paciente.registroMaisRecente.altura}cm</div>
+                    <div class="data-historico">${formatarData(paciente.registroMaisRecente.data)}</div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="imc-historico">${paciente.registroMaisRecente.imc}</div>
+                    <div class="categoria-historico ${classeCategoria}">${paciente.registroMaisRecente.categoria}</div>
+                </div>
+                <div class="acoes-historico">
+                    <button class="botao-acao-historico" onclick="excluirPaciente('${paciente.nome}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+
+            listaPacientes.appendChild(itemPaciente);
+        });
+    }
 }
 
 function excluirPaciente(nome) {
@@ -183,27 +216,27 @@ function carregarHistoricoPaciente(nome) {
         return;
     }
     
-    // Ordenar registros por data
-    paciente.registros.sort((a, b) => new Date(a.data) - new Date(b.data));
+    // Ordenar registros por data (mais recente primeiro)
+    paciente.registros.sort((a, b) => new Date(b.data) - new Date(a.data));
     
     // Atualizar informações do paciente
     document.getElementById('nome-paciente').textContent = `Histórico de ${nome}`;
     
     // Obter label da faixa etária
     let labelGrupoIdade = '';
-    if (paciente.grupoIdade === 'crianca1') labelGrupoIdade = traducoes[idiomaAtual].idade_0_5;
-    else if (paciente.grupoIdade === 'crianca2') labelGrupoIdade = traducoes[idiomaAtual].idade_5_10;
-    else if (paciente.grupoIdade === 'adolescente') labelGrupoIdade = traducoes[idiomaAtual].idade_10_19;
-    else if (paciente.grupoIdade === 'adulto') labelGrupoIdade = traducoes[idiomaAtual].idade_20_59;
-    else if (paciente.grupoIdade === 'idoso') labelGrupoIdade = traducoes[idiomaAtual].idade_60_plus;
+    if (paciente.grupoIdade === 'crianca1') labelGrupoIdade = '0-5 anos';
+    else if (paciente.grupoIdade === 'crianca2') labelGrupoIdade = '5-10 anos';
+    else if (paciente.grupoIdade === 'adolescente') labelGrupoIdade = '10-19 anos';
+    else if (paciente.grupoIdade === 'adulto') labelGrupoIdade = '20-59 anos';
+    else if (paciente.grupoIdade === 'idoso') labelGrupoIdade = '60+ anos';
 
-    const labelGenero = paciente.genero === 'masculino' ? traducoes[idiomaAtual].masculino : traducoes[idiomaAtual].feminino;
+    const labelGenero = paciente.genero === 'masculino' ? 'Masculino' : 'Feminino';
     
     document.getElementById('idade-paciente').textContent = labelGrupoIdade;
     document.getElementById('genero-paciente').textContent = labelGenero;
     
-    // Último registro
-    const ultimoRegistro = paciente.registros[paciente.registros.length - 1];
+    // Último registro (mais recente)
+    const ultimoRegistro = paciente.registros[0];
     document.getElementById('imc-mais-recente').textContent = ultimoRegistro.imc;
     document.getElementById('peso-mais-recente').textContent = `${ultimoRegistro.peso} kg`;
     
@@ -211,13 +244,16 @@ function carregarHistoricoPaciente(nome) {
     pacienteAtualParaNovoRegistro = {
         nome: nome,
         grupoIdade: paciente.grupoIdade,
-        genero: paciente.genero
+        genero: paciente.genero,
+        ultimoPeso: ultimoRegistro.peso,
+        ultimaAltura: ultimoRegistro.altura
     };
     
-    // Preparar dados para os gráficos
-    const datas = paciente.registros.map(registro => formatarData(registro.data));
-    const imcs = paciente.registros.map(registro => parseFloat(registro.imc));
-    const pesos = paciente.registros.map(registro => parseFloat(registro.peso));
+    // Preparar dados para os gráficos (ordenar por data crescente para gráfico)
+    const registrosOrdenados = [...paciente.registros].sort((a, b) => new Date(a.data) - new Date(b.data));
+    const datas = registrosOrdenados.map(registro => formatarData(registro.data));
+    const imcs = registrosOrdenados.map(registro => parseFloat(registro.imc));
+    const pesos = registrosOrdenados.map(registro => parseFloat(registro.peso));
     
     // Destruir gráficos existentes
     if (graficoIMC) {
@@ -322,6 +358,17 @@ function carregarHistoricoPaciente(nome) {
 
 function adicionarNovoRegistroParaPaciente() {
     if (pacienteAtualParaNovoRegistro) {
+        // Pré-preencher os dados do paciente na página de cálculo
         mostrarPagina('pagina-calculo');
+        
+        // Aguardar um pouco para garantir que a página foi carregada
+        setTimeout(() => {
+            if (pacienteAtualParaNovoRegistro.ultimoPeso) {
+                document.getElementById('peso').value = pacienteAtualParaNovoRegistro.ultimoPeso;
+            }
+            if (pacienteAtualParaNovoRegistro.ultimaAltura) {
+                document.getElementById('altura').value = pacienteAtualParaNovoRegistro.ultimaAltura;
+            }
+        }, 100);
     }
 }

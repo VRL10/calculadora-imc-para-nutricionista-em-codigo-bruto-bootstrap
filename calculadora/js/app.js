@@ -53,12 +53,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Configurar eventos de navegação
     document.getElementById('navegacao-inicio').addEventListener('click', () => mostrarPagina('pagina-inicial'));
-    document.getElementById('navegacao-calcular').addEventListener('click', () => mostrarPagina('pagina-calculo'));
+    document.getElementById('navegacao-calcular').addEventListener('click', () => {
+        pacienteAtualParaNovoRegistro = null; // Limpar para novo paciente
+        mostrarPagina('pagina-calculo');
+    });
     document.getElementById('navegacao-resultado').addEventListener('click', () => mostrarPagina('pagina-resultado'));
     document.getElementById('navegacao-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));
 
     // Configurar botões da página inicial
-    document.getElementById('botao-ir-calcular').addEventListener('click', () => mostrarPagina('pagina-calculo'));
+    document.getElementById('botao-ir-calcular').addEventListener('click', () => {
+        pacienteAtualParaNovoRegistro = null; // Limpar para novo paciente
+        mostrarPagina('pagina-calculo');
+    });
     document.getElementById('botao-ir-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));
 
     // Configurar botões de autenticação
@@ -68,7 +74,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Configurar botões da página de resultados
     document.getElementById('botao-salvar-resultado').addEventListener('click', abrirModalSalvamento);
-    document.getElementById('botao-calcular-novamente').addEventListener('click', () => mostrarPagina('pagina-calculo'));
+    document.getElementById('botao-calcular-novamente').addEventListener('click', () => {
+        // Manter o paciente atual se estiver adicionando novo registro
+        mostrarPagina('pagina-calculo');
+    });
 
     // Configurar botões do modal de salvamento
     document.getElementById('botao-confirmar-salvamento').addEventListener('click', salvarResultado);
@@ -76,6 +85,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Configurar botão de pesquisa
     document.getElementById('botao-pesquisar').addEventListener('click', pesquisarPacientes);
+    
+    // Configurar pesquisa com Enter
+    document.getElementById('campo-pesquisa').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            pesquisarPacientes();
+        }
+    });
 
     // Configurar botão de voltar para pacientes
     document.getElementById('botao-voltar-pacientes').addEventListener('click', () => mostrarPagina('pagina-pacientes'));

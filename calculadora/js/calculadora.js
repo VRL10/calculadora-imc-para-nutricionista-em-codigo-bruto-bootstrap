@@ -25,49 +25,53 @@ function calcularIMC() {
         return;
     }
 
-    // Converter altura se for em centímetros
+    // Salvar valores atuais para uso posterior (em centímetros)
+    pesoAtual = peso;
+    alturaAtual = altura; // Já está em cm
+
+    // Converter altura se for em centímetros para metros (para cálculo)
     const alturaMetros = altura > 3 ? altura / 100 : altura;
 
     // Calcular IMC
     const imc = peso / (alturaMetros * alturaMetros);
     const imcArredondado = imc.toFixed(1);
+    imcAtual = imc;
 
     // Classificação do IMC
     let categoria, classeCategoria;
 
     switch (true) {
-    case (imc < 18.5):
-        categoria = 'Abaixo do peso';
-        classeCategoria = 'categoria-abaixo-peso';
-        break;
+        case (imc < 18.5):
+            categoria = 'Abaixo do peso';
+            classeCategoria = 'categoria-abaixo-peso';
+            break;
 
-    case (imc < 25):
-        categoria = 'Peso normal';
-        classeCategoria = 'categoria-normal';
-        break;
+        case (imc < 25):
+            categoria = 'Peso normal';
+            classeCategoria = 'categoria-normal';
+            break;
 
-    case (imc < 30):
-        categoria = 'Sobrepeso';
-        classeCategoria = 'categoria-sobrepeso';
-        break;
+        case (imc < 30):
+            categoria = 'Sobrepeso';
+            classeCategoria = 'categoria-sobrepeso';
+            break;
 
-    case (imc < 35):
-        categoria = 'Obesidade Grau I';
-        classeCategoria = 'categoria-obesidade-1';
-        break;
+        case (imc < 35):
+            categoria = 'Obesidade Grau I';
+            classeCategoria = 'categoria-obesidade-1';
+            break;
 
-    case (imc < 40):
-        categoria = 'Obesidade Grau II';
-        classeCategoria = 'categoria-obesidade-2';
-        break;
+        case (imc < 40):
+            categoria = 'Obesidade Grau II';
+            classeCategoria = 'categoria-obesidade-2';
+            break;
 
-    default:
-        categoria = 'Obesidade Grau III';
-        classeCategoria = 'categoria-obesidade-3';
-}
+        default:
+            categoria = 'Obesidade Grau III';
+            classeCategoria = 'categoria-obesidade-3';
+    }
 
-
-     // ATUALIZAR A INTERFACE
+    // ATUALIZAR A INTERFACE
     document.getElementById('valor-imc').textContent = imcArredondado;
     document.getElementById('categoria-imc').textContent = categoria;
     document.getElementById('categoria-imc').className = 'categoria-imc ' + classeCategoria;
@@ -77,36 +81,6 @@ function calcularIMC() {
     const pesoMaximo = (24.9 * alturaMetros * alturaMetros).toFixed(1);
     document.getElementById('peso-ideal').textContent = `${pesoMinimo}kg - ${pesoMaximo}kg`;
 
-    // SALVAR NO BANCO DE DADOS (se for o caso)
-    salvarRegistroIMC(peso, alturaMetros, imc, categoria);
-
     // Mostrar resultados
     mostrarPagina('pagina-resultado');
-}
-
-// Função para salvar/atualizar o registro
-function salvarRegistroIMC(peso, altura, imc, categoria) {
-    // Aqui você implementa a lógica para salvar no seu banco de dados
-    // Se for um paciente existente, atualiza o registro
-    // Se for novo, cria um novo registro
-    
-    console.log('Salvando registro:', {
-        peso: peso,
-        altura: altura,
-        imc: imc,
-        categoria: categoria,
-        data: new Date().toLocaleDateString('pt-BR')
-    });
-    
-    // Exemplo de como salvar no localStorage (substitua pela sua lógica de BD)
-    const registro = {
-        peso: peso,
-        altura: altura,
-        imc: imc,
-        categoria: categoria,
-        data: new Date().toLocaleDateString('pt-BR')
-    };
-    
-    // Salva ou atualiza no localStorage
-    localStorage.setItem('ultimoRegistroIMC', JSON.stringify(registro));
 }
