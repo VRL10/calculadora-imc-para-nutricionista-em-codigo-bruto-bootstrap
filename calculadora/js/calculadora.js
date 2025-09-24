@@ -1,89 +1,112 @@
-// ===== CÁLCULO DE IMC =====
+// ===== CÁLCULO DE IMC PROFISSIONAL =====
 function calcularIMC() {
-    const peso = parseFloat(document.getElementById('peso').value);
-    const altura = parseFloat(document.getElementById('altura').value) / 100; // Converter para metros
+    // Obter e validar valores
+    const peso = parseFloat(document.getElementById('peso').value.replace(',', '.'));
+    const altura = parseFloat(document.getElementById('altura').value.replace(',', '.'));
 
-    if (isNaN(peso) || isNaN(altura) || altura <= 0) {
-        alert('Por favor, insira valores válidos para peso e altura.');
+    // Validações robustas
+    if (isNaN(peso) || isNaN(altura)) {
+        alert('Por favor, insira valores numéricos válidos para peso e altura.');
         return;
     }
 
-    pesoAtual = peso;
-    alturaAtual = altura;
-    imcAtual = peso / (altura * altura);
-    const imcArredondado = imcAtual.toFixed(1);
-
-    // Mostrar resultado
-    document.getElementById('valor-imc').textContent = imcArredondado;
-
-    // Determinar categoria
-    let categoria = '';
-    let classeCategoria = '';
-    let chaveCategoria = '';
-
-    if (imcAtual <= 15.9) {
-        categoria = traducoes[idiomaAtual].magreza_grave;
-        chaveCategoria = 'magreza_grave';
-        classeCategoria = 'categoria-magreza-grave';
-    } else if (imcAtual <= 16.9) {
-        categoria = traducoes[idiomaAtual].magreza_moderada;
-        chaveCategoria = 'magreza_moderada';
-        classeCategoria = 'categoria-magreza-moderada';
-    } else if (imcAtual <= 18.4) {
-        categoria = traducoes[idiomaAtual].magreza_leve;
-        chaveCategoria = 'magreza_leve';
-        classeCategoria = 'categoria-magreza-leve';
-    } else if (imcAtual <= 24.9) {
-        categoria = traducoes[idiomaAtual].saudavel;
-        chaveCategoria = 'saudavel';
-        classeCategoria = 'categoria-saudavel';
-    } else if (imcAtual <= 29.9) {
-        categoria = traducoes[idiomaAtual].sobrepeso;
-        chaveCategoria = 'sobrepeso';
-        classeCategoria = 'categoria-sobrepeso';
-    } else if (imcAtual <= 34.9) {
-        categoria = traducoes[idiomaAtual].obesidade_1;
-        chaveCategoria = 'obesidade_1';
-        classeCategoria = 'categoria-obesidade-1';
-    } else if (imcAtual <= 39.9) {
-        categoria = traducoes[idiomaAtual].obesidade_2;
-        chaveCategoria = 'obesidade_2';
-        classeCategoria = 'categoria-obesidade-2';
-    } else {
-        categoria = traducoes[idiomaAtual].obesidade_3;
-        chaveCategoria = 'obesidade_3';
-        classeCategoria = 'categoria-obesidade-3';
+    if (peso <= 0 || altura <= 0) {
+        alert('Peso e altura devem ser valores positivos maiores que zero.');
+        return;
     }
 
+    if (peso > 300) {
+        alert('Por favor, insira um peso válido (até 300 kg).');
+        return;
+    }
+
+    if (altura > 300 || altura <= 30) {
+        alert('Por favor, insira altura em centímetros (ex: 175). Evite utilizar alturas inexistentes');
+        return;
+    }
+
+    // Converter altura se for em centímetros
+    const alturaMetros = altura > 3 ? altura / 100 : altura;
+
+    // Calcular IMC
+    const imc = peso / (alturaMetros * alturaMetros);
+    const imcArredondado = imc.toFixed(1);
+
+    // Classificação do IMC
+    let categoria, classeCategoria;
+
+    switch (true) {
+    case (imc < 18.5):
+        categoria = 'Abaixo do peso';
+        classeCategoria = 'categoria-abaixo-peso';
+        break;
+
+    case (imc < 25):
+        categoria = 'Peso normal';
+        classeCategoria = 'categoria-normal';
+        break;
+
+    case (imc < 30):
+        categoria = 'Sobrepeso';
+        classeCategoria = 'categoria-sobrepeso';
+        break;
+
+    case (imc < 35):
+        categoria = 'Obesidade Grau I';
+        classeCategoria = 'categoria-obesidade-1';
+        break;
+
+    case (imc < 40):
+        categoria = 'Obesidade Grau II';
+        classeCategoria = 'categoria-obesidade-2';
+        break;
+
+    default:
+        categoria = 'Obesidade Grau III';
+        classeCategoria = 'categoria-obesidade-3';
+}
+
+
+     // ATUALIZAR A INTERFACE
+    document.getElementById('valor-imc').textContent = imcArredondado;
     document.getElementById('categoria-imc').textContent = categoria;
     document.getElementById('categoria-imc').className = 'categoria-imc ' + classeCategoria;
 
     // Calcular peso ideal
-    const pesoIdealMinimo = (18.5 * (altura * altura)).toFixed(1);
-    const pesoIdealMaximo = (24.9 * (altura * altura)).toFixed(1);
-    document.getElementById('peso-ideal').textContent = `${pesoIdealMinimo} - ${pesoIdealMaximo} kg`;
+    const pesoMinimo = (18.5 * alturaMetros * alturaMetros).toFixed(1);
+    const pesoMaximo = (24.9 * alturaMetros * alturaMetros).toFixed(1);
+    document.getElementById('peso-ideal').textContent = `${pesoMinimo}kg - ${pesoMaximo}kg`;
 
-    // Destacar a escala correspondente
-    document.querySelectorAll('.item-escala').forEach(item => item.classList.remove('ativo'));
+    // SALVAR NO BANCO DE DADOS (se for o caso)
+    salvarRegistroIMC(peso, alturaMetros, imc, categoria);
 
-    if (imcAtual <= 15.9) {
-        document.getElementById('escala-magreza-grave').classList.add('ativo');
-    } else if (imcAtual <= 16.9) {
-        document.getElementById('escala-magreza-moderada').classList.add('ativo');
-    } else if (imcAtual <= 18.4) {
-        document.getElementById('escala-magreza-leve').classList.add('ativo');
-    } else if (imcAtual <= 24.9) {
-        document.getElementById('escala-saudavel').classList.add('ativo');
-    } else if (imcAtual <= 29.9) {
-        document.getElementById('escala-sobrepeso').classList.add('ativo');
-    } else if (imcAtual <= 34.9) {
-        document.getElementById('escala-obesidade-1').classList.add('ativo');
-    } else if (imcAtual <= 39.9) {
-        document.getElementById('escala-obesidade-2').classList.add('ativo');
-    } else {
-        document.getElementById('escala-obesidade-3').classList.add('ativo');
-    }
-
-    // Mostrar página de resultados
+    // Mostrar resultados
     mostrarPagina('pagina-resultado');
+}
+
+// Função para salvar/atualizar o registro
+function salvarRegistroIMC(peso, altura, imc, categoria) {
+    // Aqui você implementa a lógica para salvar no seu banco de dados
+    // Se for um paciente existente, atualiza o registro
+    // Se for novo, cria um novo registro
+    
+    console.log('Salvando registro:', {
+        peso: peso,
+        altura: altura,
+        imc: imc,
+        categoria: categoria,
+        data: new Date().toLocaleDateString('pt-BR')
+    });
+    
+    // Exemplo de como salvar no localStorage (substitua pela sua lógica de BD)
+    const registro = {
+        peso: peso,
+        altura: altura,
+        imc: imc,
+        categoria: categoria,
+        data: new Date().toLocaleDateString('pt-BR')
+    };
+    
+    // Salva ou atualiza no localStorage
+    localStorage.setItem('ultimoRegistroIMC', JSON.stringify(registro));
 }
