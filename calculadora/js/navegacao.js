@@ -46,3 +46,27 @@ function mostrarPagina(idPagina) {
     }
     // Para a página de histórico do paciente, não destacamos nenhum item do menu inferior
 }
+
+// === ADICIONE ESTA FUNÇÃO NO FINAL do arquivo navegacao.js ===
+function atualizarIndicadorHeader(idPagina) {
+    const dots = document.querySelectorAll('.indicator-dot');
+    if (!dots.length) return; // Se não encontrar os dots, sai da função
+    
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Mapeia as páginas para os dots
+    const paginaParaDot = {
+        'pagina-inicial': 'inicio',
+        'pagina-calculo': 'calcular', 
+        'pagina-resultado': 'resultado',
+        'pagina-pacientes': 'pacientes'
+    };
+    
+    const dotAtivo = paginaParaDot[idPagina];
+    if (dotAtivo) {
+        const dotElement = document.querySelector(`.indicator-dot[data-page="${dotAtivo}"]`);
+        if (dotElement) {
+            dotElement.classList.add('active');
+        }
+    }
+}
