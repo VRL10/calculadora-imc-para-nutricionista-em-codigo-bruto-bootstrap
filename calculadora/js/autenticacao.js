@@ -1,4 +1,4 @@
-// ===== AUTENTICAÇÃO SOCIAL =====
+// ---- AUTENTICAÇÃO SOCIAL---
 function loginComGoogle() {
     // Simulação de login com Google
     usuarioAtual = {

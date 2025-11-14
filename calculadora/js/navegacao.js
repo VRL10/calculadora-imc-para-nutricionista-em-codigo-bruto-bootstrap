@@ -8,14 +8,14 @@ function mostrarPagina(idPagina) {
 
     if (idPagina === 'pagina-inicial') {
         document.querySelector('.item-navegacao:nth-child(1)').classList.add('ativo');
-        // Limpar paciente atual quando voltar para início
+        // Limpar paciente atual quando voltar para inicio
         pacienteAtualParaNovoRegistro = null;
     } else if (idPagina === 'pagina-calculo') {
         document.querySelector('.item-navegacao:nth-child(2)').classList.add('ativo');
         
-        // Se estamos vindo de um paciente específico, preencher os dados
+        // Se estamos vindo de um paciente específico, temos que preencher os dados
         if (pacienteAtualParaNovoRegistro) {
-            // Selecionar grupo de idade e gênero
+            // Selecionar grupo de idade e genero
             const opcaoIdade = document.querySelector(`.opcao-idade[dados-grupo-idade="${pacienteAtualParaNovoRegistro.grupoIdade}"]`);
             const opcaoGenero = document.querySelector(`.opcao-genero[dados-genero="${pacienteAtualParaNovoRegistro.genero}"]`);
             
@@ -30,11 +30,11 @@ function mostrarPagina(idPagina) {
                 document.getElementById('altura').value = pacienteAtualParaNovoRegistro.ultimaAltura;
             }
         } else {
-            // Limpar campos se for um novo cálculo para novo paciente
+            // Limpar campos se for um novo calculo para novo paciente
             document.getElementById('peso').value = '';
             document.getElementById('altura').value = '';
             
-            // Resetar para valores padrão
+            // Resetar para valores padrao
             document.querySelector('.opcao-idade[dados-grupo-idade="adulto"]').click();
             document.querySelector('.opcao-genero[dados-genero="masculino"]').click();
         }
@@ -44,10 +44,10 @@ function mostrarPagina(idPagina) {
         document.querySelector('.item-navegacao:nth-child(4)').classList.add('ativo');
         carregarPacientes();
     }
-    // Para a página de histórico do paciente, não destacamos nenhum item do menu inferior
+    // Para a página de histórico do paciente, não destaca-se nenhum item do menu inferior
 }
 
-// === ADICIONE ESTA FUNÇÃO NO FINAL do arquivo navegacao.js ===
+
 function atualizarIndicadorHeader(idPagina) {
     const dots = document.querySelectorAll('.indicator-dot');
     if (!dots.length) return; // Se não encontrar os dots, sai da função

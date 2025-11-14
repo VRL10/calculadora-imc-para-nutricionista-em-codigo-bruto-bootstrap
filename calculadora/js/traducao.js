@@ -51,10 +51,10 @@ const traducoes = {
         historico: "Histórico"
     },
     en: {
-        // ... (conteúdo em inglês) - manteremos o original em inglês para referência, mas você pode remover se não for usar
+        // ... (conteúdo em inglês)
     },
     es: {
-        // ... (conteúdo em espanhol) - mesmo caso acima
+        // ... (conteúdo em espanhol)
     }
 };
 
@@ -65,7 +65,6 @@ function aplicarTraducoes(idioma) {
         if (traducoes[idioma] && traducoes[idioma][chave]) {
             elemento.textContent = traducoes[idioma][chave];
             
-            // Para placeholders de input
             if (elemento.placeholder) {
                 elemento.placeholder = traducoes[idioma][chave];
             }

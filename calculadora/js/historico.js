@@ -1,4 +1,4 @@
-// ===== SALVAMENTO E HISTÓRICO =====
+// ===== SALVAMENTO E HISToRICO =====
 function salvarResultado() {
     const nomeInput = document.getElementById('nome-salvamento');
     const dataInput = document.getElementById('data-salvamento');

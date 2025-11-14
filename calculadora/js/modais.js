@@ -1,4 +1,4 @@
-// ===== MODAIS =====
+// ---MODAIS ---
 function abrirModalSalvamento() {
     // Se estamos adicionando um novo registro para um paciente existente
     if (pacienteAtualParaNovoRegistro) {

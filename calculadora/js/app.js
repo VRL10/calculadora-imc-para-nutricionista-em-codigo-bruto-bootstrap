@@ -1,6 +1,6 @@
-// ===== INICIALIZAÇÃO =====
+// ----- INICIALIZAÇÃo ----
 document.addEventListener('DOMContentLoaded', function () {
-    // Configurar data atual no modal de salvamento
+    // Configurar data atual no modal de salvament
     document.getElementById('data-salvamento').valueAsDate = new Date();
 
     // Adicionar evento de clique ao botão de calcular
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Configurar seletores de gênero
+    // Configurar seletores de genero
     document.querySelectorAll('.opcao-genero').forEach(opcao => {
         opcao.addEventListener('click', function () {
             document.querySelectorAll('.opcao-genero').forEach(opt => opt.classList.remove('ativo'));

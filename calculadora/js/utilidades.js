@@ -20,6 +20,6 @@ function formatarData(dataString) {
 }
 
 function mostrarNotificacao(mensagem, tipo = 'info') {
-    // Implementar um sistema de notificações se necessário
+    // Implementar um sistema de notificações futuramente!
     alert(mensagem);
 }

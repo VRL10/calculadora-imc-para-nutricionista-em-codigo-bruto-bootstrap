@@ -25,11 +25,11 @@ function calcularIMC() {
         return;
     }
 
-    // Salvar valores atuais para uso posterior (em centímetros)
+    // Salvar valores atuais para uso posterior (em centimetros)
     pesoAtual = peso;
     alturaAtual = altura; // Já está em cm
 
-    // Converter altura se for em centímetros para metros (para cálculo)
+    // Converter altura se for em centímetros para metros (para calculo)
     const alturaMetros = altura > 3 ? altura / 100 : altura;
 
     // Calcular IMC
