@@ -1,4 +1,5 @@
-/* ===== ESTILOS GERAIS ===== */
+/* ===== RESET E BASE ===== */
+/* style.css - Base styles */
 * {
     margin: 0;
     padding: 0;
@@ -21,8 +22,9 @@ body {
     position: relative;
     overflow: hidden;
 }
-/* ===== CABEÇALHO MODERNIZADO ===== */
-/* Novo Cabeçalho Moderno */
+
+/* ===== HEADER ===== */
+/* header.css - Estilos do cabeçalho */
 .header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
@@ -33,6 +35,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 100;
+    animation: headerSlideDown 0.6s ease-out;
 }
 
 .header-left {
@@ -63,6 +66,7 @@ body {
     letter-spacing: -0.5px;
     margin: 0;
     line-height: 1.2;
+    color: white !important;
 }
 
 .header-subtitle {
@@ -70,6 +74,7 @@ body {
     opacity: 0.9;
     font-weight: 500;
     margin-top: 2px;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .header-right {
@@ -78,27 +83,8 @@ body {
     gap: 20px;
 }
 
-/* Indicador de páginas */
-.header-indicator {
-    display: flex;
-    gap: 8px;
-    margin-right: 15px;
-}
-
-.indicator-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-}
-
-.indicator-dot.active {
-    background-color: white;
-    transform: scale(1.2);
-}
-
-/* Container do Perfil */
+/* ===== PERFIL E DROPDOWN ===== */
+/* profile.css - Estilos do perfil e dropdown */
 .profile-container {
     position: relative;
 }
@@ -143,7 +129,6 @@ body {
     font-weight: bold;
 }
 
-/* Dropdown Menu */
 .profile-dropdown {
     position: absolute;
     top: 55px;
@@ -158,25 +143,14 @@ body {
     animation: dropdownFade 0.2s ease;
 }
 
-@keyframes dropdownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .profile-dropdown.show {
     display: block;
 }
 
 .dropdown-header {
     padding: 20px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%) !important;
+    color: white !important;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -204,11 +178,13 @@ body {
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 4px;
+    color: white !important;
 }
 
 #dropdown-useremail {
     font-size: 0.85rem;
     opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .dropdown-divider {
@@ -221,239 +197,40 @@ body {
     display: flex;
     align-items: center;
     padding: 12px 20px;
-    color: #333;
+    color: #333 !important;
     text-decoration: none;
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9fa;
+    background-color: #f5f7ff !important;
     padding-left: 25px;
+    color: #1a237e !important;
 }
 
 .dropdown-item i {
     width: 24px;
-    color: #666;
+    color: #4361ee !important;
     margin-right: 12px;
     font-size: 1.1rem;
 }
 
 .dropdown-item.logout {
-    color: #ff4757;
+    color: #d32f2f !important;
+}
+
+.dropdown-item.logout:hover {
+    color: #b71c1c !important;
+    background-color: #ffebee !important;
 }
 
 .dropdown-item.logout i {
-    color: #ff4757;
-}
-
-/* Página de Perfil */
-#pagina-perfil {
-    display: none;
-}
-
-#pagina-perfil.ativo {
-    display: block;
-}
-
-.perfil-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.perfil-card {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 20px;
-}
-
-.perfil-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #f0f0f0;
-}
-
-.perfil-avatar-large {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-}
-
-.perfil-avatar-large i {
-    font-size: 3rem;
-    color: white;
-}
-
-.perfil-info h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.perfil-info p {
-    margin: 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.perfil-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.stat-card {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 5px;
-}
-
-.stat-label {
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.perfil-section {
-    margin-bottom: 30px;
-}
-
-.perfil-section h4 {
-    color: #333;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-}
-
-.info-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.info-label {
-    color: #666;
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-}
-
-.info-value {
-    font-weight: 500;
-    color: #333;
-}
-
-.perfil-actions {
-    display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-    margin-top: 30px;
-}
-/* Indicador de página ativa no header */
-.header-indicator {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin-top: 15px;
-}
-
-.indicator-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-}
-
-.indicator-dot.active {
-    background: rgba(255, 255, 255, 0.9);
-    transform: scale(1.2);
-}
-
-/* Efeito de brilho sutil no hover */
-.header:hover::before {
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15) 0%, transparent 50%);
-}
-
-/* Animação de entrada do header */
-@keyframes headerSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.header {
-    animation: headerSlideDown 0.6s ease-out;
-}
-
-/* ===== RESPONSIVIDADE PARA O NOVO HEADER ===== */
-@media (max-width: 576px) {
-    .header {
-        padding: 20px 15px;
-        border-radius: 0 0 25px 25px;
-    }
-    
-    .header-title {
-        font-size: 24px;
-        gap: 10px;
-    }
-    
-    .header-title::before {
-        font-size: 20px;
-    }
-    
-    .header-subtitle {
-        font-size: 14px;
-        max-width: 250px;
-    }
-}
-
-@media (max-width: 380px) {
-    .header-title {
-        font-size: 22px;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .header-subtitle {
-        font-size: 13px;
-    }
+    color: #d32f2f !important;
 }
 
 /* ===== PÁGINAS E NAVEGAÇÃO ===== */
+/* pages.css - Estilos das páginas e navegação */
 .pagina {
     display: none;
     padding: 20px;
@@ -463,17 +240,6 @@ body {
 
 .pagina.ativo {
     display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .navegacao-inferior {
@@ -513,7 +279,8 @@ body {
     margin-bottom: 4px;
 }
 
-/* ===== COMPONENTES DE CARTA ===== */
+/* ===== COMPONENTES ===== */
+/* components.css - Componentes reutilizáveis */
 .card {
     background-color: white;
     border-radius: 15px;
@@ -525,12 +292,12 @@ body {
 
 .card-title {
     font-weight: 700;
-    color: var(--dark);
+    color: #1a237e !important;
     margin-bottom: 15px;
     font-size: 18px;
 }
 
-/* ===== BOTÕES ===== */
+/* Botões */
 .btn-primary {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
@@ -550,8 +317,8 @@ body {
 }
 
 .btn-outline-primary {
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border: 2px solid #4361ee !important;
+    color: #4361ee !important;
     background: transparent;
     border-radius: 12px;
     padding: 12px 25px;
@@ -562,34 +329,15 @@ body {
 }
 
 .btn-outline-primary:hover {
-    background: var(--primary);
-    color: white;
+    background: #1a237e !important;
+    color: white !important;
+    border-color: #1a237e !important;
 }
 
-.btn-google {
-    background: white;
-    color: #757575;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px 25px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-google:hover {
-    background: #f5f5f5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
+.btn-google,
 .btn-microsoft {
     background: white;
-    color: #757575;
+    color: #424242 !important;
     border: 1px solid #ddd;
     border-radius: 12px;
     padding: 12px 25px;
@@ -603,16 +351,17 @@ body {
     gap: 10px;
 }
 
+.btn-google:hover,
 .btn-microsoft:hover {
     background: #f5f5f5;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #212121 !important;
 }
 
-
-/* ===== FORMULÁRIOS ===== */
+/* Formulários */
 .form-label {
     font-weight: 600;
-    color: var(--dark);
+    color: #424242 !important;
     margin-bottom: 8px;
     display: block;
 }
@@ -644,7 +393,138 @@ body {
     font-weight: 600;
 }
 
-/* ===== RESULTADOS E VISUALIZAÇÃO ===== */
+/* ===== PÁGINA INICIAL ===== */
+/* home.css - Estilos específicos da página inicial */
+.botoes-inicio {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.login-social {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f5f7ff;
+    border-radius: 12px;
+    border: 1px solid #e3e8ff;
+}
+
+.perfil-usuario div {
+    flex: 1;
+}
+
+.avatar-usuario {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+#nome-usuario {
+    font-weight: 600;
+    color: #1a237e !important;
+    margin-bottom: 2px;
+}
+
+#email-usuario {
+    font-size: 0.9rem;
+    color: #5c6bc0 !important;
+}
+
+#botao-logout {
+    color: #d32f2f !important;
+    border-color: #d32f2f !important;
+}
+
+#botao-logout:hover {
+    color: #ffffff !important;
+    background-color: #d32f2f !important;
+}
+
+/* ===== PÁGINA DE CÁLCULO ===== */
+/* calculation.css - Estilos da página de cálculo */
+.seletor-idade {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.opcao-idade {
+    padding: 15px 10px;
+    background-color: #f5f7ff;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.opcao-idade.ativo {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border-color: white;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+.opcao-idade i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.seletor-genero {
+    display: flex;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.opcao-genero {
+    flex: 1;
+    padding: 15px;
+    background-color: #f5f7ff;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.opcao-genero.ativo {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border-color: white;
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+.opcao-genero i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+#botao-calcular {
+    margin-bottom: 10%;
+}
+
+/* ===== RESULTADOS ===== */
+/* results.css - Estilos da página de resultados */
 .resultado-container {
     text-align: center;
     padding: 20px;
@@ -791,32 +671,85 @@ body {
     color: var(--primary);
 }
 
-/* ===== MODAIS ===== */
-.modal-salvamento {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+#botao-calcular-novamente {
+    color: #ffffff !important;
+    background-color: #4361ee !important;
+}
+
+#botao-calcular-novamente:hover {
+    color: #ffffff !important;
+    border-color: #1a237e !important;
+    background-color: #1a237e !important;
+}
+
+#botao-salvar-resultado {
+    background: linear-gradient(135deg, #4361ee 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-salvar-resultado:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+/* ===== PÁGINA DE PACIENTES ===== */
+/* patients.css - Estilos da página de pacientes */
+.container-pesquisa {
     display: flex;
     align-items: center;
+    gap: 5px;
+    margin-bottom: 5%;
+}
+
+.container-pesquisa button {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    display: flex;
     justify-content: center;
-    z-index: 2000;
-    padding: 20px;
-    display: none;
+    align-items: center;
 }
 
-.conteudo-modal-salvamento {
-    background-color: white;
-    border-radius: 15px;
-    padding: 25px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+.campo-pesquisa {
+    flex: 1;
 }
 
-/* ===== HISTÓRICO ===== */
+.botoes-ordenacao {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.botao-ordenar {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #4361ee !important;
+    border-radius: 10px;
+    background: transparent;
+    color: #4361ee !important;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.botao-ordenar.ativo {
+    background: #4361ee !important;
+    color: white !important;
+}
+
+.botao-ordenar:hover:not(.ativo) {
+    background: #4361ee !important;
+    color: white !important;
+}
+
+#botao-ir-pacientes {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* ===== HISTÓRICO DO PACIENTE ===== */
+/* patient-history.css - Estilos do histórico do paciente */
 .item-historico {
     display: flex;
     justify-content: space-between;
@@ -841,10 +774,9 @@ body {
 
 .nome-historico {
     font-weight: 700;
-    color: var(--dark);
+    color: var(--primary);
     margin-bottom: 5px;
     cursor: pointer;
-    color: var(--primary);
 }
 
 .info-historico {
@@ -894,189 +826,6 @@ body {
     margin-left: 8px;
 }
 
-/* ===== PÁGINA INICIAL ===== */
-.botoes-inicio {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-/* ===== PESQUISA E ORDENAÇÃO ===== */
-.container-pesquisa {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-bottom: 5%;
-}
-
-.container-pesquisa button {
-    width: 50px;
-    height: 50px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.campo-pesquisa {
-    flex: 1;
-}
-
-.botoes-ordenacao {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.botao-ordenar {
-    flex: 1;
-    padding: 10px;
-    border: 2px solid var(--primary);
-    border-radius: 10px;
-    background: transparent;
-    color: var(--primary);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.botao-ordenar.ativo {
-    background: var(--primary);
-    color: white;
-}
-
-.botao-ordenar:hover {
-    background: var(--primary);
-    color: white;
-}
-
-/* ===== SELEÇÃO DE IDADE E GÊNERO ===== */
-.seletor-idade {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.opcao-idade {
-    padding: 15px 10px;
-    background-color: #f5f7ff;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-}
-
-.opcao-idade.ativo {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: white;
-    border-color: white;
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-}
-
-.opcao-idade i {
-    font-size: 24px;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.seletor-genero {
-    display: flex;
-    gap: 15px;
-    margin: 15px 0;
-}
-
-.opcao-genero {
-    flex: 1;
-    padding: 15px;
-    background-color: #f5f7ff;
-    border-radius: 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-}
-
-.opcao-genero.ativo {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: white;
-    border-color: white;
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-}
-
-.opcao-genero i {
-    font-size: 24px;
-    margin-bottom: 8px;
-    display: block;
-}
-
-/* ===== BOTÕES ESPECÍFICOS ===== */
-#botao-calcular {
-    margin-bottom: 10%;
-}
-
-#botao-ir-pacientes{
-    margin-bottom: 30px;
-    position: relative;
-}
-
-/* ===== SELEÇÃO DE IDIOMA ===== */
-.seletor-idioma {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.opcao-idioma {
-    padding: 8px 15px;
-    background-color: #f5f7ff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-    font-weight: 500;
-}
-
-.opcao-idioma.ativo {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: white;
-    border-color: white;
-}
-
-/* ===== LOGIN SOCIAL ===== */
-.login-social {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.perfil-usuario {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
-    padding: 10px;
-    background-color: #f5f7ff;
-    border-radius: 10px;
-}
-
-.avatar-usuario {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-}
-
-/* ===== PÁGINA DE HISTÓRICO DO PACIENTE ===== */
 .cabecalho-paciente {
     display: flex;
     justify-content: space-between;
@@ -1125,8 +874,262 @@ body {
     margin-bottom: 20px;
 }
 
+#botao-voltar-pacientes {
+    color: #4361ee !important;
+    border-color: #4361ee !important;
+}
+
+#botao-voltar-pacientes:hover {
+    color: #ffffff !important;
+    background-color: #4361ee !important;
+}
+
+#botao-adicionar-registro {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-adicionar-registro:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+/* ===== MODAIS ===== */
+/* modals.css - Estilos dos modais */
+.modal-salvamento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+    display: none;
+}
+
+.conteudo-modal-salvamento {
+    background-color: white;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+#botao-confirmar-salvamento {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-confirmar-salvamento:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+#botao-cancelar-salvamento {
+    color: #757575 !important;
+    border-color: #bdbdbd !important;
+}
+
+#botao-cancelar-salvamento:hover {
+    color: #424242 !important;
+    background-color: #f5f5f5 !important;
+    border-color: #9e9e9e !important;
+}
+
+/* ===== PÁGINA DE PERFIL ===== */
+/* profile-page.css - Estilos da página de perfil */
+#pagina-perfil {
+    display: none;
+}
+
+#pagina-perfil.ativo {
+    display: block;
+}
+
+.perfil-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.perfil-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.perfil-avatar-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.perfil-avatar-large i {
+    font-size: 3rem;
+    color: white;
+}
+
+.perfil-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.perfil-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.perfil-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.perfil-section {
+    margin-bottom: 30px;
+}
+
+.perfil-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-weight: 500;
+    color: #333;
+}
+
+.perfil-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+/* ===== ANIMAÇÕES ===== */
+/* animations.css - Animações */
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes headerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* ===== RESPONSIVIDADE ===== */
+/* responsive.css - Estilos responsivos */
 @media (max-width: 576px) {
+    .header {
+        padding: 20px 15px;
+        border-radius: 0 0 25px 25px;
+    }
+    
+    .header-title {
+        font-size: 24px;
+        gap: 10px;
+    }
+    
+    .header-title::before {
+        font-size: 20px;
+    }
+    
+    .header-subtitle {
+        font-size: 14px;
+        max-width: 250px;
+    }
+    
     .header-title {
         font-size: 22px;
     }
@@ -1160,270 +1163,14 @@ body {
     }
 }
 
-/* ===== CORREÇÕES DE CONTRASTE E CORES ===== */
-
-/* Ajuste para o dropdown - texto sempre visível */
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    color: #333 !important; /* Força cor escura */
-    text-decoration: none;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color: #f5f7ff !important; /* Azul claro em vez de cinza */
-    padding-left: 25px;
-    color: #1a237e !important; /* Azul escuro no hover */
-}
-
-.dropdown-item i {
-    width: 24px;
-    color: #4361ee !important; /* Azul mais forte */
-    margin-right: 12px;
-    font-size: 1.1rem;
-}
-
-.dropdown-item.logout {
-    color: #d32f2f !important; /* Vermelho mais forte */
-}
-
-.dropdown-item.logout:hover {
-    color: #b71c1c !important; /* Vermelho mais escuro no hover */
-    background-color: #ffebee !important; /* Vermelho claro no hover */
-}
-
-.dropdown-item.logout i {
-    color: #d32f2f !important; /* Vermelho para o ícone também */
-}
-
-/* Ajuste para o botão Calcular Novamente */
-#botao-calcular-novamente {
-    color: #ffffff !important; /* Texto branco */
-    background-color: #4361ee !important; /* Fundo azul */
-}
-
-#botao-calcular-novamente:hover {
-    color: #ffffff !important; /* Mantém branco no hover */
-    border-color: #1a237e !important; /* Borda azul mais escuro */
-    background-color: #1a237e !important; /* Fundo azul mais escuro */
-}
-
-/* Ajuste para botões outline-primary em geral */
-.btn-outline-primary {
-    color: #4361ee !important; /* Azul forte */
-    border-color: #4361ee !important;
-    background-color: transparent;
-}
-
-.btn-outline-primary:hover {
-    color: #ffffff !important; /* Branco no hover */
-    border-color: #1a237e !important;
-    background-color: #1a237e !important; /* Azul escuro no hover */
-}
-
-/* Ajuste para o header do dropdown */
-.dropdown-header {
-    padding: 20px;
-    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%) !important;
-    color: white !important;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-#dropdown-username {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 4px;
-    color: white !important; /* Garante que seja branco */
-}
-
-#dropdown-useremail {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    color: rgba(255, 255, 255, 0.9) !important; /* Branco semi-transparente */
-}
-
-/* Ajuste para o menu de perfil na página inicial (se ainda existir) */
-.perfil-usuario {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
-    padding: 15px;
-    background-color: #f5f7ff;
-    border-radius: 12px;
-    border: 1px solid #e3e8ff;
-}
-
-.perfil-usuario div {
-    flex: 1;
-}
-
-#nome-usuario {
-    font-weight: 600;
-    color: #1a237e !important; /* Azul escuro */
-    margin-bottom: 2px;
-}
-
-#email-usuario {
-    font-size: 0.9rem;
-    color: #5c6bc0 !important; /* Azul mais claro */
-}
-
-#botao-logout {
-    color: #d32f2f !important; /* Vermelho */
-    border-color: #d32f2f !important;
-}
-
-#botao-logout:hover {
-    color: #ffffff !important; /* Branco no hover */
-    background-color: #d32f2f !important; /* Vermelho no hover */
-}
-
-/* Ajuste para botões de login social */
-.btn-google, .btn-microsoft {
-    background: white;
-    color: #424242 !important; /* Cinza escuro para melhor contraste */
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px 25px;
-    font-weight: 600;
-    font-size: 16px;
-    transition: all 0.3s;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-google:hover, .btn-microsoft:hover {
-    background: #f5f5f5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    color: #212121 !important; /* Cinza ainda mais escuro no hover */
-}
-
-/* Ajuste para seletor de idioma */
-.opcao-idioma {
-    padding: 8px 15px;
-    background-color: #f5f7ff;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: 2px solid transparent;
-    font-weight: 500;
-    color: #4361ee !important; /* Azul */
-}
-
-.opcao-idioma.ativo {
-    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-    color: white !important; /* Branco quando ativo */
-    border-color: white;
-}
-
-.opcao-idioma:hover:not(.ativo) {
-    background-color: #e3e8ff;
-    color: #1a237e !important; /* Azul mais escuro no hover */
-}
-
-/* Ajuste para botões de ordenação */
-.botao-ordenar {
-    flex: 1;
-    padding: 10px;
-    border: 2px solid #4361ee !important;
-    border-radius: 10px;
-    background: transparent;
-    color: #4361ee !important; /* Azul */
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.botao-ordenar.ativo {
-    background: #4361ee !important;
-    color: white !important; /* Branco quando ativo */
-}
-
-.botao-ordenar:hover:not(.ativo) {
-    background: #4361ee !important;
-    color: white !important; /* Branco no hover */
-}
-
-/* Ajuste para botão voltar na página de histórico */
-#botao-voltar-pacientes {
-    color: #4361ee !important;
-    border-color: #4361ee !important;
-}
-
-#botao-voltar-pacientes:hover {
-    color: #ffffff !important;
-    background-color: #4361ee !important;
-}
-
-/* Ajuste para botão adicionar registro */
-#botao-adicionar-registro {
-    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-    color: white !important;
-    border: none;
-}
-
-#botao-adicionar-registro:hover {
-    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
-    color: white !important;
-}
-
-/* Ajuste para botão salvar resultado */
-#botao-salvar-resultado {
-    background: linear-gradient(135deg, #4361ee 100%);
-    color: white !important;
-    border: none;
-}
-
-#botao-salvar-resultado:hover {
-    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
-    color: white !important;
-}
-
-/* Ajuste para botões modais */
-#botao-confirmar-salvamento {
-    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
-    color: white !important;
-    border: none;
-}
-
-#botao-confirmar-salvamento:hover {
-    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
-    color: white !important;
-}
-
-#botao-cancelar-salvamento {
-    color: #757575 !important; /* Cinza médio */
-    border-color: #bdbdbd !important;
-}
-
-#botao-cancelar-salvamento:hover {
-    color: #424242 !important; /* Cinza escuro */
-    background-color: #f5f5f5 !important;
-    border-color: #9e9e9e !important;
-}
-
-/* Garantir que todos os textos importantes tenham contraste */
-.card-title {
-    color: #1a237e !important; /* Azul bem escuro */
-}
-
-.form-label {
-    color: #424242 !important; /* Cinza escuro */
-}
-
-.header-title {
-    color: white !important; /* Já está, mas garantindo */
-}
-
-.header-subtitle {
-    color: rgba(255, 255, 255, 0.9) !important; /* Branco semi-transparente */
+@media (max-width: 380px) {
+    .header-title {
+        font-size: 22px;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .header-subtitle {
+        font-size: 13px;
+    }
 }
