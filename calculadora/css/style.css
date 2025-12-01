@@ -22,75 +22,359 @@ body {
     overflow: hidden;
 }
 /* ===== CABEÇALHO MODERNIZADO ===== */
+/* Novo Cabeçalho Moderno */
 .header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: white;
-    padding: 25px 20px;
-    text-align: center;
-    border-radius: 0 0 30px 30px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    margin-bottom: 10px;
+    z-index: 100;
 }
 
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-}
-
-.header-content {
-    position: relative;
-    z-index: 2;
-}
-
-.header-title {
-    font-weight: 800;
-    font-size: 28px;
-    margin-bottom: 8px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    letter-spacing: -0.5px;
+.header-left {
     display: flex;
     align-items: center;
-    justify-content: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
     gap: 12px;
 }
 
-.header-title::before {
-    content: '⚕️';
-    font-size: 24px;
+.logo-icon {
+    font-size: 2.5rem;
+    color: white;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
-.header-subtitle {
-    font-weight: 500;
-    font-size: 15px;
-    opacity: 0.95;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    max-width: 280px;
-    margin: 0 auto;
-    line-height: 1.4;
+.logo-text {
+    display: flex;
+    flex-direction: column;
 }
 
+.header-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.header-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Indicador de páginas */
+.header-indicator {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.indicator-dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+
+/* Container do Perfil */
+.profile-container {
+    position: relative;
+}
+
+.profile-icon {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.profile-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4757;
+    color: white;
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Dropdown Menu */
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 280px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: none;
+    z-index: 1000;
+    overflow: hidden;
+    animation: dropdownFade 0.2s ease;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-dropdown.show {
+    display: block;
+}
+
+.dropdown-header {
+    padding: 20px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.dropdown-avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-avatar i {
+    font-size: 2.2rem;
+}
+
+.dropdown-user-info {
+    flex: 1;
+}
+
+#dropdown-username {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+#dropdown-useremail {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 8px 0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    padding-left: 25px;
+}
+
+.dropdown-item i {
+    width: 24px;
+    color: #666;
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.dropdown-item.logout {
+    color: #ff4757;
+}
+
+.dropdown-item.logout i {
+    color: #ff4757;
+}
+
+/* Página de Perfil */
+#pagina-perfil {
+    display: none;
+}
+
+#pagina-perfil.ativo {
+    display: block;
+}
+
+.perfil-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.perfil-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.perfil-avatar-large {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.perfil-avatar-large i {
+    font-size: 3rem;
+    color: white;
+}
+
+.perfil-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.perfil-info p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.perfil-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.perfil-section {
+    margin-bottom: 30px;
+}
+
+.perfil-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    color: #666;
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-weight: 500;
+    color: #333;
+}
+
+.perfil-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
 /* Indicador de página ativa no header */
 .header-indicator {
     display: flex;
@@ -174,6 +458,7 @@ body {
     display: none;
     padding: 20px;
     animation: fadeIn 0.4s ease;
+    margin-bottom: 50px;
 }
 
 .pagina.ativo {
@@ -873,4 +1158,272 @@ body {
     .acoes-paciente {
         flex-direction: column;
     }
+}
+
+/* ===== CORREÇÕES DE CONTRASTE E CORES ===== */
+
+/* Ajuste para o dropdown - texto sempre visível */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #333 !important; /* Força cor escura */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f7ff !important; /* Azul claro em vez de cinza */
+    padding-left: 25px;
+    color: #1a237e !important; /* Azul escuro no hover */
+}
+
+.dropdown-item i {
+    width: 24px;
+    color: #4361ee !important; /* Azul mais forte */
+    margin-right: 12px;
+    font-size: 1.1rem;
+}
+
+.dropdown-item.logout {
+    color: #d32f2f !important; /* Vermelho mais forte */
+}
+
+.dropdown-item.logout:hover {
+    color: #b71c1c !important; /* Vermelho mais escuro no hover */
+    background-color: #ffebee !important; /* Vermelho claro no hover */
+}
+
+.dropdown-item.logout i {
+    color: #d32f2f !important; /* Vermelho para o ícone também */
+}
+
+/* Ajuste para o botão Calcular Novamente */
+#botao-calcular-novamente {
+    color: #ffffff !important; /* Texto branco */
+    background-color: #4361ee !important; /* Fundo azul */
+}
+
+#botao-calcular-novamente:hover {
+    color: #ffffff !important; /* Mantém branco no hover */
+    border-color: #1a237e !important; /* Borda azul mais escuro */
+    background-color: #1a237e !important; /* Fundo azul mais escuro */
+}
+
+/* Ajuste para botões outline-primary em geral */
+.btn-outline-primary {
+    color: #4361ee !important; /* Azul forte */
+    border-color: #4361ee !important;
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    color: #ffffff !important; /* Branco no hover */
+    border-color: #1a237e !important;
+    background-color: #1a237e !important; /* Azul escuro no hover */
+}
+
+/* Ajuste para o header do dropdown */
+.dropdown-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%) !important;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#dropdown-username {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    color: white !important; /* Garante que seja branco */
+}
+
+#dropdown-useremail {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9) !important; /* Branco semi-transparente */
+}
+
+/* Ajuste para o menu de perfil na página inicial (se ainda existir) */
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #f5f7ff;
+    border-radius: 12px;
+    border: 1px solid #e3e8ff;
+}
+
+.perfil-usuario div {
+    flex: 1;
+}
+
+#nome-usuario {
+    font-weight: 600;
+    color: #1a237e !important; /* Azul escuro */
+    margin-bottom: 2px;
+}
+
+#email-usuario {
+    font-size: 0.9rem;
+    color: #5c6bc0 !important; /* Azul mais claro */
+}
+
+#botao-logout {
+    color: #d32f2f !important; /* Vermelho */
+    border-color: #d32f2f !important;
+}
+
+#botao-logout:hover {
+    color: #ffffff !important; /* Branco no hover */
+    background-color: #d32f2f !important; /* Vermelho no hover */
+}
+
+/* Ajuste para botões de login social */
+.btn-google, .btn-microsoft {
+    background: white;
+    color: #424242 !important; /* Cinza escuro para melhor contraste */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-google:hover, .btn-microsoft:hover {
+    background: #f5f5f5;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #212121 !important; /* Cinza ainda mais escuro no hover */
+}
+
+/* Ajuste para seletor de idioma */
+.opcao-idioma {
+    padding: 8px 15px;
+    background-color: #f5f7ff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    font-weight: 500;
+    color: #4361ee !important; /* Azul */
+}
+
+.opcao-idioma.ativo {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important; /* Branco quando ativo */
+    border-color: white;
+}
+
+.opcao-idioma:hover:not(.ativo) {
+    background-color: #e3e8ff;
+    color: #1a237e !important; /* Azul mais escuro no hover */
+}
+
+/* Ajuste para botões de ordenação */
+.botao-ordenar {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #4361ee !important;
+    border-radius: 10px;
+    background: transparent;
+    color: #4361ee !important; /* Azul */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.botao-ordenar.ativo {
+    background: #4361ee !important;
+    color: white !important; /* Branco quando ativo */
+}
+
+.botao-ordenar:hover:not(.ativo) {
+    background: #4361ee !important;
+    color: white !important; /* Branco no hover */
+}
+
+/* Ajuste para botão voltar na página de histórico */
+#botao-voltar-pacientes {
+    color: #4361ee !important;
+    border-color: #4361ee !important;
+}
+
+#botao-voltar-pacientes:hover {
+    color: #ffffff !important;
+    background-color: #4361ee !important;
+}
+
+/* Ajuste para botão adicionar registro */
+#botao-adicionar-registro {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-adicionar-registro:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+/* Ajuste para botão salvar resultado */
+#botao-salvar-resultado {
+    background: linear-gradient(135deg, #4361ee 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-salvar-resultado:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+/* Ajuste para botões modais */
+#botao-confirmar-salvamento {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-confirmar-salvamento:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+#botao-cancelar-salvamento {
+    color: #757575 !important; /* Cinza médio */
+    border-color: #bdbdbd !important;
+}
+
+#botao-cancelar-salvamento:hover {
+    color: #424242 !important; /* Cinza escuro */
+    background-color: #f5f5f5 !important;
+    border-color: #9e9e9e !important;
+}
+
+/* Garantir que todos os textos importantes tenham contraste */
+.card-title {
+    color: #1a237e !important; /* Azul bem escuro */
+}
+
+.form-label {
+    color: #424242 !important; /* Cinza escuro */
+}
+
+.header-title {
+    color: white !important; /* Já está, mas garantindo */
+}
+
+.header-subtitle {
+    color: rgba(255, 255, 255, 0.9) !important; /* Branco semi-transparente */
 }

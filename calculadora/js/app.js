@@ -102,3 +102,116 @@ document.addEventListener('DOMContentLoaded', function () {
     // Carregar pacientes se existir
     carregarPacientes();
 });
+
+// Perfil e Dropdown Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const profileIcon = document.getElementById('profile-icon');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    const profileViewBtn = document.getElementById('profile-view');
+    const profileLogoutBtn = document.getElementById('profile-logout');
+    
+    // Toggle dropdown
+    profileIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('show');
+    });
+    
+    // Fechar dropdown ao clicar fora
+    document.addEventListener('click', function(e) {
+        if (!profileContainer.contains(e.target)) {
+            profileDropdown.classList.remove('show');
+        }
+    });
+    
+    // Navegar para página de perfil
+    profileViewBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileDropdown.classList.remove('show');
+        navigateToPage('perfil');
+        updateNavigation('perfil');
+    });
+    
+    // Logout
+    profileLogoutBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        profileDropdown.classList.remove('show');
+        // Sua função de logout aqui
+        logoutUser();
+    });
+    
+    // Atualizar informações do usuário no dropdown
+    function updateUserProfile(user) {
+        if (user) {
+            document.getElementById('dropdown-username').textContent = user.name || 'Usuário';
+            document.getElementById('dropdown-useremail').textContent = user.email || 'user@exemplo.com';
+            document.getElementById('profile-username').textContent = user.name || 'Usuário';
+            document.getElementById('profile-useremail').textContent = user.email || 'user@exemplo.com';
+        }
+    }
+    
+    // Função de logout
+    function logoutUser() {
+        // Sua lógica de logout aqui
+        console.log('Usuário deslogado');
+        // Redirecionar para login ou atualizar UI
+    }
+    
+    // Página de Perfil
+    function initializeProfilePage() {
+        // Carregar dados do usuário
+        loadUserData();
+        // Carregar estatísticas
+        loadProfileStats();
+    }
+    
+    function loadUserData() {
+        // Carregar dados do usuário do localStorage ou API
+        const userData = JSON.parse(localStorage.getItem('userData')) || {
+            name: 'Usuário',
+            email: 'user@exemplo.com',
+            joinDate: '2024-01-01',
+            lastLogin: new Date().toLocaleDateString()
+        };
+        
+        document.getElementById('profile-username').textContent = userData.name;
+        document.getElementById('profile-useremail').textContent = userData.email;
+        document.getElementById('profile-joindate').textContent = userData.joinDate;
+        document.getElementById('profile-lastlogin').textContent = userData.lastLogin;
+    }
+    
+    function loadProfileStats() {
+        // Carregar estatísticas do usuário
+        const pacientes = JSON.parse(localStorage.getItem('pacientes')) || [];
+        const totalCalculos = pacientes.reduce((acc, paciente) => acc + (paciente.registros?.length || 1), 0);
+        
+        document.getElementById('stat-pacientes').textContent = pacientes.length;
+        document.getElementById('stat-calculations').textContent = totalCalculos;
+        
+        // Calcular IMC médio
+        let totalIMC = 0;
+        let count = 0;
+        pacientes.forEach(paciente => {
+            if (paciente.registros) {
+                paciente.registros.forEach(registro => {
+                    totalIMC += registro.imc;
+                    count++;
+                });
+            }
+        });
+        
+        const avgIMC = count > 0 ? (totalIMC / count).toFixed(1) : '0.0';
+        document.getElementById('stat-avgimc').textContent = avgIMC;
+    }
+    
+    // Adicionar ao objeto de navegação existente
+    window.navigation.pages['perfil'] = {
+        element: document.getElementById('pagina-perfil'),
+        initialize: initializeProfilePage
+    };
+    
+    // Adicionar indicador para página de perfil
+    const perfilIndicator = document.createElement('div');
+    perfilIndicator.className = 'indicator-dot';
+    perfilIndicator.setAttribute('data-page', 'perfil');
+    document.querySelector('.header-indicator').appendChild(perfilIndicator);
+});

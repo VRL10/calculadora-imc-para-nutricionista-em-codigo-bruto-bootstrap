@@ -15,22 +15,67 @@
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- Cabeçalho alterado -->
-        <div class="header">
-            <div class="header-content">
+    <!-- Novo Cabeçalho Moderno -->
+<div class="header">
+    <div class="header-left">
+        <div class="logo-container">
+            <i class="fas fa-heartbeat logo-icon"></i>
+            <div class="logo-text">
                 <div class="header-title" data-translate="app_title">IMC Saúde</div>
                 <div class="header-subtitle" data-translate="app_subtitle">Sua saúde em primeiro lugar</div>
-
-                <!-- Indicador de página ativa -->
-                <div class="header-indicator">
-                    <div class="indicator-dot active" data-page="inicio"></div>
-                    <div class="indicator-dot" data-page="calcular"></div>
-                    <div class="indicator-dot" data-page="resultado"></div>
-                    <div class="indicator-dot" data-page="pacientes"></div>
-                </div>
             </div>
         </div>
+    </div>
+    
+    <div class="header-right">
+        
+        
+        <!-- Ícone de Perfil com Dropdown -->
+        <div class="profile-container" id="profile-container">
+            <div class="profile-icon" id="profile-icon">
+                <i class="fas fa-user-circle"></i>
+                <div class="notification-badge" id="notification-badge">0</div>
+            </div>
+            
+            <!-- Dropdown Menu -->
+            <div class="profile-dropdown" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <div class="dropdown-avatar" id="dropdown-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="dropdown-user-info">
+                        <div id="dropdown-username">Usuário</div>
+                        <div id="dropdown-useremail">user@exemplo.com</div>
+                    </div>
+                </div>
+                
+                <div class="dropdown-divider"></div>
+                
+                <a href="#" class="dropdown-item" id="profile-view">
+                    <i class="fas fa-user"></i>
+                    <span>Ver Perfil</span>
+                </a>
+                
+                <a href="#" class="dropdown-item" id="profile-settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configurações</span>
+                </a>
+                
+                <a href="#" class="dropdown-item" id="profile-history">
+                    <i class="fas fa-history"></i>
+                    <span>Histórico</span>
+                </a>
+                
+                <div class="dropdown-divider"></div>
+                
+                <a href="#" class="dropdown-item logout" id="profile-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Sair</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- Página inicial -->
         <div id="pagina-inicial" class="pagina ativo">
             <div class="card">
@@ -38,12 +83,7 @@
                 <p data-translate="home_description">O Índice de Massa Corporal (IMC) é uma medida internacional usada
                     para calcular se uma pessoa está no peso ideal.</p>
 
-                <!-- Seleção de Idioma -->
-                <div class="seletor-idioma">
-                    <div class="opcao-idioma ativo" dados-idioma="pt">Português</div>
-                    <div class="opcao-idioma" dados-idioma="en">English</div>
-                    <div class="opcao-idioma" dados-idioma="es">Español</div>
-                </div>
+                
 
                 <!-- Login Social -->
                 <div class="login-social" id="secao-login-social">
@@ -198,7 +238,7 @@
                 </div>
             </div>
 
-            <div class="d-grid gap-2" style="margin-bottom: 20%;">
+            <div class="d-grid gap-2" style="margin-bottom: 5%;">
                 <button class="btn btn-primary" id="botao-salvar-resultado">
                     <i class="fas fa-save me-2"></i><span data-translate="save_result">Salvar Resultado</span>
                 </button>
