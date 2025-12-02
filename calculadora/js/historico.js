@@ -1,4 +1,4 @@
-// ===== SALVAMENTO E HISToRICO =====
+// --- SALVAMENTO E HISToRICO ----
 function salvarResultado() {
     const nomeInput = document.getElementById('nome-salvamento');
     const dataInput = document.getElementById('data-salvamento');
@@ -58,6 +58,12 @@ function salvarResultado() {
 
     // Salvar no localStorage
     localStorage.setItem('pacientesIMC', JSON.stringify(pacientes));
+
+    // DISPARAR EVENTO PARA ATUALIZAR ESTATÍSTICAS AUTOMATICAMENTE
+    const eventoSalvo = new CustomEvent('pacienteSalvo');
+    document.dispatchEvent(eventoSalvo);
+    
+    console.log('Paciente salvo, estatísticas atualizadas automaticamente');
 
     // Fechar modal
     fecharModalSalvamento();
@@ -182,6 +188,7 @@ function carregarPacientes(termoPesquisa = '') {
     }
 }
 
+
 function excluirPaciente(nome) {
     if (!confirm('Tem certeza que deseja excluir este paciente e todos os seus registros?')) {
         return;
@@ -196,12 +203,19 @@ function excluirPaciente(nome) {
     // Salvar no localStorage
     localStorage.setItem('pacientesIMC', JSON.stringify(pacientes));
 
+    // DISPARAR EVENTO PARA ATUALIZAR ESTATÍSTICAS AUTOMATICAMENTE
+    const eventoExcluido = new CustomEvent('pacienteExcluido');
+    document.dispatchEvent(eventoExcluido);
+    
+    console.log('Paciente excluído, estatísticas atualizadas automaticamente');
+
     // Recarregar pacientes
     carregarPacientes();
 
     // Mostrar mensagem de sucesso
     alert('Paciente excluído com sucesso!');
 }
+
 
 // ===== HISTÓRICO DO PACIENTE =====
 function verHistoricoPaciente(nome) {

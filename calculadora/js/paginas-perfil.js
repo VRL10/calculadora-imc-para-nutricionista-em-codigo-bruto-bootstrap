@@ -1,15 +1,25 @@
 // Função principal para carregar dados reais
 function carregarDadosReaisPaginaPerfil() {
+    console.log(' carregarDadosReaisPaginaPerfil chamado');
+    
     // Verifica qual página está ativa e carrega os dados apropriados
     const paginaAtiva = document.querySelector('.pagina.ativo');
     
-    if (!paginaAtiva) return;
+    if (!paginaAtiva) {
+        console.log(' Nenhuma página ativa encontrada');
+        return;
+    }
+    
+    console.log(' Página ativa:', paginaAtiva.id);
     
     // Se for a página de perfil
     if (paginaAtiva.id === 'pagina-perfil' || paginaAtiva.id.includes('pagina-carregada-')) {
         const card = paginaAtiva.querySelector('.card');
         if (card && card.querySelector('#estat-calculos-reais')) {
+            console.log(' Atualizando estatísticas da página de perfil');
             atualizarEstatisticasReais();
+        } else {
+            console.log(' Card ou elemento de estatísticas não encontrado');
         }
     }
     
@@ -17,64 +27,109 @@ function carregarDadosReaisPaginaPerfil() {
     if (paginaAtiva.id === 'pagina-historico' || paginaAtiva.id.includes('pagina-carregada-')) {
         const card = paginaAtiva.querySelector('.card');
         if (card && card.querySelector('#lista-historico-real')) {
+            console.log(' Atualizando histórico da página de histórico');
             atualizarHistoricoReal();
             configurarBuscaHistorico();
+        } else {
+            console.log(' Card ou container de histórico não encontrado');
         }
     }
 }
 
-// Atualiza estatisticas reais do localStorage
 function atualizarEstatisticasReais() {
-    const pacientes = JSON.parse(localStorage.getItem('pacientesIMC')) || {};
+    console.log('📊 atualizarEstatisticasReais chamado');
     
+    // Tenta encontrar os elementos em TODAS as páginas
     const estatCalculos = document.getElementById('estat-calculos-reais');
     const estatPacientes = document.getElementById('estat-pacientes-reais');
     const estatDias = document.getElementById('estat-dias-reais');
     
-    if (estatCalculos && estatPacientes) {
-        // Total de cálculos
-        let totalCalculos = 0;
-        Object.values(pacientes).forEach(paciente => {
+    console.log('🔍 Procurando elementos:', {
+        estatCalculos: estatCalculos ? ' Encontrado' : ' Não encontrado',
+        estatPacientes: estatPacientes ? ' Encontrado' : ' Não encontrado',
+        estatDias: estatDias ? ' Encontrado' : ' Não encontrado'
+    });
+    
+    // Se não encontrar, não faz nada
+    if (!estatCalculos || !estatPacientes) {
+        console.log(' Elementos de estatísticas não encontrados no DOM');
+        return;
+    }
+    
+    const pacientes = JSON.parse(localStorage.getItem('pacientesIMC')) || {};
+    console.log(' Dados do localStorage (pacientesIMC):', pacientes);
+    console.log(' Número de pacientes:', Object.keys(pacientes).length);
+    
+    // Total de cálculos (soma de todos os registros de todos os pacientes)
+    let totalCalculos = 0;
+    Object.values(pacientes).forEach(paciente => {
+        if (paciente.registros && Array.isArray(paciente.registros)) {
             totalCalculos += paciente.registros.length;
-        });
-        
-        // Total de pacientes
-        const totalPacientes = Object.keys(pacientes).length;
-        
-        // Dias desde o primeiro registro
-        let dias = 0;
-        if (totalCalculos > 0) {
-            let dataMaisAntiga = new Date();
-            Object.values(pacientes).forEach(paciente => {
+        }
+    });
+    
+    // Total de pacientes (número de entradas no objeto)
+    const totalPacientes = Object.keys(pacientes).length;
+    
+    // Dias desde o primeiro registro (se houver)
+    let dias = 0;
+    let dataMaisAntiga = null;
+    
+    if (totalCalculos > 0) {
+        Object.values(pacientes).forEach(paciente => {
+            if (paciente.registros && Array.isArray(paciente.registros)) {
                 paciente.registros.forEach(registro => {
-                    const dataRegistro = new Date(registro.data);
-                    if (dataRegistro < dataMaisAntiga) {
-                        dataMaisAntiga = dataRegistro;
+                    if (registro.data) {
+                        const dataRegistro = new Date(registro.data);
+                        if (!dataMaisAntiga || dataRegistro < dataMaisAntiga) {
+                            dataMaisAntiga = dataRegistro;
+                        }
                     }
                 });
-            });
-            
+            }
+        });
+        
+        if (dataMaisAntiga) {
             const diffTempo = new Date() - dataMaisAntiga;
             dias = Math.floor(diffTempo / (1000 * 60 * 60 * 24));
         }
-        
-        // Atualizar na tela
-        estatCalculos.textContent = totalCalculos;
-        estatPacientes.textContent = totalPacientes;
-        
-        if (estatDias) {
-            estatDias.textContent = dias || 'Hoje';
-        }
     }
+    
+    console.log(' Estatísticas calculadas:', {
+        totalCalculos,
+        totalPacientes,
+        dias,
+        dataMaisAntiga
+    });
+    
+    // Atualizar na tela
+    estatCalculos.textContent = totalCalculos;
+    estatPacientes.textContent = totalPacientes;
+    
+    if (estatDias) {
+        estatDias.textContent = dias > 0 ? dias : 'Hoje';
+    }
+    
+    console.log(' Estatísticas atualizadas na tela');
 }
 
-// Atualiza histórico real do localStorage
+// histórico real do localStorage
 function atualizarHistoricoReal() {
+    console.log(' atualizarHistoricoReal chamado');
+    
     const container = document.getElementById('lista-historico-real');
-    if (!container) return;
+    if (!container) {
+        console.log(' Container de histórico não encontrado');
+        return;
+    }
     
     const pacientes = JSON.parse(localStorage.getItem('pacientesIMC')) || {};
     const busca = document.getElementById('busca-historico')?.value.toLowerCase() || '';
+    
+    console.log(' Dados para histórico:', {
+        totalPacientes: Object.keys(pacientes).length,
+        termoBusca: busca
+    });
     
     // Verificar se há dados
     if (Object.keys(pacientes).length === 0) {
@@ -91,18 +146,20 @@ function atualizarHistoricoReal() {
     // Coletar todos os registros
     let todosRegistros = [];
     Object.entries(pacientes).forEach(([nomePaciente, dadosPaciente]) => {
-        dadosPaciente.registros.forEach(registro => {
-            todosRegistros.push({
-                nome: nomePaciente,
-                data: registro.data,
-                imc: registro.imc,
-                peso: registro.peso,
-                altura: registro.altura,
-                categoria: registro.categoria,
-                grupoIdade: dadosPaciente.grupoIdade,
-                genero: dadosPaciente.genero
+        if (dadosPaciente.registros && Array.isArray(dadosPaciente.registros)) {
+            dadosPaciente.registros.forEach(registro => {
+                todosRegistros.push({
+                    nome: nomePaciente,
+                    data: registro.data,
+                    imc: registro.imc,
+                    peso: registro.peso,
+                    altura: registro.altura,
+                    categoria: registro.categoria,
+                    grupoIdade: dadosPaciente.grupoIdade,
+                    genero: dadosPaciente.genero
+                });
             });
-        });
+        }
     });
     
     // Filtrar por busca
@@ -132,18 +189,18 @@ function atualizarHistoricoReal() {
     let html = '';
     todosRegistros.forEach(registro => {
         // Formatar data
-        const dataFormatada = new Date(registro.data).toLocaleDateString('pt-BR');
+        const dataFormatada = registro.data ? new Date(registro.data).toLocaleDateString('pt-BR') : 'Data não informada';
         
         // Determinar cor da categoria
         let corCategoria = 'success';
         let iconeCategoria = 'fas fa-heart';
-        if (registro.categoria.includes('Magreza')) {
+        if (registro.categoria && registro.categoria.includes('Magreza')) {
             corCategoria = 'info';
             iconeCategoria = 'fas fa-weight';
-        } else if (registro.categoria.includes('Sobrepeso')) {
+        } else if (registro.categoria && registro.categoria.includes('Sobrepeso')) {
             corCategoria = 'warning';
             iconeCategoria = 'fas fa-exclamation-triangle';
-        } else if (registro.categoria.includes('Obesidade')) {
+        } else if (registro.categoria && registro.categoria.includes('Obesidade')) {
             corCategoria = 'danger';
             iconeCategoria = 'fas fa-exclamation-circle';
         }
@@ -171,7 +228,7 @@ function atualizarHistoricoReal() {
                         <div class="fw-bold fs-4 text-primary">${registro.imc}</div>
                         <div class="d-flex align-items-center justify-content-end mt-1">
                             <i class="${iconeCategoria} me-1 text-${corCategoria}"></i>
-                            <span class="badge bg-${corCategoria}">${registro.categoria}</span>
+                            <span class="badge bg-${corCategoria}">${registro.categoria || 'Não classificado'}</span>
                         </div>
                     </div>
                 </div>
@@ -185,7 +242,7 @@ function atualizarHistoricoReal() {
                           registro.grupoIdade === 'crianca2' ? '5-10 anos' : 
                           registro.grupoIdade === 'adolescente' ? '10-19 anos' : 
                           registro.grupoIdade === 'adulto' ? '20-59 anos' : 
-                          registro.grupoIdade === 'idoso' ? '60+ anos' : 'Adulto'}
+                          registro.grupoIdade === 'idoso' ? '60+ anos' : 'Não informado'}
                     </span>
                 </div>
             </div>
@@ -193,6 +250,7 @@ function atualizarHistoricoReal() {
     });
     
     container.innerHTML = html;
+    console.log(' Histórico atualizado com', todosRegistros.length, 'registros');
 }
 
 // Configura busca do histórico
@@ -225,8 +283,6 @@ function adicionarBotaoVoltar() {
     btnVoltar.className = 'btn btn-outline-secondary btn-sm btn-voltar-perfil';
     btnVoltar.innerHTML = '<i class="fas fa-arrow-left me-2"></i>Voltar';
     
-    // NÃO adicione estilos inline!
-    
     btnVoltar.addEventListener('click', function() {
         // Remove a página atual se for uma página carregada
         const paginaId = paginaAtiva.id;
@@ -253,44 +309,45 @@ function adicionarBotaoVoltar() {
 
 // Função para inicializar quando uma página do perfil é carregada
 function inicializarPaginaPerfil() {
+    console.log(' inicializarPaginaPerfil chamado');
     // Aguarda um pouco para garantir que o DOM foi atualizado
     setTimeout(() => {
         carregarDadosReaisPaginaPerfil();
         adicionarBotaoVoltar();
-    }, 50);
+    }, 100);
 }
 
-// Observa mudanças no localStorage para atualizar automaticamente
-function observarMudancasLocalStorage() {
-    // Sobrescrever o setItem original para detectar mudanças
-    const originalSetItem = localStorage.setItem;
-    
-    localStorage.setItem = function(key, value) {
-        originalSetItem.apply(this, arguments);
-        
-        // Disparar evento customizado quando pacientes são salvos
-        if (key === 'pacientesIMC') {
-            const evento = new CustomEvent('pacientesAtualizados');
-            window.dispatchEvent(evento);
-        }
-    };
-}
+// Sistema de eventos para atualizar estatísticas automaticamente
+document.addEventListener('pacienteSalvo', function() {
+    console.log(' EVENTO: pacienteSalvo disparado');
+    atualizarEstatisticasReais();
+    atualizarHistoricoReal();
+});
 
-// Escuta o evento de pacientes atualizados
-window.addEventListener('pacientesAtualizados', function() {
-    // Atualiza as páginas do perfil se estiverem visíveis
-    carregarDadosReaisPaginaPerfil();
+document.addEventListener('pacienteExcluido', function() {
+    console.log(' EVENTO: pacienteExcluido disparado');
+    atualizarEstatisticasReais();
+    atualizarHistoricoReal();
 });
 
 // Inicializa quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', function() {
-    observarMudancasLocalStorage();
+    console.log(' DOMContentLoaded - página carregada');
     
     // Se já houver uma página do perfil visível, inicializa
     const paginaPerfil = document.querySelector('#pagina-perfil.ativo, #pagina-historico.ativo, [id^="pagina-carregada-"].ativo');
     if (paginaPerfil) {
+        console.log(' Página de perfil já está ativa, inicializando...');
         inicializarPaginaPerfil();
+    } else {
+        console.log('ℹ Nenhuma página de perfil ativa no momento');
     }
+});
+
+// Adiciona evento para quando a página de perfil for carregada via menu
+document.addEventListener('paginaPerfilCarregada', function() {
+    console.log(' EVENTO: paginaPerfilCarregada disparado');
+    inicializarPaginaPerfil();
 });
 
 // Exporta funções para uso global
