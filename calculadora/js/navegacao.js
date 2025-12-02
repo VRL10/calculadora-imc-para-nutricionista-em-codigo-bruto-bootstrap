@@ -1,4 +1,4 @@
-// ===== FUNÇÕES DE PÁGINAS =====
+// Finções de paginas 
 function mostrarPagina(idPagina) {
     document.querySelectorAll('.pagina').forEach(pagina => pagina.classList.remove('ativo'));
     document.getElementById(idPagina).classList.add('ativo');
@@ -106,15 +106,11 @@ async function carregarPaginaPerfil(arquivo) {
         // 9. Fechar dropdown
         document.getElementById('profile-dropdown').classList.remove('show');
         
-        // 10. Adicionar botão de voltar
-        const card = conteudo.querySelector('.card');
-        if (card) {
-            const botaoVoltar = document.createElement('button');
-            botaoVoltar.className = 'btn btn-outline-secondary btn-sm';
-            botaoVoltar.innerHTML = '<i class="fas fa-arrow-left me-2"></i>Voltar';
-            botaoVoltar.onclick = () => removerPaginaCarregada(idUnico);
-            card.style.position = 'relative';
-            card.insertBefore(botaoVoltar, card.firstChild);
+        // 10. Inicializar a página do perfil
+        if (typeof inicializarPaginaPerfil === 'function') {
+            setTimeout(() => {
+                inicializarPaginaPerfil();
+            }, 100);
         }
         
     } catch (erro) {

@@ -2,30 +2,20 @@
     <div class="card">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="card-title mb-0">Meu Histórico</h3>
-
         </div>
 
-        <div class="filtros-historico mb-4">
-            <div class="row">
-                <div class="col-6">
-                    <label class="form-label">Período</label>
-                    <select class="form-select" id="select-periodo-historico">
-                        <option value="30">Últimos 30 dias</option>
-                        <option value="90">Últimos 3 meses</option>
-                        <option value="365">Último ano</option>
-                        <option value="todos">Todo o período</option>
-                    </select>
-                </div>
-                <div class="col-6">
-                    <label class="form-label">Tipo</label>
-                    <select class="form-select" id="select-tipo-historico">
-                        <option value="todos">Todos</option>
-                        <option value="meu">Meus cálculos</option>
-                        <option value="pacientes">Pacientes</option>
-                    </select>
-                </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="busca-historico" placeholder="Buscar paciente...">
+        </div>
+
+        <div id="lista-historico-real">
+            <div class="text-center py-4">
+                <i class="fas fa-history fa-3x text-muted mb-3"></i>
+                <p>Carregando histórico...</p>
             </div>
         </div>
+    </div>
+</div>
 
         <div class="estatisticas-historico mb-4">
             <div class="row text-center">

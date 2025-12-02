@@ -1324,3 +1324,52 @@ body {
 .badge.bg-pink {
     background-color: #e64980 !important;
 }
+
+/* Estilos para histórico real - extra - paginas-perfil*/
+.item-historico {
+    transition: all 0.3s ease;
+    border-left: 4px solid #4361ee !important;
+}
+
+.item-historico:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.badge.bg-info { background-color: #17a2b8 !important; }
+.badge.bg-success { background-color: #28a745 !important; }
+.badge.bg-warning { background-color: #ffc107 !important; color: #212529 !important; }
+.badge.bg-danger { background-color: #dc3545 !important; }
+
+.btn-voltar-perfil {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 1000 !important;
+}
+
+.avatar-grande {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: white;
+}
+
+.valor-estatistica {
+    font-size: 24px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.rotulo-estatistica {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
