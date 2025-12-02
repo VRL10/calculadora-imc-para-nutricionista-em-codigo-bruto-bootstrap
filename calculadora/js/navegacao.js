@@ -148,3 +148,4 @@ document.addEventListener('DOMContentLoaded', function() {
         carregarPaginaPerfil('historico.html');
     });
 });
+

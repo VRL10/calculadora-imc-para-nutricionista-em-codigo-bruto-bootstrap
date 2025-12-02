@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Perfil e Dropdown Functionality
 document.addEventListener('DOMContentLoaded', function() {
+    const profileContainer = document.getElementById('profile-container');
     const profileIcon = document.getElementById('profile-icon');
     const profileDropdown = document.getElementById('profile-dropdown');
     const profileViewBtn = document.getElementById('profile-view');
@@ -209,9 +210,14 @@ document.addEventListener('DOMContentLoaded', function() {
         initialize: initializeProfilePage
     };
     
-    // Adicionar indicador para página de perfil
+    // Adicionar indicador para página de perfil (protege existência do elemento)
     const perfilIndicator = document.createElement('div');
     perfilIndicator.className = 'indicator-dot';
     perfilIndicator.setAttribute('data-page', 'perfil');
-    document.querySelector('.header-indicator').appendChild(perfilIndicator);
+    const headerIndicator = document.querySelector('.header-indicator');
+    if (headerIndicator) headerIndicator.appendChild(perfilIndicator);
+
+    // Garantir que window.navigation e pages existam para evitar exceção
+    if (!window.navigation) window.navigation = { pages: {} };
+    if (!window.navigation.pages) window.navigation.pages = {};
 });

@@ -1,0 +1,64 @@
+@media (max-width: 576px) {
+    .header {
+        padding: 20px 15px;
+        border-radius: 0 0 25px 25px;
+    }
+    
+    .header-title {
+        font-size: 24px;
+        gap: 10px;
+    }
+    
+    .header-title::before {
+        font-size: 20px;
+    }
+    
+    .header-subtitle {
+        font-size: 14px;
+        max-width: 250px;
+    }
+    
+    .header-title {
+        font-size: 22px;
+    }
+
+    .valor-imc {
+        font-size: 36px;
+    }
+
+    .categoria-imc {
+        font-size: 18px;
+    }
+
+    .seletor-idade {
+        grid-template-columns: 1fr;
+    }
+
+    .seletor-genero {
+        flex-direction: column;
+    }
+
+    .informacoes-paciente {
+        flex-direction: column;
+    }
+
+    .item-informacao {
+        min-width: 100%;
+    }
+
+    .acoes-paciente {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 380px) {
+    .header-title {
+        font-size: 22px;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .header-subtitle {
+        font-size: 13px;
+    }
+}

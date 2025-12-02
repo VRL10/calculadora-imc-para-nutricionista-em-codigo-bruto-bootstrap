@@ -224,10 +224,8 @@ function adicionarBotaoVoltar() {
     const btnVoltar = document.createElement('button');
     btnVoltar.className = 'btn btn-outline-secondary btn-sm btn-voltar-perfil';
     btnVoltar.innerHTML = '<i class="fas fa-arrow-left me-2"></i>Voltar';
-    btnVoltar.style.position = 'absolute';
-    btnVoltar.style.top = '10px';
-    btnVoltar.style.right = '10px';
-    btnVoltar.style.zIndex = '1000';
+    
+    // NÃO adicione estilos inline!
     
     btnVoltar.addEventListener('click', function() {
         // Remove a página atual se for uma página carregada
@@ -248,7 +246,6 @@ function adicionarBotaoVoltar() {
         }
     });
     
-    card.style.position = 'relative';
     card.appendChild(btnVoltar);
 }
 

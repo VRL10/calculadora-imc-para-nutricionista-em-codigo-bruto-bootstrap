@@ -1,0 +1,130 @@
+.cabecalho-paciente {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.container-grafico {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.informacoes-paciente {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.item-informacao {
+    flex: 1;
+    min-width: 150px;
+    margin: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.valor-informacao {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.rotulo-informacao {
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.acoes-paciente {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#botao-voltar-pacientes {
+    color: #4361ee !important;
+    border-color: #4361ee !important;
+}
+
+#botao-voltar-pacientes:hover {
+    color: #ffffff !important;
+    background-color: #4361ee !important;
+}
+
+#botao-adicionar-registro {
+    background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+    color: white !important;
+    border: none;
+}
+
+#botao-adicionar-registro:hover {
+    background: linear-gradient(135deg, #3a0ca3 0%, #2d0680 100%);
+    color: white !important;
+}
+
+/* ESTILOS FALTANDO PARA A LISTA DE PACIENTES */
+
+.item-historico {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.detalhes-historico {
+    flex: 1;
+}
+
+.nome-historico {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.info-historico {
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 2px;
+}
+
+.data-historico {
+    font-size: 13px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.imc-historico {
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--primary);
+    margin-right: 15px;
+}
+
+.categoria-historico {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.acoes-historico {
+    margin-left: 15px;
+}
+
+.botao-acao-historico {
+    background: none;
+    border: none;
+    color: var(--danger);
+    font-size: 18px;
+    cursor: pointer;
+}

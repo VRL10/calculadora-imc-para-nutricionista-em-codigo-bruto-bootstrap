@@ -90,9 +90,11 @@ function carregarPacientes(termoPesquisa = '') {
 
     // Converter objeto em array para facilitar a manipulação
     let arrayPacientes = Object.entries(pacientes).map(([nome, dados]) => {
+        // Garantir que a propriedade registros seja um array
+        const registros = Array.isArray(dados.registros) ? dados.registros : [];
         // Ordenar registros por data e pegar o mais recente
-        const registrosOrdenados = dados.registros.sort((a, b) => new Date(b.data) - new Date(a.data));
-        const registroMaisRecente = registrosOrdenados[0];
+        const registrosOrdenados = registros.sort((a, b) => new Date(b.data) - new Date(a.data));
+        const registroMaisRecente = registrosOrdenados[0] || { data: '', imc: '', peso: '', altura: '', categoria: '' };
         
         return {
             nome: nome,
@@ -121,7 +123,7 @@ function carregarPacientes(termoPesquisa = '') {
     if (listaPacientes) {
         listaPacientes.innerHTML = '';
 
-        if (arrayPacientes.length === 0) {
+            if (arrayPacientes.length === 0) {
             listaPacientes.innerHTML = `
                 <div class="text-center py-4">
                     <i class="fas fa-users fa-3x text-muted mb-3"></i>
@@ -132,7 +134,9 @@ function carregarPacientes(termoPesquisa = '') {
         }
 
         // Adicionar itens dos pacientes
-        arrayPacientes.forEach((paciente) => {
+            arrayPacientes.forEach((paciente) => {
+                // garantir estrutura do registro mais recente
+                if (!paciente.registroMaisRecente) paciente.registroMaisRecente = { data: '', imc: '', peso: '', altura: '', categoria: '' };
             let classeCategoria = '';
 
             // Determinar a classe da categoria
