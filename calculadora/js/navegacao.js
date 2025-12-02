@@ -70,3 +70,85 @@ function atualizarIndicadorHeader(idPagina) {
         }
     }
 }
+// ---- CARREGAR PÁGINAS DO PERFIL ----
+async function carregarPaginaPerfil(arquivo) {
+    try {
+        // 1. Esconder todas as páginas atuais
+        document.querySelectorAll('.pagina').forEach(pagina => {
+            pagina.classList.remove('ativo');
+        });
+        
+        // 2. Esconder navegação inferior
+        document.querySelector('.navegacao-inferior').style.display = 'none';
+        
+        // 3. Carregar arquivo HTML externo
+        const resposta = await fetch(arquivo);
+        const html = await resposta.text();
+        
+        // 4. Criar div temporária para extrair conteúdo
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        
+        // 5. Encontrar a div principal do conteúdo
+        const conteudo = tempDiv.querySelector('.pagina');
+        if (!conteudo) return;
+        
+        // 6. Adicionar ID único
+        const idUnico = 'pagina-carregada-' + Date.now();
+        conteudo.id = idUnico;
+        
+        // 7. Adicionar ao corpo
+        document.body.appendChild(conteudo);
+        
+        // 8. Mostrar a página
+        conteudo.classList.add('ativo');
+        
+        // 9. Fechar dropdown
+        document.getElementById('profile-dropdown').classList.remove('show');
+        
+        // 10. Adicionar botão de voltar
+        const card = conteudo.querySelector('.card');
+        if (card) {
+            const botaoVoltar = document.createElement('button');
+            botaoVoltar.className = 'btn btn-outline-secondary btn-sm';
+            botaoVoltar.innerHTML = '<i class="fas fa-arrow-left me-2"></i>Voltar';
+            botaoVoltar.onclick = () => removerPaginaCarregada(idUnico);
+            card.style.position = 'relative';
+            card.insertBefore(botaoVoltar, card.firstChild);
+        }
+        
+    } catch (erro) {
+        console.error('Erro ao carregar página:', erro);
+        alert('Erro ao carregar página. Verifique se o arquivo existe.');
+    }
+}
+
+function removerPaginaCarregada(id) {
+    // Remover página carregada
+    const pagina = document.getElementById(id);
+    if (pagina) pagina.remove();
+    
+    // Mostrar navegação inferior
+    document.querySelector('.navegacao-inferior').style.display = 'flex';
+    
+    // Voltar para página inicial
+    mostrarPagina('pagina-inicial');
+}
+
+// Adicionar eventos aos itens do menu
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('profile-view').addEventListener('click', (e) => {
+        e.preventDefault();
+        carregarPaginaPerfil('perfil.html');
+    });
+    
+    document.getElementById('profile-settings').addEventListener('click', (e) => {
+        e.preventDefault();
+        carregarPaginaPerfil('configuracoes.html');
+    });
+    
+    document.getElementById('profile-history').addEventListener('click', (e) => {
+        e.preventDefault();
+        carregarPaginaPerfil('historico.html');
+    });
+});

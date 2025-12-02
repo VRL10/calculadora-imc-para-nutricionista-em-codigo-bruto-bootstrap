@@ -1,0 +1,127 @@
+<div id="pagina-historico" class="pagina">
+    <div class="card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="card-title mb-0">Meu Histórico</h3>
+
+        </div>
+
+        <div class="filtros-historico mb-4">
+            <div class="row">
+                <div class="col-6">
+                    <label class="form-label">Período</label>
+                    <select class="form-select" id="select-periodo-historico">
+                        <option value="30">Últimos 30 dias</option>
+                        <option value="90">Últimos 3 meses</option>
+                        <option value="365">Último ano</option>
+                        <option value="todos">Todo o período</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-select" id="select-tipo-historico">
+                        <option value="todos">Todos</option>
+                        <option value="meu">Meus cálculos</option>
+                        <option value="pacientes">Pacientes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="estatisticas-historico mb-4">
+            <div class="row text-center">
+                <div class="col-4">
+                    <div class="valor-estatistica cor-magreza">3</div>
+                    <div class="rotulo-estatistica">Magreza</div>
+                </div>
+                <div class="col-4">
+                    <div class="valor-estatistica cor-saudavel">8</div>
+                    <div class="rotulo-estatistica">Saudável</div>
+                </div>
+                <div class="col-4">
+                    <div class="valor-estatistica cor-sobrepeso">4</div>
+                    <div class="rotulo-estatistica">Sobrepeso</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="lista-historico">
+            <div class="item-historico">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="titulo-historico">João Silva</div>
+                        <div class="detalhes-historico">
+                            <span class="badge bg-primary me-2">Adulto</span>
+                            <span class="badge bg-secondary me-2">Masculino</span>
+                            <span>15/03/2024</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="valor-imc-historico">24.5</div>
+                        <div class="categoria-historico categoria-saudavel">Saudável</div>
+                    </div>
+                </div>
+                <div class="dados-historico mt-2">
+                    <small>Peso: 75kg | Altura: 175cm | Idade: 35</small>
+                </div>
+            </div>
+
+            <div class="item-historico">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="titulo-historico">Maria Santos</div>
+                        <div class="detalhes-historico">
+                            <span class="badge bg-success me-2">Adolescente</span>
+                            <span class="badge bg-pink me-2">Feminino</span>
+                            <span>10/03/2024</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="valor-imc-historico">28.3</div>
+                        <div class="categoria-historico categoria-sobrepeso">Sobrepeso</div>
+                    </div>
+                </div>
+                <div class="dados-historico mt-2">
+                    <small>Peso: 68kg | Altura: 155cm | Idade: 16</small>
+                </div>
+            </div>
+
+            <div class="item-historico">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="titulo-historico">Meu cálculo</div>
+                        <div class="detalhes-historico">
+                            <span class="badge bg-warning me-2">Adulto</span>
+                            <span class="badge bg-primary me-2">Masculino</span>
+                            <span>05/03/2024</span>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <div class="valor-imc-historico">22.8</div>
+                        <div class="categoria-historico categoria-saudavel">Saudável</div>
+                    </div>
+                </div>
+                <div class="dados-historico mt-2">
+                    <small>Peso: 70kg | Altura: 175cm | Idade: 30</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-outline-primary" id="botao-carregar-mais-historico">
+                <i class="fas fa-sync me-2"></i>Carregar Mais
+            </button>
+        </div>
+
+        <div class="mt-4 pt-4 border-top">
+            <h5 class="mb-3">Exportar Dados</h5>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-secondary" id="botao-exportar-csv">
+                    <i class="fas fa-file-csv me-2"></i>Exportar como CSV
+                </button>
+                <button class="btn btn-outline-secondary" id="botao-exportar-pdf">
+                    <i class="fas fa-file-pdf me-2"></i>Exportar como PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

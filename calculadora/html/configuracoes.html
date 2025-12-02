@@ -1,0 +1,89 @@
+<div id="pagina-configuracoes" class="pagina">
+    <div class="card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="card-title mb-0">Configurações</h3>
+
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3"><i class="fas fa-language me-2"></i>Idioma</h5>
+            <select class="form-select" id="select-idioma">
+                <option value="pt-br">Português (Brasil)</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3"><i class="fas fa-palette me-2"></i>Tema</h5>
+            <div class="seletor-tema">
+                <div class="opcao-tema ativo" dados-tema="claro">
+                    <i class="fas fa-sun"></i>
+                    <div>Claro</div>
+                </div>
+                <div class="opcao-tema" dados-tema="escuro">
+                    <i class="fas fa-moon"></i>
+                    <div>Escuro</div>
+                </div>
+                <div class="opcao-tema" dados-tema="auto">
+                    <i class="fas fa-adjust"></i>
+                    <div>Automático</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3"><i class="fas fa-bell me-2"></i>Notificações</h5>
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="switch-notificacoes" checked>
+                <label class="form-check-label" for="switch-notificacoes">Notificações por email</label>
+            </div>
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="switch-lembretes" checked>
+                <label class="form-check-label" for="switch-lembretes">Lembretes de acompanhamento</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="switch-dicas">
+                <label class="form-check-label" for="switch-dicas">Dicas de saúde</label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3"><i class="fas fa-ruler me-2"></i>Unidades de Medida</h5>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="unidades" id="radio-sistema-metrico" checked>
+                <label class="form-check-label" for="radio-sistema-metrico">
+                    Sistema Métrico (kg, cm)
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="unidades" id="radio-sistema-imperial">
+                <label class="form-check-label" for="radio-sistema-imperial">
+                    Sistema Imperial (lbs, ft/in)
+                </label>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h5 class="mb-3"><i class="fas fa-shield-alt me-2"></i>Privacidade</h5>
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input" type="checkbox" id="switch-perfil-publico">
+                <label class="form-check-label" for="switch-perfil-publico">Perfil público</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="switch-compartilhar-dados" checked>
+                <label class="form-check-label" for="switch-compartilhar-dados">Compartilhar dados anônimos para pesquisa</label>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 mt-4">
+            <button class="btn btn-primary" id="botao-salvar-configuracoes">
+                <i class="fas fa-save me-2"></i>Salvar Configurações
+            </button>
+            <button class="btn btn-outline-secondary" id="botao-restaurar-padroes">
+                <i class="fas fa-undo me-2"></i>Restaurar Padrões
+            </button>
+        </div>
+    </div>
+</div>
