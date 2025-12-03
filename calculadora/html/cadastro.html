@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - IMC Saúde</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
+</head>
+
+<body>
+    <div class="container-cadastro">
+        
+        <div class="lado-esquerdo">
+            <h2>Bem-vindo!</h2>
+            <p>Para se manter conectado conosco e acessar seu histórico de saúde, por favor crie sua conta.</p>
+            <a href="index.html" class="btn-voltar">Voltar para Home</a>
+        </div>
+
+        <div class="lado-direito">
+            <h1 class="titulo-cadastro">Criar Conta</h1>
+            
+            <div class="icones-sociais">
+                <a href="#"><i class="fab fa-google"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            
+            <span style="font-size: 12px; margin-bottom: 10px;">ou use seu email para registro</span>
+
+            <form class="form-cadastro" action="#" method="POST" id="formCadastro">
+                
+                <div class="input-group">
+                    <i class="fas fa-id-card"></i>
+                    <input type="text" placeholder="CPF" required id="cpf" maxlength="14">
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Nome Completo" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Senha" required>
+                </div>
+
+                <button type="submit" class="btn-cadastrar">CADASTRAR</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Script simples para máscara de CPF
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let valor = e.target.value.replace(/\D/g, '');
+            if (valor.length > 11) valor = valor.slice(0, 11);
+            valor = valor.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+            e.target.value = valor;
+        });
+
+        // Script para simular o cadastro
+        document.getElementById('formCadastro').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("Cadastro realizado com sucesso! (Simulação)");
+            window.location.href = "index.html"; // Volta para a home
+        });
+    </script>
+</body>
+</html>

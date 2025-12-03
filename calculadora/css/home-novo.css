@@ -1,0 +1,199 @@
+/* =========================================
+   ESTILOS DA LANDING PAGE (CORRIGIDO)
+   Arquivo: css/landing-page.css
+   ========================================= */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* --- HEADER (Topo) --- */
+.custom-navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 50px; /* Espaçamento das bordas */
+    display: flex;
+    justify-content: space-between; /* ISSO SEPARA: Logo na esquerda, Menu na direita */
+    align-items: center;
+    z-index: 1000;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.logo-area i {
+    margin-right: 10px;
+    color: #00ff88;
+}
+
+/* Menu da Direita */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Espaço entre Início, Botão e Perfil */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a.link-texto {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.nav-links a.link-texto:hover {
+    color: #00ff88;
+}
+
+/* Botão Cadastrar no Header */
+.btn-cadastrar-header {
+    background-color: #2563eb;
+    color: white !important;
+    padding: 10px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn-cadastrar-header:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* --- HERO SECTION (Meio da tela) --- */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    /* Centralização Absoluta */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza Verticalmente */
+    align-items: center;     /* Centraliza Horizontalmente */
+    text-align: center;
+    color: white;
+    
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Container do conteúdo central */
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Garante que o texto e a caixa fiquem no meio */
+    max-width: 900px;
+    padding: 0 20px;
+    margin-top: -50px; /* Leve ajuste para subir um pouco visualmente */
+}
+
+.hero-content h1 {
+    font-size: 3.5rem; /* Fonte grande */
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Caixa Branca de Ação (Centralizada) */
+.action-box {
+    background: white;
+    padding: 15px 20px; /* Mais espaço interno */
+    border-radius: 60px; /* Bem arredondado */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    
+    /* Tamanho controlado */
+    width: 100%;
+    max-width: 550px; 
+    min-width: 320px;
+}
+
+/* Botão Azul Grande (Calcular) */
+.btn-cta {
+    flex: 1; /* Ocupa metade */
+    padding: 18px 0;
+    border-radius: 40px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-cta:hover {
+    background: #1d4ed8;
+    transform: scale(1.02);
+}
+
+/* Botão Transparente (Pacientes) */
+.btn-secondary-cta {
+    flex: 1; /* Ocupa metade */
+    background: transparent;
+    color: #333;
+    border: none; /* Sem borda para ficar clean igual a imagem */
+    padding: 15px 0;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-secondary-cta:hover {
+    color: #2563eb;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .custom-navbar { padding: 20px; }
+    .hero-content h1 { font-size: 2.2rem; }
+    .action-box { flex-direction: column; border-radius: 20px; width: 100%; padding: 20px; }
+    .btn-cta, .btn-secondary-cta { width: 100%; border-radius: 10px; }
+    .nav-links { gap: 15px; }
+    .nav-links a.link-texto { display: none; } /* Esconde texto em telas pequenas */
+}

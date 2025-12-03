@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - IMC Saúde</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
+</head>
+
+<body>
+    <div class="container-cadastro">
+        
+        <div class="lado-esquerdo">
+            <h2>Bem-vindo de volta!</h2>
+            <p>Acesse sua conta para continuar monitorando a saúde dos seus pacientes.</p>
+            <a href="index.html" class="btn-voltar">Voltar para Home</a>
+        </div>
+
+        <div class="lado-direito">
+            <h1 class="titulo-cadastro">Login</h1>
+            
+            <div class="icones-sociais">
+                <a href="#"><i class="fab fa-google"></i></a>
+                <a href="#"><i class="fab fa-microsoft"></i></a>
+            </div>
+            
+            <span style="font-size: 12px; margin-bottom: 20px;">use sua conta cadastrada</span>
+
+            <form class="form-cadastro" id="formLogin">
+                
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="usuario" placeholder="Usuário" required>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="senha" placeholder="Senha" required>
+                </div>
+
+                <div style="width: 100%; text-align: right; margin-bottom: 10px;">
+                    <a href="#" style="font-size: 12px; color: #2563eb; text-decoration: none;">Esqueceu a senha?</a>
+                </div>
+
+                <button type="submit" class="btn-cadastrar">ENTRAR</button>
+
+                <div style="margin-top: 20px; font-size: 13px;">
+                    Ainda não tem conta? <a href="cadastro.html" style="color: #2563eb; font-weight: bold; text-decoration: none;">Cadastre-se</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', function(e) {
+            e.preventDefault(); // Impede o recarregamento da página
+
+            const usuarioInput = document.getElementById('usuario').value;
+            const senhaInput = document.getElementById('senha').value;
+
+            // Validação simples
+            if (usuarioInput.length < 3 || senhaInput.length < 3) {
+                alert("Preencha os campos corretamente.");
+                return;
+            }
+
+            // SIMULAÇÃO DE LOGIN
+            // Aqui você verificaria no banco de dados. 
+            // Como exemplo, vamos aceitar qualquer login ou verificar no localStorage se tiver salvo algo antes.
+            
+            console.log("Tentando logar com:", usuarioInput);
+            
+            // Simula um tempo de processamento
+            const botao = document.querySelector('.btn-cadastrar');
+            const textoOriginal = botao.innerText;
+            botao.innerText = "ENTRANDO...";
+            botao.disabled = true;
+
+            setTimeout(() => {
+                alert("Login realizado com sucesso! Bem-vindo, " + usuarioInput);
+                
+                // Salva que o usuário está logado (para a Home saber)
+                localStorage.setItem('usuario_logado', JSON.stringify({
+                    nome: usuarioInput,
+                    email: usuarioInput + "@exemplo.com"
+                }));
+
+                // Redireciona para a Home
+                window.location.href = "index.html";
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

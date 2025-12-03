@@ -4,393 +4,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC Saúde - Calculadora</title>
+    <title>IMC Saúde - App</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="../css/variaveis.css">
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/estrutura.css">
     <link rel="stylesheet" href="../css/componentes-e-animacoes.css">
     <link rel="stylesheet" href="../css/paginas.css">
     <link rel="stylesheet" href="../css/paginas-icone-perfil.css">
-
     <link rel="stylesheet" href="../css/modais.css">        
     <link rel="stylesheet" href="../css/historico-graficos.css">
-    <link rel="stylesheet" href="../css/responsivo.css">  
-    
+    <link rel="stylesheet" href="../css/responsivo.css">
+    <link rel="stylesheet" href="../css/home-novo.css">
 </head>
 
 <body>
-    <!-- Novo Cabeçalho Moderno -->
-<div class="header">
-    <div class="header-left">
-        <div class="logo-container">
-            <i class="fas fa-heartbeat logo-icon"></i>
-            <div class="logo-text">
-                <div class="header-title" data-translate="app_title">IMC Saúde</div>
-                <div class="header-subtitle" data-translate="app_subtitle">Sua saúde em primeiro lugar</div>
-            </div>
+
+    <header class="custom-navbar">
+        <div class="logo-area">
+            <i class="fas fa-heartbeat"></i> IMC Saúde
         </div>
-    </div>
-    
-    <div class="header-right">
         
-        
-        <!-- Ícone de Perfil com Dropdown -->
-        <div class="profile-container" id="profile-container">
-            <div class="profile-icon" id="profile-icon">
-                <i class="fas fa-user-circle"></i>
-                <div class="notification-badge" id="notification-badge">0</div>
-            </div>
-            
-            <!-- Dropdown Menu -->
-            <div class="profile-dropdown" id="profile-dropdown">
-                <div class="dropdown-header">
-                    <div class="dropdown-avatar" id="dropdown-avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="dropdown-user-info">
-                        <div id="dropdown-username">Usuário</div>
-                        <div id="dropdown-useremail">user@exemplo.com</div>
-                    </div>
-                </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#" class="link-texto" onclick="mostrarPagina('pagina-inicial')">INÍCIO</a></li>
                 
-                <div class="dropdown-divider"></div>
+                <li id="menu-visitante" style="display: flex; gap: 15px; align-items: center;">
+                    <a href="login.html" class="link-texto">LOGIN</a>
+                    <a href="cadastro.html" class="btn-cadastrar-header">CADASTRAR</a>
+                </li>
                 
-                <a class="dropdown-item" id="profile-view">
-                    <i class="fas fa-user"></i>
-                    <span>Ver Perfil</span>
-                </a>
-                
-                <a class="dropdown-item" id="profile-settings">
-                    <i class="fas fa-cog"></i>
-                    <span>Configurações</span>
-                </a>
-                
-                <a class="dropdown-item" id="profile-history">
-                    <i class="fas fa-history"></i>
-                    <span>Histórico</span>
-                </a>
-                
-                <div class="dropdown-divider"></div>
-                
-                <a href="#" class="dropdown-item logout" id="profile-logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Sair</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-        <!-- Página inicial -->
-        <div id="pagina-inicial" class="pagina ativo">
-            <div class="card">
-                <h3 class="card-title" data-translate="home_title">Calculadora de IMC</h3>
-                <p data-translate="home_description">O Índice de Massa Corporal (IMC) é uma medida internacional usada
-                    para calcular se uma pessoa está no peso ideal.</p>
-
-                
-
-                <!-- Login Social -->
-                <div class="login-social" id="secao-login-social">
-                    <button class="btn btn-google" id="botao-login-google">
-                        <i class="fab fa-google"></i>
-                        <span data-translate="login_google">Entrar com Google</span>
-                    </button>
-                    <button class="btn btn-microsoft" id="botao-login-microsoft">
-                        <i class="fab fa-microsoft"></i>
-                        <span data-translate="login_microsoft">Entrar com Microsoft</span>
-                    </button>
-                </div>
-
-                <!-- Perfil do Usuário (quando logado) -->
-                <div class="perfil-usuario" id="secao-perfil-usuario" style="display: none;">
-                    <div class="avatar-usuario" id="avatar-usuario">U</div>
-                    <div>
-                        <div id="nome-usuario">Usuário</div>
-                        <div id="email-usuario">user@example.com</div>
-                    </div>
-                    <button class="btn btn-outline-primary btn-sm" id="botao-logout"
-                        data-translate="logout">Sair</button>
-                </div>
-
-                <div class="botoes-inicio">
-                    <button class="btn btn-primary" id="botao-ir-calcular">
-                        <i class="fas fa-calculator me-2"></i><span data-translate="calculate_imc">Calcular IMC</span>
-                    </button>
-                    <button class="btn btn-outline-primary" id="botao-ir-pacientes">
-                        <i class="fas fa-users me-2"></i><span>Meus Pacientes</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Página de cálculo -->
-        <div id="pagina-calculo" class="pagina">
-            <div class="card">
-                <h3 class="card-title" data-translate="calculation_info">Informações para Cálculo</h3>
-
-                <div class="mb-3">
-                    <label class="form-label" data-translate="age_group">Faixa Etária</label>
-                    <div class="seletor-idade" id="seletor-idade">
-                        <div class="opcao-idade ativo" dados-grupo-idade="crianca1">
-                            <i class="fas fa-baby"></i>
-                            <div data-translate="age_0_5">0-5 anos</div>
+                <li class="profile-li" id="menu-usuario" style="display: none;">
+                    <div class="profile-container" id="profile-container">
+                        <div class="profile-icon" onclick="toggleDropdown()">
+                            <i class="fas fa-user-circle" style="font-size: 2rem; color: rgba(255,255,255,0.9);"></i>
+                            <div class="notification-badge" id="notification-badge" style="display:none;">0</div>
                         </div>
-                        <div class="opcao-idade" dados-grupo-idade="crianca2">
-                            <i class="fas fa-child"></i>
-                            <div data-translate="age_5_10">5-10 anos</div>
-                        </div>
-                        <div class="opcao-idade" dados-grupo-idade="adolescente">
-                            <i class="fas fa-user-graduate"></i>
-                            <div data-translate="age_10_19">10-19 anos</div>
-                        </div>
-                        <div class="opcao-idade" dados-grupo-idade="adulto">
-                            <i class="fas fa-user"></i>
-                            <div data-translate="age_20_59">20-59 anos</div>
-                        </div>
-                        <div class="opcao-idade" dados-grupo-idade="idoso">
-                            <i class="fas fa-user-alt"></i>
-                            <div data-translate="age_60_plus">60+ anos</div>
+                        
+                        <div class="profile-dropdown" id="profile-dropdown">
+                            <div class="dropdown-header">
+                                <div class="dropdown-avatar"><i class="fas fa-user-circle"></i></div>
+                                <div class="dropdown-user-info">
+                                    <div id="dropdown-username">Usuário</div>
+                                    <div id="dropdown-useremail">user@exemplo.com</div>
+                                </div>
+                            </div>
+                            
+                            <div class="dropdown-divider"></div>
+                            
+                            <a class="dropdown-item" onclick="mostrarPagina('pagina-perfil')">
+                                <i class="fas fa-user"></i><span>Ver Perfil</span>
+                            </a>
+                            <a class="dropdown-item" onclick="mostrarPagina('pagina-configuracoes')">
+                                <i class="fas fa-cog"></i><span>Configurações</span>
+                            </a>
+                            <a class="dropdown-item" onclick="mostrarPagina('pagina-historico')">
+                                <i class="fas fa-history"></i><span>Histórico</span>
+                            </a>
+                            
+                            <div class="dropdown-divider"></div>
+                            
+                            <a href="#" class="dropdown-item logout" onclick="fazerLogout()">
+                                <i class="fas fa-sign-out-alt"></i><span>Sair</span>
+                            </a>
                         </div>
                     </div>
-                </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-                <div class="mb-3">
-                    <label class="form-label" data-translate="gender">Gênero</label>
-                    <div class="seletor-genero" id="seletor-genero">
-                        <div class="opcao-genero ativo" dados-genero="masculino">
-                            <i class="fas fa-mars"></i>
-                            <div data-translate="male">Masculino</div>
-                        </div>
-                        <div class="opcao-genero" dados-genero="feminino">
-                            <i class="fas fa-venus"></i>
-                            <div data-translate="female">Feminino</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="peso" class="form-label" data-translate="weight">Peso (kg)</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="peso" placeholder="Ex: 70" step="0.1" min="0">
-                        <span class="input-group-text">kg</span>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="altura" class="form-label" data-translate="height">Altura (cm)</label>
-                    <div class="input-group">
-                        <input type="number" class="form-control" id="altura" placeholder="Ex: 170" step="0.1" min="0">
-                        <span class="input-group-text">cm</span>
-                    </div>
-                </div>
-
-                <button class="btn btn-primary" id="botao-calcular">
-                    <i class="fas fa-calculator me-2"></i><span data-translate="calculate_imc">Calcular IMC</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Página de resultados -->
-        <div id="pagina-resultado" class="pagina">
-            <div class="card">
-                <h3 class="card-title" data-translate="result_title">Resultado do IMC</h3>
-
-                <div class="resultado-container">
-                    <div class="valor-imc" id="valor-imc">22.5</div>
-                    <div class="categoria-imc categoria-saudavel" id="categoria-imc" data-translate="healthy">Saudável
-                    </div>
-
-                    <div class="faixa-peso">
-                        <div class="titulo-faixa-peso" data-translate="ideal_weight">Peso ideal para sua altura</div>
-                        <div class="valor-faixa-peso" id="peso-ideal">53.4 - 72.1 kg</div>
-                    </div>
-                </div>
-
-                <div class="escala-imc">
-                    <div class="item-escala magreza-grave" id="escala-magreza-grave">
-                        <span data-translate="severe_thinness">Magreza grave</span>
-                        <span>≤ 15.9</span>
-                    </div>
-                    <div class="item-escala magreza-moderada" id="escala-magreza-moderada">
-                        <span data-translate="moderate_thinness">Magreza moderada</span>
-                        <span>16.0 – 16.9</span>
-                    </div>
-                    <div class="item-escala magreza-leve" id="escala-magreza-leve">
-                        <span data-translate="mild_thinness">Magreza leve</span>
-                        <span>17.0 – 18.4</span>
-                    </div>
-                    <div class="item-escala saudavel" id="escala-saudavel">
-                        <span data-translate="healthy">Saudável</span>
-                        <span>18.5 – 24.9</span>
-                    </div>
-                    <div class="item-escala sobrepeso" id="escala-sobrepeso">
-                        <span data-translate="overweight">Sobrepeso</span>
-                        <span>25.0 – 29.9</span>
-                    </div>
-                    <div class="item-escala obesidade-1" id="escala-obesidade-1">
-                        <span data-translate="obesity_1">Obesidade Grau I</span>
-                        <span>30.0 – 34.9</span>
-                    </div>
-                    <div class="item-escala obesidade-2" id="escala-obesidade-2">
-                        <span data-translate="obesity_2">Obesidade Grau II</span>
-                        <span>35.0 – 39.9</span>
-                    </div>
-                    <div class="item-escala obesidade-3" id="escala-obesidade-3">
-                        <span data-translate="obesity_3">Obesidade Grau III</span>
-                        <span>≥ 40.0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="d-grid gap-2" style="margin-bottom: 5%;">
-                <button class="btn btn-primary" id="botao-salvar-resultado">
-                    <i class="fas fa-save me-2"></i><span data-translate="save_result">Salvar Resultado</span>
-                </button>
-                <button class="btn btn-outline-primary" id="botao-calcular-novamente">
-                    <i class="fas fa-redo me-2"></i><span data-translate="calculate_again">Calcular Novamente</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Página de pacientes -->
-        <div id="pagina-pacientes" class="pagina">
-            <div class="card" id="card-pacientes">
-                <h3 class="card-title">Meus Pacientes</h3>
-
-                <div class="container-pesquisa">
-                    <input type="text" class="form-control campo-pesquisa" id="campo-pesquisa"
-                        placeholder="Buscar por nome...">
-                    <button class="btn btn-primary" id="botao-pesquisar">
-                        <i class="fas fa-search"></i>
+    <div id="pagina-inicial" class="pagina ativo" style="background: transparent; padding: 0;">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 data-translate="app_title">SUA SAÚDE EM<br>PRIMEIRO LUGAR</h1>
+                <p data-translate="home_description">O Índice de Massa Corporal (IMC) é a medida internacional para calcular se você está no peso ideal. Comece agora.</p>
+                <div class="action-box">
+                    <button class="btn-cta" onclick="mostrarPagina('pagina-calculo')">
+                        <i class="fas fa-calculator"></i> CALCULAR AGORA
+                    </button>
+                    <button class="btn-secondary-cta" onclick="mostrarPagina('pagina-pacientes')">
+                        <i class="fas fa-users"></i> Meus Pacientes
                     </button>
                 </div>
-
-                <div class="botoes-ordenacao" id="botoes-ordenacao">
-                    <button class="botao-ordenar ativo" dados-ordenacao="nome">
-                        <i class="fas fa-font me-2"></i><span>Nome</span>
-                    </button>
-                    <button class="botao-ordenar" dados-ordenacao="data">
-                        <i class="fas fa-calendar me-2"></i><span>Data</span>
-                    </button>
-                </div>
-
-                <div id="lista-pacientes">
-                    <div class="text-center py-4" id="pacientes-vazios">
-                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
-                        <p>Nenhum paciente salvo ainda</p>
-                    </div>
-                </div>
             </div>
-        </div>
-
-        <!-- Página de histórico do paciente -->
-        <div id="pagina-historico-paciente" class="pagina">
-            <div class="card">
-                <div class="cabecalho-paciente">
-                    <h3 class="card-title" id="nome-paciente">Histórico do Paciente</h3>
-                    <button class="btn btn-outline-primary" id="botao-voltar-pacientes">
-                        <i class="fas fa-arrow-left me-2"></i> Voltar
-                    </button>
-                </div>
-
-                <div class="informacoes-paciente">
-                    <div class="item-informacao">
-                        <div class="valor-informacao" id="idade-paciente"></div>
-                        <div class="rotulo-informacao">Faixa Etária</div>
-                    </div>
-                    <div class="item-informacao">
-                        <div class="valor-informacao" id="genero-paciente"></div>
-                        <div class="rotulo-informacao">Gênero</div>
-                    </div>
-                    <div class="item-informacao">
-                        <div class="valor-informacao" id="imc-mais-recente"></div>
-                        <div class="rotulo-informacao">Último IMC</div>
-                    </div>
-                    <div class="item-informacao">
-                        <div class="valor-informacao" id="peso-mais-recente"></div>
-                        <div class="rotulo-informacao">Último Peso</div>
-                    </div>
-                </div>
-
-                <div class="acoes-paciente">
-                    <button class="btn btn-primary" id="botao-adicionar-registro">
-                        <i class="fas fa-plus me-2"></i> Adicionar Novo Registro
-                    </button>
-                </div>
-
-                <h4 class="mb-3">Evolução do IMC</h4>
-                <div class="container-grafico">
-                    <canvas id="grafico-imc"></canvas>
-                </div>
-
-                <h4 class="mb-3">Evolução do Peso</h4>
-                <div class="container-grafico">
-                    <canvas id="grafico-peso"></canvas>
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
 
-    <!-- Modal de salvamento -->
-    <div class="modal-salvamento" id="modal-salvamento">
-        <div class="conteudo-modal-salvamento">
-            <h3 class="card-title mb-4" data-translate="save_result">Salvar Resultado</h3>
-
+    <div id="pagina-calculo" class="pagina">
+        <div class="card">
+            <h3 class="card-title">Informações para Cálculo</h3>
             <div class="mb-3">
-                <label for="nome-salvamento" class="form-label">Nome do Paciente</label>
-                <input type="text" class="form-control" id="nome-salvamento" placeholder="Ex: João Silva">
+                <label class="form-label">Peso (kg)</label>
+                <input type="number" class="form-control" id="peso" placeholder="70">
             </div>
-
-            <div class="mb-4">
-                <label for="data-salvamento" class="form-label" data-translate="save_date">Data</label>
-                <input type="date" class="form-control" id="data-salvamento">
+            <div class="mb-3">
+                <label class="form-label">Altura (cm)</label>
+                <input type="number" class="form-control" id="altura" placeholder="170">
             </div>
+            <button class="btn btn-primary w-100" id="botao-calcular">Calcular IMC</button>
+        </div>
+    </div>
 
-            <div class="d-grid gap-2">
-                <button class="btn btn-primary" id="botao-confirmar-salvamento" data-translate="save">Salvar</button>
-                <button class="btn btn-outline-secondary" id="botao-cancelar-salvamento"
-                    data-translate="cancel">Cancelar</button>
+    <div id="pagina-resultado" class="pagina">
+        <div class="card">
+            <h3 class="card-title">Resultado</h3>
+            <div class="resultado-container">
+                <div class="valor-imc" id="valor-imc">--</div>
+                <div class="categoria-imc" id="categoria-imc">--</div>
+            </div>
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-outline-primary" onclick="mostrarPagina('pagina-calculo')">Calcular Novamente</button>
             </div>
         </div>
     </div>
 
-    <!-- Navegação inferior -->
-    <div class="navegacao-inferior">
-        <a href="#" class="item-navegacao ativo" id="navegacao-inicio">
-            <i class="fas fa-home"></i>
-            <span data-translate="home">Início</span>
-        </a>
-        <a href="#" class="item-navegacao" id="navegacao-calcular">
-            <i class="fas fa-calculator"></i>
-            <span data-translate="calculate">Calcular</span>
-        </a>
-        <a href="#" class="item-navegacao" id="navegacao-resultado">
-            <i class="fas fa-chart-line"></i>
-            <span data-translate="result">Resultado</span>
-        </a>
-        <a href="#" class="item-navegacao" id="navegacao-pacientes">
-            <i class="fas fa-users"></i>
-            <span>Pacientes</span>
-        </a>
+    <div id="pagina-pacientes" class="pagina">
+        <div class="card">
+            <h3 class="card-title">Meus Pacientes</h3>
+            <div class="container-pesquisa">
+                <input type="text" class="form-control campo-pesquisa" placeholder="Buscar...">
+            </div>
+            <div id="lista-pacientes" class="mt-4 text-center">
+                <p>Lista de pacientes aqui...</p>
+            </div>
+        </div>
     </div>
+
+    <div id="pagina-perfil" class="pagina">
+        <div class="card">
+            <h3 class="card-title mb-4">Meu Perfil</h3>
+            <div class="text-center mb-4">
+                <div class="avatar-grande mb-3" style="font-size: 4rem; color: #2563eb;">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <button class="btn btn-outline-primary btn-sm"><i class="fas fa-camera me-2"></i>Alterar Avatar</button>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nome Completo</label>
+                <input type="text" class="form-control" id="input-nome-perfil" placeholder="Seu nome">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" id="input-email-perfil" placeholder="seu@email.com" disabled>
+            </div>
+            <button class="btn btn-primary w-100"><i class="fas fa-save me-2"></i>Salvar Alterações</button>
+        </div>
+    </div>
+
+    <div id="pagina-configuracoes" class="pagina">
+        <div class="card">
+            <h3 class="card-title mb-4">Configurações</h3>
+            <div class="mb-4">
+                <h5 class="mb-3"><i class="fas fa-palette me-2"></i>Tema</h5>
+                <select class="form-select">
+                    <option>Claro</option>
+                    <option>Escuro</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <h5 class="mb-3"><i class="fas fa-bell me-2"></i>Notificações</h5>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" checked>
+                    <label class="form-check-label">Receber emails</label>
+                </div>
+            </div>
+            <button class="btn btn-primary w-100">Salvar Configurações</button>
+        </div>
+    </div>
+
+    <div id="pagina-historico" class="pagina">
+        <div class="card">
+            <h3 class="card-title mb-4">Meu Histórico</h3>
+            <input type="text" class="form-control mb-3" placeholder="Buscar no histórico...">
+            <div class="text-center py-4">
+                <i class="fas fa-history fa-3x text-muted mb-3"></i>
+                <p>Nenhum histórico recente.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navegacao-inferior">
+        <a href="#" class="item-navegacao ativo" onclick="mostrarPagina('pagina-inicial')"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#" class="item-navegacao" onclick="mostrarPagina('pagina-calculo')"><i class="fas fa-calculator"></i> Calcular</a>
+        <a href="#" class="item-navegacao" onclick="mostrarPagina('pagina-pacientes')"><i class="fas fa-users"></i> Pacientes</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/utilidades.js"></script>
-    <script src="../js/traducao.js"></script>
-    <script src="../js/autenticacao.js"></script>
-    <script src="../js/calculadora.js"></script>
-    <script src="../js/historico.js"></script>
-    <script src="../js/graficos.js"></script>
-    <script src="../js/modais.js"></script>
-    <script src="../js/navegacao.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/paginas-perfil.js"></script>
-</body>
+    
+    <script>
+        // 1. FUNÇÃO PARA TROCAR DE PÁGINA
+        function mostrarPagina(idPagina) {
+            
+            document.querySelectorAll('.pagina').forEach(p => p.classList.remove('ativo'));
+            
+            const paginaAlvo = document.getElementById(idPagina);
+            if (paginaAlvo) {
+                paginaAlvo.classList.add('ativo');
+                
+                const dropdown = document.getElementById('profile-dropdown');
+                if(dropdown) dropdown.classList.remove('show');
+            }
+            
+            document.querySelectorAll('.item-navegacao').forEach(item => item.classList.remove('ativo'));
+        }
 
+        function toggleDropdown() {
+            const dropdown = document.getElementById('profile-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.profile-container')) {
+                const dropdown = document.getElementById('profile-dropdown');
+                if (dropdown && dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        function verificarLogin() {
+            const usuarioLogado = localStorage.getItem('usuario_logado');
+            const menuVisitante = document.getElementById('menu-visitante');
+            const menuUsuario = document.getElementById('menu-usuario');
+
+            if (usuarioLogado) {
+                if(menuVisitante) menuVisitante.style.display = 'none';
+                if(menuUsuario) menuUsuario.style.display = 'block';
+
+                const dados = JSON.parse(usuarioLogado);
+                const nomeDisplay = document.getElementById('dropdown-username');
+                const emailDisplay = document.getElementById('dropdown-useremail');
+                const inputNome = document.getElementById('input-nome-perfil');
+                const inputEmail = document.getElementById('input-email-perfil');
+
+                if(nomeDisplay) nomeDisplay.innerText = dados.nome || 'Usuário';
+                if(emailDisplay) emailDisplay.innerText = dados.email || 'email@teste.com';
+                
+                if(inputNome) inputNome.value = dados.nome || '';
+                if(inputEmail) inputEmail.value = dados.email || '';
+
+            } else {
+                if(menuVisitante) menuVisitante.style.display = 'flex';
+                if(menuUsuario) menuUsuario.style.display = 'none';
+            }
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem('usuario_logado');
+            window.location.href = "login.html"; 
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            verificarLogin();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+        });
+
+        // 4. LÓGICA DA CALCULADORA (BÁSICA)
+        const btnCalcular = document.getElementById('botao-calcular');
+        if(btnCalcular) {
+            btnCalcular.addEventListener('click', () => {
+                const peso = parseFloat(document.getElementById('peso').value);
+                const altura = parseFloat(document.getElementById('altura').value) / 100;
+                
+                if(peso && altura) {
+                    const imc = (peso / (altura * altura)).toFixed(1);
+                    document.getElementById('valor-imc').innerText = imc;
+                    
+                    let cat = "Saudável";
+                    if(imc < 18.5) cat = "Abaixo do peso";
+                    else if(imc >= 25) cat = "Sobrepeso";
+                    
+                    document.getElementById('categoria-imc').innerText = cat;
+                    mostrarPagina('pagina-resultado');
+                } else {
+                    alert("Preencha peso e altura!");
+                }
+            });
+        }
+    </script>
+    </script>
+</body>
 </html>
