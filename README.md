@@ -75,8 +75,9 @@ projeto-imc/
 │   ├── navegacao.js
 │   ├── app.js
 │   └── paginas-perfil.js
-├── README.md
-└── Documentacao.pdf
+└── README.md
+Documentacao.pdf
+
 👥 Autores
 
     Jordann Jeferson da Silva - Gerente de Projeto
