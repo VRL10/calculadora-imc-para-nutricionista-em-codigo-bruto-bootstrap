@@ -48,6 +48,7 @@ python -m http.server 8000
 # Com Node.js
 npx serve .
 
+🏗️ Estrutura do Projeto
 ```
 📁 projeto-imc/
 ├── 📁 html/
