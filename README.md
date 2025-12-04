@@ -48,45 +48,35 @@ python -m http.server 8000
 # Com Node.js
 npx serve .
 
-📁 Estrutura do Projeto
-projeto-imc/
-│
-├── 📁 html/                     # Páginas HTML principais
-│   ├── 📄 index.html            # Página principal (raiz da aplicação)
-│   ├── 📄 perfil.html           # Página de perfil do usuário
-│   ├── 📄 configuracoes.html    # Página de configurações
-│   └── 📄 historico.html        # Página de histórico geral
-│
-├── 📁 css/                      # Arquivos de estilo organizados
-│   ├── 📄 variaveis.css         # Variáveis CSS (cores, fontes, espaçamentos)
-│   ├── 📄 base.css              # Reset CSS e estilos base globais
-│   ├── 📄 estrutura.css         # Layout, grids e estrutura geral
-│   ├── 📄 componentes-e-animacoes.css  # Botões, cards, inputs, animações
-│   ├── 📄 paginas.css           # Estilos específicos de cada página
-│   ├── 📄 paginas-icone-perfil.css     # Header, dropdown do perfil
-│   ├── 📄 modais.css            # Estilos para modais e overlays
-│   ├── 📄 historico-graficos.css       # Gráficos, tabelas, histórico
-│   └── 📄 responsivo.css        # Media queries para responsividade
-│
-├── 📁 js/                       # Lógica JavaScript modular
-│   ├── 📄 utilidades.js         # Variáveis globais e funções utilitárias
-│   ├── 📄 traducao.js           # Sistema de multi-idioma
-│   ├── 📄 autenticacao.js       # Login social (Google/Microsoft)
-│   ├── 📄 calculadora.js        # Cálculo do IMC e validações
-│   ├── 📄 historico.js          # CRUD de pacientes e histórico
-│   ├── 📄 graficos.js           # Configuração de gráficos com Chart.js
-│   ├── 📄 modais.js             # Controle de modais
-│   ├── 📄 navegacao.js          # Navegação entre páginas
-│   ├── 📄 app.js                # Ponto de entrada e inicialização
-│   └── 📄 paginas-perfil.js     # Gerenciamento das páginas do perfil
-│
-├── 📄 README.md                 # Documentação do projeto (este arquivo)
-├── 📄 Documentacao.pdf          # Documentação de gerência de projetos
-│
-└── 📁 assets/                   # Recursos estáticos (opcional)
-    ├── 📁 icons/                # Ícones personalizados
-    ├── 📁 images/               # Imagens e backgrounds
-    └── 📁 fonts/                # Fontes personalizadas
+📁projeto-imc/
+├── 📁html/
+│   ├── index.html
+│   ├── perfil.html
+│   ├── configuracoes.html
+│   └── historico.html
+├── 📁css/
+│   ├── variaveis.css
+│   ├── base.css
+│   ├── estrutura.css
+│   ├── componentes-e-animacoes.css
+│   ├── paginas.css
+│   ├── paginas-icone-perfil.css
+│   ├── modais.css
+│   ├── historico-graficos.css
+│   └── responsivo.css
+├── 📁js/
+│   ├── utilidades.js
+│   ├── traducao.js
+│   ├── autenticacao.js
+│   ├── calculadora.js
+│   ├── historico.js
+│   ├── graficos.js
+│   ├── modais.js
+│   ├── navegacao.js
+│   ├── app.js
+│   └── paginas-perfil.js
+├── README.md
+└── Documentacao.pdf
 
 👥 Autores
 
