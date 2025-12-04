@@ -48,13 +48,14 @@ python -m http.server 8000
 # Com Node.js
 npx serve .
 
-projeto-imc/
-├── html/
+```
+📁 projeto-imc/
+├── 📁 html/
 │   ├── index.html
 │   ├── perfil.html
 │   ├── configuracoes.html
 │   └── historico.html
-├── css/
+├── 📁 css/
 │   ├── variaveis.css
 │   ├── base.css
 │   ├── estrutura.css
@@ -64,7 +65,7 @@ projeto-imc/
 │   ├── modais.css
 │   ├── historico-graficos.css
 │   └── responsivo.css
-├── js/
+├── 📁 js/
 │   ├── utilidades.js
 │   ├── traducao.js
 │   ├── autenticacao.js
@@ -77,6 +78,7 @@ projeto-imc/
 │   └── paginas-perfil.js
 └── README.md
 Documentacao.pdf
+```
 
 👥 Autores
 
