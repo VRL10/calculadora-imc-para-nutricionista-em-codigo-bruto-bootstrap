@@ -48,13 +48,13 @@ python -m http.server 8000
 # Com Node.js
 npx serve .
 
-📁projeto-imc/
-├── 📁html/
+projeto-imc/
+├── html/
 │   ├── index.html
 │   ├── perfil.html
 │   ├── configuracoes.html
 │   └── historico.html
-├── 📁css/
+├── css/
 │   ├── variaveis.css
 │   ├── base.css
 │   ├── estrutura.css
@@ -64,7 +64,7 @@ npx serve .
 │   ├── modais.css
 │   ├── historico-graficos.css
 │   └── responsivo.css
-├── 📁js/
+├── js/
 │   ├── utilidades.js
 │   ├── traducao.js
 │   ├── autenticacao.js
@@ -77,7 +77,6 @@ npx serve .
 │   └── paginas-perfil.js
 ├── README.md
 └── Documentacao.pdf
-
 👥 Autores
 
     Jordann Jeferson da Silva - Gerente de Projeto
