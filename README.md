@@ -99,44 +99,43 @@ Documentacao.pdf
 ---
 
 ### Página de calcular o IMC do Paciente
-![Calcular](https://github.com/user-attachments/assets/0215aa38-45c3-4b5f-accc-72589f413322)
+![Calcular](https://github.com/user-attachments/assets/32938bab-7769-4bed-97b1-364fa14e116f)
 
 ---
 
 ### Resultado do Cálculo
-![Resultado](https://github.com/user-attachments/assets/921e0206-5a88-49b2-9d4c-a826814c5302)
+![Resultado](https://github.com/user-attachments/assets/29b516ad-d606-47e2-8e68-e1761195d7ec)
 
 ---
 
 ### Visão Geral dos Pacientes
-![Pacientes](https://github.com/user-attachments/assets/9576a558-b145-4259-a004-75387f67ac8d)
+![Pacientes](https://github.com/user-attachments/assets/41525225-7a27-4a71-8f8c-84f39554fa23)
 
 ---
 
-### Histórico e Métricas
-![Pacientes Detalhes](https://github.com/user-attachments/assets/7db9e0cd-e185-4137-a255-a60a82ebc79a)
+### Histórico e Métricas feitos através das Consultas
+![Pacientes Detalhes](https://github.com/user-attachments/assets/8c436c18-e09b-4b01-9c98-40bdb7c6c8af)
 
 ---
 
 ### Modal de Ver Perfil
-![Ver Perfil](https://github.com/user-attachments/assets/4280d6cb-a727-4ad8-82ca-6424abac203d)
+![Ver Perfil](https://github.com/user-attachments/assets/8d43c3aa-f922-4292-9503-50ac41764b3c)
 
 ---
 
 ### OP-Ver Perfil
-![OP-Ver Perfil](https://github.com/user-attachments/assets/2b564a1c-9eaf-466d-bbe7-c6cb246a44ac)
+![Ver Perfil 2](https://github.com/user-attachments/assets/613f157b-0c3e-4a9c-81d0-04c7f28bd470)
 
 ---
 
 ### OP-Configurações
-![OP-Configurações](https://github.com/user-attachments/assets/52a9d98d-5338-4a29-bb7c-5d235519d95e)
+![Config](https://github.com/user-attachments/assets/dc323914-d012-42bd-ab7c-422fb9497737)
 
 ---
 
 ### OP-Histórico
-![Config](https://github.com/user-attachments/assets/b23b1ca8-6c9d-4744-94c3-8e28ed1bcff8)
+![Histórico](https://github.com/user-attachments/assets/d9db2d9a-2cab-4a58-8340-162becb05a65)
 
-![Histórico](https://github.com/user-attachments/assets/1e57e8b3-115e-4e26-8695-574403a03bee)
 
 
 
