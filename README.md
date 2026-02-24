@@ -90,36 +90,53 @@ Documentacao.pdf
     Patrick do Nascimento Santos - Analista de Requisitos
 
     Victor Rodrigues Luz - Desenvolvedor
+    
+## Imagens da aplicação
 
-Imagens da aplicação:
-<img width="625" height="915" alt="Inicio" src="https://github.com/user-attachments/assets/d26c239a-5c37-41c7-b953-b0bd837d6e23" />
+### Página Inicial
+![Inicio](https://github.com/user-attachments/assets/d26c239a-5c37-41c7-b953-b0bd837d6e23)
 
-Página Inicial
-<img width="603" height="1752" alt="calcular" src="https://github.com/user-attachments/assets/0215aa38-45c3-4b5f-accc-72589f413322" />
+---
 
-Página de calclular o IMC do Paciente
-<img width="603" height="1523" alt="resultado" src="https://github.com/user-attachments/assets/921e0206-5a88-49b2-9d4c-a826814c5302" />
+### Página de calcular o IMC do Paciente
+![Calcular](https://github.com/user-attachments/assets/0215aa38-45c3-4b5f-accc-72589f413322)
 
-Resultado do Cálculo com opção de salvar ou recalcular
-<img width="1898" height="1186" alt="Pacientes" src="https://github.com/user-attachments/assets/9576a558-b145-4259-a004-75387f67ac8d" />
+---
 
-Visão Geral dos Pacientes cadastrados
-<img width="1898" height="1575" alt="pacientes-detalhes" src="https://github.com/user-attachments/assets/7db9e0cd-e185-4137-a255-a60a82ebc79a" />
+### Resultado do Cálculo
+![Resultado](https://github.com/user-attachments/assets/921e0206-5a88-49b2-9d4c-a826814c5302)
 
-Histórico e Métricas dos cálculos feitos ao longo das consultas
-<img width="1898" height="1186" alt="ver-perfil" src="https://github.com/user-attachments/assets/4280d6cb-a727-4ad8-82ca-6424abac203d" />
+---
 
-Modal de ver perfil aberto quando clica
-<img width="1898" height="1186" alt="ver-perfil" src="https://github.com/user-attachments/assets/2b564a1c-9eaf-466d-bbe7-c6cb246a44ac" />
+### Visão Geral dos Pacientes
+![Pacientes](https://github.com/user-attachments/assets/9576a558-b145-4259-a004-75387f67ac8d)
 
-OP-Ver Perfil
-<img width="1898" height="1186" alt="ver-perfil" src="https://github.com/user-attachments/assets/52a9d98d-5338-4a29-bb7c-5d235519d95e" />
+---
 
-OP-Configurações
-<img width="1898" height="1345" alt="config" src="https://github.com/user-attachments/assets/b23b1ca8-6c9d-4744-94c3-8e28ed1bcff8" />
+### Histórico e Métricas
+![Pacientes Detalhes](https://github.com/user-attachments/assets/7db9e0cd-e185-4137-a255-a60a82ebc79a)
 
-OP-Histórico
-<img width="1898" height="2403" alt="historico" src="https://github.com/user-attachments/assets/1e57e8b3-115e-4e26-8695-574403a03bee" />
+---
+
+### Modal de Ver Perfil
+![Ver Perfil](https://github.com/user-attachments/assets/4280d6cb-a727-4ad8-82ca-6424abac203d)
+
+---
+
+### OP-Ver Perfil
+![OP-Ver Perfil](https://github.com/user-attachments/assets/2b564a1c-9eaf-466d-bbe7-c6cb246a44ac)
+
+---
+
+### OP-Configurações
+![OP-Configurações](https://github.com/user-attachments/assets/52a9d98d-5338-4a29-bb7c-5d235519d95e)
+
+---
+
+### OP-Histórico
+![Config](https://github.com/user-attachments/assets/b23b1ca8-6c9d-4744-94c3-8e28ed1bcff8)
+
+![Histórico](https://github.com/user-attachments/assets/1e57e8b3-115e-4e26-8695-574403a03bee)
 
 
 
