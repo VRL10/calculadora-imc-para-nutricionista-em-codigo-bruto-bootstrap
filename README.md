@@ -123,8 +123,8 @@ Documentacao.pdf
 
 ---
 
-### OP-Ver Perfil
-![Ver-Perfil](https://github.com/user-attachments/assets/687646f2-cf94-44de-bafa-e4a69da534f9)
+### OP-Ver Perfil - Com Estatísticas
+![Ver-Perfil](https://github.com/user-attachments/assets/d297a77c-d53e-447a-b56b-148450ea5526)
 
 ---
 
