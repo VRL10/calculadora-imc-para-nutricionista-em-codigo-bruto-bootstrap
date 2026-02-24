@@ -119,12 +119,12 @@ Documentacao.pdf
 ---
 
 ### Modal de Ver Perfil
-![Ver Perfil](https://github.com/user-attachments/assets/8d43c3aa-f922-4292-9503-50ac41764b3c)
+![Modal-Ver-Perfil](https://github.com/user-attachments/assets/689fa8f2-9121-45a5-85d6-eb8eb47bd511)
 
 ---
 
 ### OP-Ver Perfil
-![Ver Perfil 2](https://github.com/user-attachments/assets/613f157b-0c3e-4a9c-81d0-04c7f28bd470)
+![Ver-Perfil](https://github.com/user-attachments/assets/687646f2-cf94-44de-bafa-e4a69da534f9)
 
 ---
 
